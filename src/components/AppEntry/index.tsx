@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { Provider } from "react-redux";
 import store from "../../store";
-import AppEntry from "../../appEntry";
+import AppEntry from "../../appEntry/AppEntry";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AsyncView from "../../appEntry/asyncView";
 

@@ -4,8 +4,10 @@ import { AstroFeedRequest } from "./requests";
 
 import { AstroFeedResponseSchema, AstroFeedResponse } from "./schema";
 
+import appEntry from "../../appEntry";
+
 const astroApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api.nasa.gov/neo/rest/v1/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: appEntry.baseUrl }),
   endpoints: (builder) => ({
     getAtroFeed: builder.query<AstroFeedResponse, AstroFeedRequest>({
       query: (req) => `feed?start_date=${req.startDate}&end_date=${req.endDate}&api_key=DEMO_KEY`,

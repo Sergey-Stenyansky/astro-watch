@@ -3,6 +3,7 @@ import "./styles.css";
 import { increment, decrement, set } from "../../reducers/counter/counter";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store";
+import { useGetAtroFeedQuery } from "../../services/api";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +14,8 @@ function App() {
     (e: React.ChangeEvent<HTMLInputElement>) => setNewValue(+e.target.value),
     [],
   );
+
+  const { data } = useGetAtroFeedQuery({ startDate: "2015-09-07", endDate: "2015-09-08" });
 
   return (
     <>

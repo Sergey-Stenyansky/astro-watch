@@ -1,14 +1,18 @@
 import "./index.css";
 
 import { createRoot } from "react-dom/client";
-import AppEntry from "./appEntry/index.ts";
-import MainPage from "./pages/main.ts";
 import AppEntryComponent from "./components/AppEntry/index.tsx";
-import TestPage from "./pages/test.ts";
+import appEntry from "./appEntry/index.ts";
+import { startMockServiceWorker } from "./mocks/browser.ts";
 
-const appEntry = new AppEntry();
+async function setup() {
+  if (process.env.NODE_ENV !== "development") {
+    return;
+  }
 
-appEntry.addPage(new MainPage());
-appEntry.addPage(new TestPage());
+  startMockServiceWorker();
+}
 
-createRoot(document.getElementById("root")!).render(<AppEntryComponent appEntry={appEntry} />);
+setup().then(() => {
+  createRoot(document.getElementById("root")!).render(<AppEntryComponent appEntry={appEntry} />);
+});

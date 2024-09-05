@@ -3,7 +3,6 @@ import "./styles.css";
 import { increment, decrement, set } from "../../reducers/counter/counter";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store";
-import { Link } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,7 +17,6 @@ function App() {
   return (
     <>
       <h1>Astro watch</h1>
-      <Link to="/test">Test page link</Link>
       <div className="card">
         <button onClick={() => dispatch(decrement())}>-</button>
         Count is {count}

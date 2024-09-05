@@ -4,10 +4,10 @@ import { handlers } from "./handlers";
 
 export const worker = setupWorker(...handlers);
 
-export const startMockServiceWorker = () => {
-  worker.start();
-};
+export function startMockServiceWorker() {
+  return worker.start();
+}
 
-export const stopMockServiceWorker = () => {
-  worker.stop();
-};
+export function stopMockServiceWorker() {
+  return worker.stop();
+}

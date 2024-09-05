@@ -5,14 +5,12 @@ import AppEntryComponent from "./components/AppEntry/index.tsx";
 import appEntry from "./appEntry/index.ts";
 import { startMockServiceWorker } from "./mocks/browser.ts";
 
-async function setup() {
-  if (process.env.NODE_ENV !== "development") {
-    return;
+async function run() {
+  if (process.env.NODE_ENV === "development") {
+    await startMockServiceWorker();
   }
 
-  startMockServiceWorker();
+  createRoot(document.getElementById("root")!).render(<AppEntryComponent appEntry={appEntry} />);
 }
 
-setup().then(() => {
-  createRoot(document.getElementById("root")!).render(<AppEntryComponent appEntry={appEntry} />);
-});
+run();

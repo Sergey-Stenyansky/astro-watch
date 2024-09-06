@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 
 import { setIsHazardous, setName } from "../../reducers/feed/feedFilter";
 
-function App() {
+function Feed() {
   const { data } = useGetAtroFeedQuery({
     startDate: "2015-09-07",
     endDate: "2015-09-08",
@@ -54,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default Feed;

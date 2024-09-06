@@ -5,11 +5,13 @@ function AsyncView({ name }: { name: string }) {
   return <Suspense fallback={null}>{<View />}</Suspense>;
 }
 
-export default memo(AsyncView);
-
 function getAsyncViewComponent(name: string) {
   return lazy(async () => {
-    const Component = await import(`../views/${name}/index.tsx`).then((module) => module.default);
+    const Component = await import(`../../views/${name}/index.tsx`).then(
+      (module) => module.default,
+    );
     return { default: () => <Component /> };
   });
 }
+
+export default memo(AsyncView);

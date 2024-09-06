@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import store from "../../store";
 import AppEntry from "../../appEntry/AppEntry";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AsyncView from "../../appEntry/asyncView";
+import AsyncView from "../AsyncView";
 
 interface ComponentProps {
   appEntry: AppEntry;

@@ -1,10 +1,10 @@
-import { BaseQueryFn, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { AstroFeedRequest } from "./requests";
+import { AstroFeedRequest } from "@/services/api/requests";
 
-import { AstroFeedResponseSchema, AstroFeedResponse } from "./schema";
+import { AstroFeedResponseSchema, AstroFeedResponse } from "@/services/api/schema";
 
-import appEntry from "../../appEntry";
+import appEntry from "@/appEntry";
 
 const astroApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: appEntry.baseUrl }),

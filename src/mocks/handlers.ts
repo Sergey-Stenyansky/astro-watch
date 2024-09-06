@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import appEntry from "../appEntry";
+import appEntry from "@/appEntry/index.ts";
 
 import feed from "./data/feed.json";
 

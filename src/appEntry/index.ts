@@ -1,9 +1,9 @@
-import FeedPage from "../pages/feed";
-import TestPage from "../pages/test";
+import FeedPage from "@/pages/feed";
+import TestPage from "@/pages/test";
 
-import AppEntry from "./AppEntry";
+import AppEntry from "@/appEntry/AppEntry";
 
-import deployment from "../deployment/deployment.json";
+import deployment from "@/deployment/deployment.json";
 
 const appEntry = new AppEntry();
 

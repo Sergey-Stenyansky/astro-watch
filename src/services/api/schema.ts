@@ -92,15 +92,26 @@ export const AstroObjectSchema = object({
 
 export type AstroObjectInterface = z.infer<typeof AstroObjectSchema>;
 
+const NearObjectsSchema = record(string(), array(AstroObjectSchema));
+
+type NearObjects = z.infer<typeof NearObjectsSchema>;
+
+function aggregateByDate(nearEarthObjects: NearObjects) {
+  return Object.entries(nearEarthObjects).flatMap(([date, objects]) => {
+    return objects.map((o) => ({ date, ...o }));
+  });
+}
+
 export const AstroFeedResponseSchema = object({
   links: LinksSchema,
   element_count: number(),
-  near_earth_objects: record(string(), array(AstroObjectSchema)),
+  near_earth_objects: NearObjectsSchema,
 }).transform((obj) => {
+  obj.near_earth_objects;
   return {
     links: obj.links,
     elementCount: obj.element_count,
-    nearEarthObjects: obj.near_earth_objects,
+    nearEarthObjects: aggregateByDate(obj.near_earth_objects),
   };
 });
 

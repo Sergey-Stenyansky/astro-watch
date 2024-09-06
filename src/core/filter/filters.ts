@@ -12,10 +12,6 @@ export abstract class FilterField<T> {
   abstract get isApplied(): boolean;
 }
 
-export abstract class FlagCriteria<T> {
-  abstract checkFun(item: T): boolean;
-}
-
 export class Filter<T, F extends Record<string, FilterField<any>>> {
   constructor(public filters: F) {}
 

@@ -7,7 +7,7 @@ function AsyncView({ name }: { name: string }) {
 
 function getAsyncViewComponent(name: string) {
   return lazy(async () => {
-    const Component = await import(`@/views/${name}/index.tsx`).then((module) => module.default);
+    const Component = await import(`@/pages/${name}/index.tsx`).then((module) => module.default);
     return { default: () => <Component /> };
   });
 }

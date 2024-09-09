@@ -41,7 +41,6 @@ function Feed() {
             type="checkbox"
             checked={filterState.isHazardous || false}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              console.log("checked???", e.target.checked);
               dispatch(setIsHazardous(e.target.checked));
             }}
           ></input>

@@ -23,6 +23,7 @@ export default tseslint.config(
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/no-unused-vars": "warn",
       "unused-disable-directive": "off",
+      "eol-last": ["error", "always"],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },
   },

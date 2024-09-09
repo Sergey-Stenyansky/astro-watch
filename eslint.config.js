@@ -18,8 +18,12 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
     },
     rules: {
-      "no-unused-vars": false,
       ...reactHooks.configs.recommended.rules,
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "unused-disable-directive": "off",
+      "eol-last": ["error", "always"],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },
   },

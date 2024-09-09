@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { assignDefault } from "../../util/object";
-import { setStateFactory } from "../../util/redux";
+import { assignDefault } from "@/util/object";
+import { setStateFactory } from "@/util/redux";
 
 import { PayloadAction } from "@reduxjs/toolkit";
 

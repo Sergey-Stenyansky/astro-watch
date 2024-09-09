@@ -1,10 +1,9 @@
 import "./styles.css";
-import { useGetAtroFeedQuery } from "../../services/api";
+import { useGetAtroFeedQuery } from "@/services/api";
 import { ChangeEvent, useMemo } from "react";
-import { FeedFilter } from "../../core/filter/feed";
-import { useAppDispatch, useAppSelector } from "../../store";
-
-import { setIsHazardous, setName } from "../../reducers/feed/feedFilter";
+import { FeedFilter } from "@/core/filter/feed";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { setIsHazardous, setName } from "@/reducers/feed/feedFilter";
 
 function Feed() {
   const { data } = useGetAtroFeedQuery({
@@ -42,7 +41,6 @@ function Feed() {
             type="checkbox"
             checked={filterState.isHazardous || false}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              console.log("checked???", e.target.checked);
               dispatch(setIsHazardous(e.target.checked));
             }}
           ></input>

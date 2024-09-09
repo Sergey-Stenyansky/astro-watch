@@ -1,13 +1,13 @@
-import { BaseQueryFn, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { AstroFeedRequest } from "./requests";
+import { AstroFeedRequest } from "@/services/api/requests";
 
-import { AstroFeedResponseSchema, AstroFeedResponse } from "./schema";
+import { AstroFeedResponseSchema, AstroFeedResponse } from "@/services/api/schema";
 
-import appEntry from "../../appEntry";
+import RequestManager from "@/util/request";
 
 const astroApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: appEntry.baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: RequestManager.baseUrl }),
   endpoints: (builder) => ({
     getAtroFeed: builder.query<AstroFeedResponse, AstroFeedRequest>({
       query: (req) => `feed?start_date=${req.startDate}&end_date=${req.endDate}&api_key=DEMO_KEY`,

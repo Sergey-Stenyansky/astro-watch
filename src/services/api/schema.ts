@@ -107,7 +107,6 @@ export const AstroFeedResponseSchema = object({
   element_count: number(),
   near_earth_objects: NearObjectsSchema,
 }).transform((obj) => {
-  obj.near_earth_objects;
   return {
     links: obj.links,
     elementCount: obj.element_count,

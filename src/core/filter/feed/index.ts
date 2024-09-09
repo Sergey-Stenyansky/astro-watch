@@ -1,6 +1,6 @@
-import { AstroObjectInterface } from "../../../services/api/schema";
-import { FilterField, Filter } from "../filters";
-import type { FeedFilterState } from "../../../reducers/feed/feedFilter";
+import { AstroObjectInterface } from "@/services/api/schema";
+import { FilterField, Filter } from "@/core/filter/filters";
+import type { FeedFilterState } from "@/reducers/feed/feedFilter";
 
 export class NameFilter extends FilterField<AstroObjectInterface> {
   constructor(public value: string = "") {

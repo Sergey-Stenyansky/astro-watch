@@ -6,4 +6,8 @@ export default class TestPage extends Page {
   constructor() {
     super({ name: "Test" });
   }
+
+  get isActive() {
+    return false;
+  }
 }

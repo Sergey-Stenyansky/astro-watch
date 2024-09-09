@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counter from "../reducers/counter/counter";
 import { useDispatch, useSelector } from "react-redux";
+import api from "../services/api";
+import feedFilterReducer from "../reducers/feed/feedFilter";
 
 const store = configureStore({
   reducer: {
-    counter,
+    feedFilter: feedFilterReducer,
+    [api.reducerPath]: api.reducer,
   },
+  middleware: (gDM) => gDM().concat(api.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

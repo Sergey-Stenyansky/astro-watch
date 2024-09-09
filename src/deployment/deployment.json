@@ -1,0 +1,8 @@
+{
+  "envConfigs": {
+    "development": {
+      "baseUrl": "https://api.nasa.gov/neo/rest/v1"
+    }
+  },
+  "env": "development"
+}

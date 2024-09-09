@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import importPlugin from "eslint-plugin-import";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
@@ -16,6 +17,7 @@ export default tseslint.config(
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      import: importPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -24,7 +26,18 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "warn",
       "unused-disable-directive": "off",
       "eol-last": ["error", "always"],
+      "import/no-unresolved": "error",
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+    },
+    settings: {
+      "import/resolver": {
+        "eslint-import-resolver-custom-alias": {
+          alias: {
+            "@": "./src",
+          },
+          extensions: [".ts", ".js", ".tsx", ".jsx"],
+        },
+      },
     },
   },
 );

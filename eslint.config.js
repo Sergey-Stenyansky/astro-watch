@@ -27,6 +27,7 @@ export default tseslint.config(
       "unused-disable-directive": "off",
       "eol-last": ["error", "always"],
       "import/no-unresolved": "error",
+      "@typescript-eslint/no-empty-object-type": "off",
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     },
     settings: {

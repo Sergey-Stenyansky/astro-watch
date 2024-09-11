@@ -5,3 +5,10 @@ export function setStateFactory<S extends Record<string, any>, K extends keyof S
     state[key] = payload;
   };
 }
+
+export function togglerFactory<S extends Record<string, any>, K extends keyof S>(key: K) {
+  return function toggle(state: S) {
+    //@ts-ignore
+    state[key] = !state[key];
+  };
+}

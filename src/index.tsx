@@ -1,4 +1,5 @@
-import "./index.css";
+import "@mantine/core/styles.css";
+import "./global.styles.css";
 
 import { createRoot } from "react-dom/client";
 import App from "@/components/App";

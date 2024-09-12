@@ -11,3 +11,5 @@ export const fullWidth = {
 export const margin0 = {
   margin: 0,
 };
+
+export const overlowEllipsis = { overflow: "hidden", textWrap: "nowrap", textOverflow: "ellipsis" };

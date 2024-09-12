@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import RequestManager from "@/util/request";
+import RequestManager from "@/util/requestManager";
 
 import feed from "./data/feed.json";
 import asyncTimeout from "@/util/asyncTimeout";

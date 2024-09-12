@@ -7,7 +7,7 @@ import {
   type FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query/react";
 
-import RequestManager from "@/util/request";
+import RequestManager from "@/util/requestManager";
 
 export type QueryOptions = { decoder?: ZodSchema };
 

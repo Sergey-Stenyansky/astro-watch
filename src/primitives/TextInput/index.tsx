@@ -10,24 +10,22 @@ interface ComponentProps extends Omit<TextFieldProps, "variant"> {
   onClear?: () => void;
 }
 
-const TextInput = ({ onClear, ...innerProps }: ComponentProps, ref: Ref<any>) => {
-  return (
-    <TextField
-      {...innerProps}
-      ref={ref}
-      slotProps={{
-        input: {
-          endAdornment: !!innerProps.value && (
-            <InputAdornment position="end">
-              <IconButton size="small" onClick={onClear} onMouseDown={preventDefault}>
-                <ClearIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        },
-      }}
-    />
-  );
-};
+const TextInput = ({ onClear, ...innerProps }: ComponentProps, ref: Ref<any>) => (
+  <TextField
+    {...innerProps}
+    ref={ref}
+    slotProps={{
+      input: {
+        endAdornment: !!innerProps.value && (
+          <InputAdornment position="end">
+            <IconButton size="small" onClick={onClear} onMouseDown={preventDefault}>
+              <ClearIcon />
+            </IconButton>
+          </InputAdornment>
+        ),
+      },
+    }}
+  />
+);
 
 export default forwardRef(TextInput);

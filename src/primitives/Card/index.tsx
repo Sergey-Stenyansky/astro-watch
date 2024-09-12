@@ -16,12 +16,10 @@ interface ComponentProps {
   elevation?: CardElevation;
 }
 
-const CardComponent = ({ children, elevation = 3 }: ComponentProps) => {
-  return (
-    <Card variant="elevation" sx={cardStylesMap[elevation]}>
-      {children}
-    </Card>
-  );
-};
+const CardComponent = ({ children, elevation = 3 }: ComponentProps) => (
+  <Card variant="elevation" sx={cardStylesMap[elevation]}>
+    {children}
+  </Card>
+);
 
 export default memo(CardComponent);

@@ -17,21 +17,19 @@ const CheckboxComponent = ({
   label,
   labelPlacement = "end",
   required,
-}: ComponentProps) => {
-  return (
-    <FormControlLabel
-      sx={margin0}
-      label={label}
-      labelPlacement={labelPlacement}
-      required={required}
-      control={
-        <Checkbox
-          checked={checked}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked)}
-        />
-      }
-    />
-  );
-};
+}: ComponentProps) => (
+  <FormControlLabel
+    sx={margin0}
+    label={label}
+    labelPlacement={labelPlacement}
+    required={required}
+    control={
+      <Checkbox
+        checked={checked}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked)}
+      />
+    }
+  />
+);
 
 export default memo(CheckboxComponent);

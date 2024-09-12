@@ -1,14 +1,16 @@
 import { useGetAtroFeedQuery } from "@/services/api";
-import { useMemo, memo } from "react";
+import { useMemo, memo, useState } from "react";
 import { FeedFilter } from "@/core/filter/feed";
 import { useAppSelector } from "@/store";
-import { Stack, Typography } from "@mui/material";
+import { Pagination, Stack, Typography } from "@mui/material";
 import AstroObjectCard from "./elements/AstroObjectCard";
 import FeedFilterComponent from "./elements/FeedFilter";
 
 import SkeletonPlaceholder from "./elements/SkeletonPlaceholder";
 import Spacing from "@/primitives/Spacing";
 import { useTranslation } from "react-i18next";
+import { paginate } from "@/util/pagination";
+import { paginationContainerStyle } from "@/theme/commonStyles";
 
 const Feed = () => {
   const { t } = useTranslation();
@@ -20,9 +22,12 @@ const Feed = () => {
 
   const filter = useMemo(() => new FeedFilter(), []);
 
-  const items = useAppSelector((state) => {
+  const [page, setPage] = useState(1);
+
+  const pagination = useAppSelector((state) => {
     const items = data?.nearEarthObjects || [];
-    return filter.apply(state.feedFilter, items);
+    const filteredItems = filter.apply(state.feedFilter, items);
+    return paginate(filteredItems, page, 8);
   });
 
   return (
@@ -35,10 +40,23 @@ const Feed = () => {
       <Spacing v={2} />
       <Stack spacing={1} useFlexGap={true}>
         {isLoading && !isError && <SkeletonPlaceholder count={5} />}
-        {items.map((item) => (
+        {pagination.items.map((item) => (
           <AstroObjectCard key={item.id} item={item} />
         ))}
       </Stack>
+      <Spacing v={2} />
+      {pagination.totalPages > 0 && (
+        <Pagination
+          sx={paginationContainerStyle}
+          count={pagination.totalPages}
+          page={page}
+          onChange={(_, page) => {
+            setPage(page);
+          }}
+          size="large"
+          boundaryCount={2}
+        />
+      )}
     </>
   );
 };

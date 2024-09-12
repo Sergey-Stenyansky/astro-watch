@@ -15,13 +15,11 @@ interface ComponentProps {
 
 const cellStyles = [flexSpaceBetween, { paddingTop: "4px" }];
 
-const CardCell = ({ text, color, value }: ComponentProps) => {
-  return (
-    <Box sx={cellStyles}>
-      <Typography color={color}>{text}</Typography>
-      {isJSXContent(value) ? <Typography>{value}</Typography> : value}
-    </Box>
-  );
-};
+const CardCell = ({ text, color, value }: ComponentProps) => (
+  <Box sx={cellStyles}>
+    <Typography color={color}>{text}</Typography>
+    {isJSXContent(value) ? <Typography>{value}</Typography> : value}
+  </Box>
+);
 
 export default memo(CardCell);

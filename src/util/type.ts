@@ -10,7 +10,9 @@ export function isBoolean(value: any): value is boolean {
   return typeof value === "boolean";
 }
 
-export function isJSXContent(value: any): value is string {
+type JSXContent = string | number | boolean | null | undefined;
+
+export function isJSXContent(value: any): value is JSXContent {
   return (
     isString(value) || isNumber(value) || isBoolean(value) || value === null || value === undefined
   );

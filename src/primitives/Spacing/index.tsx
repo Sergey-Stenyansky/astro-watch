@@ -5,8 +5,6 @@ interface ComponentProps {
   v?: string | number;
 }
 
-const Spacing = ({ h, v }: ComponentProps) => {
-  return <Box sx={{ paddingTop: v, paddingLeft: h }} />;
-};
+const Spacing = ({ h, v }: ComponentProps) => <Box sx={{ paddingTop: v, paddingLeft: h }} />;
 
 export default Spacing;

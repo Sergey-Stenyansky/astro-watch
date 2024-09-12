@@ -3,7 +3,7 @@ import { string, object, number, boolean, record, z, array } from "zod";
 export const MeasureSchema = object({
   estimated_diameter_min: number(),
   estimated_diameter_max: number(),
-}).transform(function decoder(obj: any) {
+}).transform(function (obj) {
   return { diameterMin: obj.estimated_diameter_min, diameterMax: obj.estimated_diameter_max };
 });
 

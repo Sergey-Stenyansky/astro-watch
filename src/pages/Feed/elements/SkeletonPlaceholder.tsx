@@ -6,7 +6,7 @@ const SkeletonPlaceholder = ({ count }: { count: number }) => {
   return (
     <>
       {Array.from({ length: count }).map((_, index) => (
-        <Skeleton key={index} sx={{ width: "100%", height: "200px" }} />
+        <Skeleton key={index} animation="wave" variant="rectangular" height={250} />
       ))}
     </>
   );

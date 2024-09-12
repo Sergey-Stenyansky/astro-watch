@@ -8,8 +8,11 @@ import FeedFilterComponent from "./elements/FeedFilter";
 
 import SkeletonPlaceholder from "./elements/SkeletonPlaceholder";
 import Spacing from "@/primitives/Spacing";
+import { useTranslation } from "react-i18next";
 
 const Feed = () => {
+  const { t } = useTranslation();
+
   const { data, isLoading, isError } = useGetAtroFeedQuery({
     startDate: "2015-09-07",
     endDate: "2015-09-08",
@@ -24,7 +27,9 @@ const Feed = () => {
 
   return (
     <>
-      <Typography variant="h2">Astro watch</Typography>
+      <Typography sx={{ textAlign: "center" }} variant="h2">
+        {t("astroWatch")}
+      </Typography>
       <Spacing v={2} />
       <FeedFilterComponent />
       <Spacing v={2} />

@@ -1,0 +1,16 @@
+{
+  "astroWatch": "Astro watch",
+  "feed": {
+    "customize": "Настроить Feed",
+    "name": "Название",
+    "astroObjectFields": {
+      "isPotentiallyHazardous": "Потенциально опасен",
+      "isSentryObject": "Объект Sentry",
+      "estimatedDiameter": "Диаметр",
+      "closeApproachDate": "Дата приближения",
+      "missDistance": "Расстояние подлета",
+      "relativeVelocity": "Скорость",
+      "absoluteMagnitude": "Абсолютная звездная величина"
+    }
+  }
+}

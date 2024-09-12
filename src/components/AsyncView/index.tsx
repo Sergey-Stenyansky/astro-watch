@@ -1,9 +1,13 @@
 import { Suspense, lazy, memo, useMemo } from "react";
 
-function AsyncView({ name }: { name: string }) {
+const AsyncView = ({ name }: { name: string }) => {
   const View = useMemo(() => getAsyncViewComponent(name), [name]);
-  return <Suspense fallback={null}>{<View />}</Suspense>;
-}
+  return (
+    <Suspense fallback={null}>
+      <View />
+    </Suspense>
+  );
+};
 
 function getAsyncViewComponent(name: string) {
   return lazy(async () => {

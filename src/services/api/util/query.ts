@@ -8,7 +8,6 @@ import {
 } from "@reduxjs/toolkit/query/react";
 
 import RequestManager from "@/util/request";
-import logger from "@/util/logger";
 
 export type QueryOptions = { decoder?: ZodSchema };
 
@@ -35,7 +34,7 @@ function withValidation(result: QueryResult, options: QueryOptions): QueryResult
     result.data = decoder.parse(data);
   } catch (error) {
     if (error instanceof ZodError) {
-      logger.log(error);
+      console.log(error);
       return {
         error: {
           data: data.toString(),

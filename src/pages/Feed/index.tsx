@@ -1,18 +1,19 @@
-import "./styles.css";
 import { useGetAtroFeedQuery } from "@/services/api";
-import { ChangeEvent, useMemo } from "react";
+import { useMemo, memo } from "react";
 import { FeedFilter } from "@/core/filter/feed";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { setIsHazardous, setName } from "@/reducers/feed/feedFilter";
+import { useAppSelector } from "@/store";
+import { Stack, Typography } from "@mui/material";
+import AstroObjectCard from "./elements/AstroObjectCard";
+import FeedFilterComponent from "./elements/FeedFilter";
 
-function Feed() {
-  const { data } = useGetAtroFeedQuery({
+import SkeletonPlaceholder from "./elements/SkeletonPlaceholder";
+import Spacing from "@/primitives/Spacing";
+
+const Feed = () => {
+  const { data, isLoading, isError } = useGetAtroFeedQuery({
     startDate: "2015-09-07",
     endDate: "2015-09-08",
   });
-
-  const dispatch = useAppDispatch();
-  const filterState = useAppSelector((state) => state.feedFilter);
 
   const filter = useMemo(() => new FeedFilter(), []);
 
@@ -23,33 +24,18 @@ function Feed() {
 
   return (
     <>
-      <h1>Astro watch</h1>
-      <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
-        <div style={{ display: "flex", gap: 16, flexDirection: "row" }}>
-          <div>Название астероида:</div>
-          <input
-            type="text"
-            value={filterState.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              dispatch(setName(e.target.value));
-            }}
-          ></input>
-        </div>
-        <div style={{ display: "flex", gap: 16, flexDirection: "row" }}>
-          <div>Потенциально опасен:</div>
-          <input
-            type="checkbox"
-            checked={filterState.isHazardous || false}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              dispatch(setIsHazardous(e.target.checked));
-            }}
-          ></input>
-        </div>
-      </div>
-
-      <div className="card">{JSON.stringify(items)}</div>
+      <Typography variant="h2">Astro watch</Typography>
+      <Spacing v={2} />
+      <FeedFilterComponent />
+      <Spacing v={2} />
+      <Stack spacing={1} useFlexGap={true}>
+        {isLoading && !isError && <SkeletonPlaceholder count={5} />}
+        {items.map((item) => (
+          <AstroObjectCard key={item.id} item={item} />
+        ))}
+      </Stack>
     </>
   );
-}
+};
 
-export default Feed;
+export default memo(Feed);

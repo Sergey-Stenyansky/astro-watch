@@ -1,5 +1,9 @@
 {
   "astroWatch": "Astro watch",
+  "search": {
+    "noElements": "Нет элементов для отображения",
+    "tryChangeSearch": "Попробуйте изменить поисковой запрос"
+  },
   "feed": {
     "customize": "Настроить Feed",
     "name": "Название",

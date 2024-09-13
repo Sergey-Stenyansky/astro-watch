@@ -12,13 +12,13 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 const App = () => {
   const routesElement = (
     <Routes>
-      {pages
-        .filter((page) => page.isActive)
-        .map((page) => {
-          return (
+      <Route path="/" element={<MainLayout />}>
+        {pages
+          .filter((page) => page.isActive)
+          .map((page) => (
             <Route key={page.path} path={page.path} element={<AsyncView name={page.name} />} />
-          );
-        })}
+          ))}
+      </Route>
     </Routes>
   );
 
@@ -27,7 +27,7 @@ const App = () => {
       <Provider store={store}>
         <BrowserRouter>
           <ThemeProvider theme={theme}>
-            <MainLayout>{routesElement}</MainLayout>
+            {routesElement}
             <CssBaseline />
           </ThemeProvider>
         </BrowserRouter>

@@ -1,9 +1,12 @@
-import { type PropsWithChildren } from "react";
-
 import styles from "./styles.module.css";
+import { Outlet } from "react-router-dom";
 
-const MainLayout = ({ children }: PropsWithChildren<{}>) => {
-  return <div className={styles.root}>{children}</div>;
+const MainLayout = () => {
+  return (
+    <div className={styles.root}>
+      <Outlet />
+    </div>
+  );
 };
 
 export default MainLayout;

@@ -12,7 +12,7 @@ export const pages: PageConfig[] = [
   },
   {
     name: "Test",
-    path: "/test",
+    path: "test",
     isActive: false,
   },
 ];

@@ -6,9 +6,9 @@ import { memo, ReactNode } from "react";
 export type CardElevation = 1 | 2 | 3;
 
 const cardStylesMap: Record<CardElevation, SxProps> = {
-  1: { padding: "8px 12px", borderRadius: 2 },
-  2: { padding: "8px 12px", borderRadius: 2, boxShadow: 2 },
-  3: { padding: "8px 12px", borderRadius: 2, boxShadow: 3 },
+  1: { padding: "8px 12px", width: "100%", borderRadius: 2 },
+  2: { padding: "8px 12px", width: "100%", borderRadius: 2, boxShadow: 2 },
+  3: { padding: "8px 12px", width: "100%", borderRadius: 2, boxShadow: 3 },
 };
 
 interface ComponentProps {

@@ -44,7 +44,7 @@ const Feed = () => {
         {pagination.items.map((item) => (
           <AstroObjectCard key={item.id} item={item} />
         ))}
-        {!pagination.items.length && (
+        {!isLoading && !isError && !pagination.items.length && (
           <Placeholder
             primaryText={t("search.noElements")}
             secondaryText={t("search.tryChangeSearch")}

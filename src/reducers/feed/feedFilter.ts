@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { assignDefault } from "@/util/object";
-import { setStateFactory } from "@/util/redux";
+import { setStateFactory, togglerFactory } from "@/util/redux/factories";
 
 import { PayloadAction } from "@reduxjs/toolkit";
+import astroApi from "@/services/api";
 
 export type FeedFilterState = {
   startDate: Date | null;
@@ -17,6 +18,7 @@ export type FeedFilterState = {
   missDistance: number | null;
   orbitingBody: string;
   isSentryObject: boolean | null;
+  isOpened: boolean;
 };
 
 function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState {
@@ -33,6 +35,7 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
       missDistance: null,
       orbitingBody: "",
       isSentryObject: null,
+      isOpened: true,
     },
     config,
   );
@@ -40,7 +43,7 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
 
 const initialState = getInitialState();
 
-const feedFilterSlice = createSlice({
+export const feedFilterSlice = createSlice({
   name: "feedFilter",
   reducers: {
     setStartDate(state, { payload }: PayloadAction<Date>) {
@@ -61,6 +64,13 @@ const feedFilterSlice = createSlice({
     setMissDistance: setStateFactory("missDistance"),
     setOrbitingBody: setStateFactory("orbitingBody"),
     setIsSentryObject: setStateFactory("isSentryObject"),
+    setIsOpened: setStateFactory("isOpened"),
+    toggleOpened: togglerFactory("isOpened"),
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(astroApi.endpoints.getAtroFeed.matchFulfilled, (state) => {
+      state.isOpened = false;
+    });
   },
   initialState,
 });
@@ -78,6 +88,8 @@ export const {
   setMissDistance,
   setOrbitingBody,
   setIsSentryObject,
+  toggleOpened,
+  setIsOpened,
 } = feedFilterSlice.actions;
 
 export default feedFilterSlice.reducer;

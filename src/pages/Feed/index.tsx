@@ -1,55 +1,71 @@
-import "./styles.css";
 import { useGetAtroFeedQuery } from "@/services/api";
-import { ChangeEvent, useMemo } from "react";
+import { useMemo, memo, useState } from "react";
 import { FeedFilter } from "@/core/filter/feed";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { setIsHazardous, setName } from "@/reducers/feed/feedFilter";
+import { useAppSelector } from "@/store";
+import { Pagination, Stack, Typography } from "@mui/material";
+import AstroObjectCard from "./elements/AstroObjectCard";
+import FeedFilterComponent from "./elements/FeedFilter";
 
-function Feed() {
-  const { data } = useGetAtroFeedQuery({
+import SkeletonPlaceholder from "./elements/SkeletonPlaceholder";
+import Spacing from "@/primitives/Spacing";
+import { useTranslation } from "react-i18next";
+import { paginate } from "@/util/pagination";
+import { flexCenter, paginationContainerStyle } from "@/theme/commonStyles";
+import Placeholder from "@/primitives/Placeholder";
+
+const Feed = () => {
+  const { t } = useTranslation();
+
+  const { data, isLoading, isError } = useGetAtroFeedQuery({
     startDate: "2015-09-07",
     endDate: "2015-09-08",
   });
 
-  const dispatch = useAppDispatch();
-  const filterState = useAppSelector((state) => state.feedFilter);
-
   const filter = useMemo(() => new FeedFilter(), []);
 
-  const items = useAppSelector((state) => {
+  const [page, setPage] = useState(1);
+
+  const pagination = useAppSelector((state) => {
     const items = data?.nearEarthObjects || [];
-    return filter.apply(state.feedFilter, items);
+    const filteredItems = filter.apply(state.feedFilter, items);
+    return paginate(filteredItems, page, 8);
   });
 
   return (
     <>
-      <h1>Astro watch</h1>
-      <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
-        <div style={{ display: "flex", gap: 16, flexDirection: "row" }}>
-          <div>Название астероида:</div>
-          <input
-            type="text"
-            value={filterState.name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              dispatch(setName(e.target.value));
-            }}
-          ></input>
-        </div>
-        <div style={{ display: "flex", gap: 16, flexDirection: "row" }}>
-          <div>Потенциально опасен:</div>
-          <input
-            type="checkbox"
-            checked={filterState.isHazardous || false}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              dispatch(setIsHazardous(e.target.checked));
-            }}
-          ></input>
-        </div>
-      </div>
-
-      <div className="card">{JSON.stringify(items)}</div>
+      <Typography sx={{ textAlign: "center" }} variant="h2">
+        {t("astroWatch")}
+      </Typography>
+      <Spacing v={2} />
+      <FeedFilterComponent />
+      <Spacing v={2} />
+      <Stack spacing={1} useFlexGap={true} sx={flexCenter}>
+        {isLoading && !isError && <SkeletonPlaceholder count={5} />}
+        {pagination.items.map((item) => (
+          <AstroObjectCard key={item.id} item={item} />
+        ))}
+        {!isLoading && !isError && !pagination.items.length && (
+          <Placeholder
+            primaryText={t("search.noElements")}
+            secondaryText={t("search.tryChangeSearch")}
+          />
+        )}
+      </Stack>
+      <Spacing v={2} />
+      {pagination.totalPages > 1 && (
+        <Pagination
+          sx={paginationContainerStyle}
+          count={pagination.totalPages}
+          page={page}
+          onChange={(_, page) => {
+            setPage(page);
+          }}
+          size="large"
+          boundaryCount={2}
+        />
+      )}
     </>
   );
-}
+};
 
-export default Feed;
+export default memo(Feed);

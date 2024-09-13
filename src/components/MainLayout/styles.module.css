@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
+}
+
+
+@media screen and (min-width: 700px) {
+  .root {
+    width: 600px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .root {
+    width: 900px;
+  }
+}

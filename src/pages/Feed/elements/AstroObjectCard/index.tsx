@@ -14,6 +14,7 @@ import { flexSpaceBetween, overlowEllipsis } from "@/theme/commonStyles";
 
 import { diameterFormatter } from "./util";
 import { useTranslation } from "react-i18next";
+import formatDate, { DateFormat } from "@/util/date/format";
 
 interface ComponentProps {
   item: AstroObjectInterface;
@@ -41,7 +42,7 @@ const AstroObjectCard = ({ item }: ComponentProps) => {
       )}
       <CardCell
         text={t("feed.astroObjectFields.closeApproachDate")}
-        value={approachData.closeApproachDate}
+        value={formatDate(approachData.closeApproachDate, DateFormat.shortDate)}
       />
       <CardCell
         text={t("feed.astroObjectFields.relativeVelocity")}

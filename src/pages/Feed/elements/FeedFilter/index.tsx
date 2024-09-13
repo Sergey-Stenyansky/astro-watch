@@ -13,14 +13,22 @@ import Spacing from "@/primitives/Spacing";
 import Checkbox from "@/primitives/Checkbox";
 import Card from "@/primitives/Card";
 
-import { flexSpaceBetween, fullWidth } from "@/theme/commonStyles";
+import { flexSpaceBetween, fullWidth, rotateY180 } from "@/theme/commonStyles";
 import { useTranslation } from "react-i18next";
 import Settings from "@mui/icons-material/Settings";
+import { useFeedContext } from "@/pages/Feed/context";
+import { sortActions } from "@/reducers/sorting";
+import { FeedSortingFields } from "@/pages/Feed/sorting";
+
+import Sort from "@mui/icons-material/Sort";
+
+import { SortOrder } from "@/reducers/sorting";
 
 const FeedFilter = () => {
   const state = useAppSelector((state) => state.feedFilter);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { sortDispatch, sort } = useFeedContext();
   return (
     <Stack>
       <Card>
@@ -28,6 +36,12 @@ const FeedFilter = () => {
           <Typography>{t("feed.customize")}</Typography>
           <IconButton onClick={() => dispatch(toggleOpened())}>
             <Settings />
+          </IconButton>
+        </Box>
+        <Box sx={flexSpaceBetween}>
+          <Typography>{t("sort.word")}</Typography>
+          <IconButton onClick={() => sortDispatch(sortActions.toggle(FeedSortingFields.date))}>
+            {sort.sortOrder === SortOrder.desc ? <Sort /> : <Sort sx={rotateY180} />}
           </IconButton>
         </Box>
         <Collapse in={state.isOpened}>

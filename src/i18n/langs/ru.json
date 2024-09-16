@@ -7,8 +7,19 @@
   "sort": {
     "word": "Сортировка"
   },
+  "datePicker": {
+    "errors": {
+      "invalidDate": "Неверное значение даты",
+      "fromError": "Укажите дату от {{from}}",
+      "toError": "Укажите дату до {{from}}",
+      "rangeError": "Укажите дату между {{from}} и {{to}}"
+    }
+  },
   "feed": {
+    "pickDate": "Выберите дату",
     "customize": "Настроить Feed",
+    "dateFrom": "Дата с",
+    "dateTo": "Дата по",
     "name": "Название",
     "astroObjectFields": {
       "isPotentiallyHazardous": "Потенциально опасен",

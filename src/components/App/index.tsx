@@ -8,6 +8,8 @@ import theme from "@/theme";
 import MainLayout from "../MainLayout";
 
 import { ThemeProvider, CssBaseline } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const App = () => {
   const routesElement = (
@@ -26,10 +28,12 @@ const App = () => {
     <StrictMode>
       <Provider store={store}>
         <BrowserRouter>
-          <ThemeProvider theme={theme}>
-            {routesElement}
-            <CssBaseline />
-          </ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <ThemeProvider theme={theme}>
+              {routesElement}
+              <CssBaseline />
+            </ThemeProvider>
+          </LocalizationProvider>
         </BrowserRouter>
       </Provider>
     </StrictMode>

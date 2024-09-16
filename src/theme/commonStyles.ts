@@ -10,6 +10,19 @@ export const flexCenter = {
   justifyContent: "center",
 };
 
+export const flexJcStart = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "start",
+};
+
+export const flexStart = {
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center",
+};
+
+export const textAlignCenter = { textAlign: "center" };
 export const flexColumn = { flexDirection: "column" };
 export const rotateY180 = { transform: "scaleY(-1)" };
 export const fullWidth = { width: "100%" };

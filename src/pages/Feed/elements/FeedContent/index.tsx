@@ -1,12 +1,12 @@
 import { useGetAtroFeedQuery } from "@/services/api";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "@/store";
 import { Pagination, Stack, Typography } from "@mui/material";
 
 import Spacing from "@/primitives/Spacing";
 import { useTranslation } from "react-i18next";
 import { paginate } from "@/util/pagination";
-import { flexCenter, paginationContainerStyle } from "@/theme/commonStyles";
+import { flexCenter, paginationContainerStyle, textAlignCenter } from "@/theme/commonStyles";
 import Placeholder from "@/primitives/Placeholder";
 import AstroObjectCard from "../AstroObjectCard";
 import SkeletonPlaceholder from "../SkeletonPlaceholder";
@@ -35,7 +35,7 @@ const FeedContent = () => {
 
   return (
     <>
-      <Typography sx={{ textAlign: "center" }} variant="h2">
+      <Typography sx={textAlignCenter} variant="h2">
         {t("astroWatch")}
       </Typography>
       <Spacing v={2} />
@@ -70,4 +70,4 @@ const FeedContent = () => {
   );
 };
 
-export default memo(FeedContent);
+export default FeedContent;

@@ -1,11 +1,12 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 export enum DateFormat {
   shortDate = "DD.MM.YYYY",
+  shortDateISO = "YYYY-MM-DD",
 }
 
 export default function formatDate(
-  date: Date | string | null | undefined,
+  date: Dayjs | Date | string | null | undefined,
   format: DateFormat | string,
   fallbackValue = "",
 ) {

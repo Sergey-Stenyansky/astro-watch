@@ -7,8 +7,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import astroApi from "@/services/api";
 
 export type FeedFilterState = {
-  startDate: Date | null;
-  endDate: Date | null;
+  startDate: string | null;
+  endDate: string | null;
   name: string;
   absoluteMagnitude: number | null;
   diameter: number | null;
@@ -46,14 +46,14 @@ const initialState = getInitialState();
 export const feedFilterSlice = createSlice({
   name: "feedFilter",
   reducers: {
-    setStartDate(state, { payload }: PayloadAction<Date>) {
-      assignDefault(state, { startDate: payload, endDate: state.endDate });
+    setStartDate(state, { payload }: PayloadAction<string | null>) {
+      return assignDefault(getInitialState(), { startDate: payload, endDate: state.endDate });
     },
-    setEndDate(state, { payload }: PayloadAction<Date>) {
-      assignDefault(state, { startDate: state.endDate, endDate: payload });
+    setEndDate(state, { payload }: PayloadAction<string | null>) {
+      return assignDefault(getInitialState(), { startDate: state.startDate, endDate: payload });
     },
     clearFilter(state) {
-      assignDefault(state, { startDate: state.startDate, endDate: state.endDate });
+      return assignDefault(state, { startDate: state.startDate, endDate: state.endDate });
     },
     setName: setStateFactory("name"),
     setAbsoluteMagnitude: setStateFactory("absoluteMagnitude"),

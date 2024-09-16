@@ -1,4 +1,4 @@
-import { ChangeEvent, memo } from "react";
+import { ChangeEvent, memo, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Stack, Typography, FormGroup, Box, Collapse, IconButton } from "@mui/material";
 import TextInput from "@/primitives/TextInput";
@@ -7,6 +7,8 @@ import {
   setName,
   setIsHazardous,
   setIsSentryObject,
+  setStartDate,
+  setEndDate,
 } from "@/reducers/feed/feedFilter";
 
 import Spacing from "@/primitives/Spacing";
@@ -23,15 +25,37 @@ import { FeedSortingFields } from "@/pages/Feed/sorting";
 import Sort from "@mui/icons-material/Sort";
 
 import { SortOrder } from "@/reducers/sorting";
+import DatePickerPair from "@/primitives/DatePickerPair";
+import { DateRangeProps } from "@/primitives/DatePickerPair/types";
+
+const feedDateRange: DateRangeProps = {
+  count: 7,
+  unit: "days",
+};
 
 const FeedFilter = () => {
   const state = useAppSelector((state) => state.feedFilter);
+  const dates = useAppSelector((state) => ({
+    start: state.feedFilter.startDate,
+    end: state.feedFilter.endDate,
+  }));
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { sortDispatch, sort } = useFeedContext();
+
   return (
     <Stack>
       <Card>
+        <DatePickerPair
+          firstLabel={t("feed.dateFrom")}
+          firstDate={dates.start}
+          onChangeFirstDate={useCallback((value) => dispatch(setStartDate(value)), [dispatch])}
+          secondLabel={t("feed.dateTo")}
+          secondDate={dates.end}
+          onChangeSecondDate={useCallback((value) => dispatch(setEndDate(value)), [dispatch])}
+          allowedRange={feedDateRange}
+          label={t("feed.pickDate")}
+        />
         <Box sx={flexSpaceBetween}>
           <Typography>{t("feed.customize")}</Typography>
           <IconButton onClick={() => dispatch(toggleOpened())}>
@@ -44,6 +68,7 @@ const FeedFilter = () => {
             {sort.sortOrder === SortOrder.desc ? <Sort /> : <Sort sx={rotateY180} />}
           </IconButton>
         </Box>
+
         <Collapse in={state.isOpened}>
           <Spacing v={1} />
           <TextInput

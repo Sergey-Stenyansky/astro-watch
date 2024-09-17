@@ -17,9 +17,13 @@ import { applySort } from "@/pages/Feed/sorting";
 const FeedContent = () => {
   const { t } = useTranslation();
 
-  const { data, isLoading, isError } = useGetAtroFeedQuery({
-    startDate: "2015-09-07",
-    endDate: "2015-09-08",
+  const timeWindow = useAppSelector((state) => {
+    return { start: state.feedFilter.startDate, end: state.feedFilter.endDate };
+  });
+
+  const { data, isFetching, isError } = useGetAtroFeedQuery({
+    startDate: timeWindow.start || "",
+    endDate: timeWindow.end || "",
   });
 
   const { sort, filter } = useFeedContext();
@@ -42,8 +46,8 @@ const FeedContent = () => {
       <FeedFilterComponent />
       <Spacing v={2} />
       <Stack spacing={1} useFlexGap={true} sx={flexCenter}>
-        {isLoading && !isError && <SkeletonPlaceholder count={5} />}
-        {!isLoading && !isError && !pagination.items.length && (
+        {isFetching && !isError && <SkeletonPlaceholder count={5} />}
+        {!isFetching && !isError && !pagination.items.length && (
           <Placeholder
             primaryText={t("search.noElements")}
             secondaryText={t("search.tryChangeSearch")}

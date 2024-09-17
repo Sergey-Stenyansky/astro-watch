@@ -6,11 +6,24 @@ import { AstroFeedResponseSchema, AstroFeedResponse } from "@/services/api/schem
 
 import { baseQuery } from "./util/query";
 
+import deployment from "@/deployment/deployment.json";
+
+const getApiKey = () => deployment.envConfigs[deployment.env as "development"].apiKey;
+
 const astroApi = createApi({
   baseQuery,
+  tagTypes: ["feed"],
   endpoints: (builder) => ({
     getAtroFeed: builder.query<AstroFeedResponse, AstroFeedRequest>({
-      query: (req) => `feed?start_date=${req.startDate}&end_date=${req.endDate}&api_key=DEMO_KEY`,
+      query: (req) => ({
+        url: "feed",
+        params: {
+          start_date: req.startDate,
+          end_date: req.endDate,
+          api_key: getApiKey(),
+        },
+      }),
+      providesTags: ["feed"],
       extraOptions: { decoder: AstroFeedResponseSchema },
     }),
   }),

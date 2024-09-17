@@ -34,14 +34,15 @@ const feedDateRange: DateRangeProps = {
 };
 
 const FeedFilter = () => {
+  const { t } = useTranslation();
+  const { sortDispatch, sort } = useFeedContext();
+
   const state = useAppSelector((state) => state.feedFilter);
   const dates = useAppSelector((state) => ({
     start: state.feedFilter.startDate,
     end: state.feedFilter.endDate,
   }));
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
-  const { sortDispatch, sort } = useFeedContext();
 
   return (
     <Stack>

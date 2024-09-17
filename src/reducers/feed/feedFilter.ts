@@ -5,6 +5,7 @@ import { setStateFactory, togglerFactory } from "@/util/redux/factories";
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import astroApi from "@/services/api";
+import { getDefaultFeedWindow } from "@/util/date/window";
 
 export type FeedFilterState = {
   startDate: string | null;
@@ -41,19 +42,32 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
   );
 }
 
-const initialState = getInitialState();
+const defaultWindow = getDefaultFeedWindow();
+const initialState = getInitialState(defaultWindow);
 
 export const feedFilterSlice = createSlice({
   name: "feedFilter",
   reducers: {
     setStartDate(state, { payload }: PayloadAction<string | null>) {
-      return assignDefault(getInitialState(), { startDate: payload, endDate: state.endDate });
+      return assignDefault(getInitialState(), {
+        startDate: payload,
+        endDate: state.endDate,
+        isOpened: state.isOpened,
+      });
     },
     setEndDate(state, { payload }: PayloadAction<string | null>) {
-      return assignDefault(getInitialState(), { startDate: state.startDate, endDate: payload });
+      return assignDefault(getInitialState(), {
+        startDate: state.startDate,
+        endDate: payload,
+        isOpened: state.isOpened,
+      });
     },
     clearFilter(state) {
-      return assignDefault(state, { startDate: state.startDate, endDate: state.endDate });
+      return assignDefault(state, {
+        startDate: state.startDate,
+        endDate: state.endDate,
+        isOpened: state.isOpened,
+      });
     },
     setName: setStateFactory("name"),
     setAbsoluteMagnitude: setStateFactory("absoluteMagnitude"),

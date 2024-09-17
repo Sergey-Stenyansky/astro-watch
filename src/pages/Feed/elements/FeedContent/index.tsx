@@ -1,41 +1,43 @@
 import { useGetAtroFeedQuery } from "@/services/api";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppSelector } from "@/store";
 import { Pagination, Stack, Typography } from "@mui/material";
 
 import Spacing from "@/primitives/Spacing";
 import { useTranslation } from "react-i18next";
-import { paginate } from "@/util/pagination";
 import { flexCenter, paginationContainerStyle, textAlignCenter } from "@/theme/commonStyles";
 import Placeholder from "@/primitives/Placeholder";
 import AstroObjectCard from "../AstroObjectCard";
 import SkeletonPlaceholder from "../SkeletonPlaceholder";
 import FeedFilterComponent from "../FeedFilter";
 import { useFeedContext } from "@/pages/Feed/context";
-import { applySort } from "@/pages/Feed/sorting";
+
+import { applySort } from "../../sorting";
+
+import { paginate } from "@/util/pagination";
+
+import useDebouncedValue from "@/hooks/useDebouncedValue";
+import { windowSelector } from "@/reducers/feed/feedFilter";
 
 const FeedContent = () => {
   const { t } = useTranslation();
 
-  const timeWindow = useAppSelector((state) => {
-    return { start: state.feedFilter.startDate, end: state.feedFilter.endDate };
-  });
+  const timeWindow = useAppSelector(windowSelector);
 
-  const { data, isFetching, isError } = useGetAtroFeedQuery({
-    startDate: timeWindow.start || "",
-    endDate: timeWindow.end || "",
-  });
+  const { data, isFetching, isError } = useGetAtroFeedQuery(useDebouncedValue(timeWindow));
 
   const { sort, filter } = useFeedContext();
 
   const [page, setPage] = useState(1);
 
-  const pagination = useAppSelector((state) => {
+  const filterState = useAppSelector((state) => state.feedFilter);
+
+  const content = useMemo(() => {
     const items = data?.nearEarthObjects || [];
-    const filtered = filter.apply(state.feedFilter, items);
+    const filtered = filter.apply(filterState, items);
     const sorted = applySort(filtered, sort.activeField, sort.sortOrder);
     return paginate(sorted, page, 8);
-  });
+  }, [sort.activeField, sort.sortOrder, filterState, page, filter, data]);
 
   return (
     <>
@@ -47,21 +49,21 @@ const FeedContent = () => {
       <Spacing v={2} />
       <Stack spacing={1} useFlexGap={true} sx={flexCenter}>
         {isFetching && !isError && <SkeletonPlaceholder count={5} />}
-        {!isFetching && !isError && !pagination.items.length && (
+        {!isFetching && !isError && !content.items.length && (
           <Placeholder
             primaryText={t("search.noElements")}
             secondaryText={t("search.tryChangeSearch")}
           />
         )}
-        {pagination.items.map((item) => (
+        {content.items.map((item) => (
           <AstroObjectCard key={item.id} item={item} />
         ))}
       </Stack>
       <Spacing v={2} />
-      {pagination.totalPages > 1 && (
+      {content.totalPages > 1 && (
         <Pagination
           sx={paginationContainerStyle}
-          count={pagination.totalPages}
+          count={content.totalPages}
           page={page}
           onChange={(_, page) => {
             setPage(page);

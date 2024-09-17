@@ -9,6 +9,8 @@ import {
   setIsSentryObject,
   setStartDate,
   setEndDate,
+  windowSelector,
+  feedFilterSelector,
 } from "@/reducers/feed/feedFilter";
 
 import Spacing from "@/primitives/Spacing";
@@ -37,11 +39,8 @@ const FeedFilter = () => {
   const { t } = useTranslation();
   const { sortDispatch, sort } = useFeedContext();
 
-  const state = useAppSelector((state) => state.feedFilter);
-  const dates = useAppSelector((state) => ({
-    start: state.feedFilter.startDate,
-    end: state.feedFilter.endDate,
-  }));
+  const state = useAppSelector(feedFilterSelector);
+  const window = useAppSelector(windowSelector);
   const dispatch = useAppDispatch();
 
   return (
@@ -49,10 +48,10 @@ const FeedFilter = () => {
       <Card>
         <DatePickerPair
           firstLabel={t("feed.dateFrom")}
-          firstDate={dates.start}
+          firstDate={window.startDate}
           onChangeFirstDate={useCallback((value) => dispatch(setStartDate(value)), [dispatch])}
           secondLabel={t("feed.dateTo")}
-          secondDate={dates.end}
+          secondDate={window.endDate}
           onChangeSecondDate={useCallback((value) => dispatch(setEndDate(value)), [dispatch])}
           allowedRange={feedDateRange}
           label={t("feed.pickDate")}

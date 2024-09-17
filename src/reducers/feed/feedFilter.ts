@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 import { assignDefault } from "@/util/object";
 import { setStateFactory, togglerFactory } from "@/util/redux/factories";
@@ -6,6 +6,7 @@ import { setStateFactory, togglerFactory } from "@/util/redux/factories";
 import { PayloadAction } from "@reduxjs/toolkit";
 import astroApi from "@/services/api";
 import { getDefaultFeedWindow } from "@/util/date/window";
+import { AppState } from "@/store";
 
 export type FeedFilterState = {
   startDate: string | null;
@@ -88,6 +89,14 @@ export const feedFilterSlice = createSlice({
   },
   initialState,
 });
+
+const selectWindow = (state: FeedFilterState) => ({
+  startDate: state.startDate || "",
+  endDate: state.endDate || "",
+});
+
+export const feedFilterSelector = (state: AppState) => state.feedFilter;
+export const windowSelector = createSelector([feedFilterSelector], selectWindow);
 
 export const {
   setStartDate,

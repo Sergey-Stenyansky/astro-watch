@@ -90,13 +90,14 @@ export const feedFilterSlice = createSlice({
   initialState,
 });
 
-const selectWindow = (state: FeedFilterState) => ({
-  startDate: state.startDate || "",
-  endDate: state.endDate || "",
-});
+const selectStartDate = (state: FeedFilterState) => state.startDate || "";
+const selectEndDate = (state: FeedFilterState) => state.endDate || "";
 
 export const feedFilterSelector = (state: AppState) => state.feedFilter;
-export const windowSelector = createSelector([feedFilterSelector], selectWindow);
+export const windowSelector = createSelector(
+  [selectStartDate, selectEndDate],
+  (startDate: string, endDate: string) => ({ startDate, endDate }),
+);
 
 export const {
   setStartDate,

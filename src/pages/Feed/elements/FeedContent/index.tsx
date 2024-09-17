@@ -22,7 +22,7 @@ import { windowSelector } from "@/reducers/feed/feedFilter";
 const FeedContent = () => {
   const { t } = useTranslation();
 
-  const timeWindow = useAppSelector(windowSelector);
+  const timeWindow = useAppSelector((state) => windowSelector(state.feedFilter));
 
   const { data, isFetching, isError } = useGetAtroFeedQuery(useDebouncedValue(timeWindow));
 

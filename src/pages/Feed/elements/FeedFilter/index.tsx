@@ -40,7 +40,7 @@ const FeedFilter = () => {
   const { sortDispatch, sort } = useFeedContext();
 
   const state = useAppSelector(feedFilterSelector);
-  const window = useAppSelector(windowSelector);
+  const window = useAppSelector((state) => windowSelector(state.feedFilter));
   const dispatch = useAppDispatch();
 
   return (

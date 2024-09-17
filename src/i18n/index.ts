@@ -3,7 +3,9 @@ import { initReactI18next } from "react-i18next";
 
 import ru from "./langs/ru.json";
 
-const debug = process.env.NODE_ENV === "development";
+import deployment from "@/deployment/deployment.json";
+
+const debug = deployment.env === "development";
 
 i18n.use(initReactI18next).init({
   lng: "ru",

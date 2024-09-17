@@ -5,8 +5,10 @@ import App from "@/components/App";
 
 import "@/i18n/index";
 
+import deployment from "@/deployment/deployment.json";
+
 async function run() {
-  if (process.env.NODE_ENV === "development") {
+  if (deployment.env === "development") {
     const mock = await import("@/mocks/browser");
     await mock.startMockServiceWorker();
   }

@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useCallback } from "react";
+import { ChangeEvent, memo, useCallback, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Stack, Typography, FormGroup, Box, Collapse, IconButton } from "@mui/material";
 import TextInput from "@/primitives/TextInput";
@@ -17,23 +17,31 @@ import Spacing from "@/primitives/Spacing";
 import Checkbox from "@/primitives/Checkbox";
 import Card from "@/primitives/Card";
 
-import { flexSpaceBetween, fullWidth, rotateY180 } from "@/theme/commonStyles";
+import { flexSpaceBetween, fullWidth } from "@/theme/commonStyles";
 import { useTranslation } from "react-i18next";
-import Settings from "@mui/icons-material/Settings";
 import { useFeedContext } from "@/pages/Feed/context";
-import { sortActions } from "@/reducers/sorting";
-import { FeedSortingFields } from "@/pages/Feed/sorting";
 
-import Sort from "@mui/icons-material/Sort";
-
-import { SortOrder } from "@/reducers/sorting";
+import { sortActions, SortOrder } from "@/reducers/sorting";
 import DatePickerPair from "@/primitives/DatePickerPair";
 import { DateRangeProps } from "@/primitives/DatePickerPair/types";
+
+import InternalIcon from "@/primitives/InternalIcon";
+import SortContextMenu from "../SortContextMenu";
+import { SortActionValues } from "../SortContextMenu/types";
+import { FeedSortingFields } from "@/util/sorting";
 
 const feedDateRange: DateRangeProps = {
   count: 7,
   unit: "days",
 };
+
+function parseSorting(value: string) {
+  const [field, order] = value.split("-");
+  return {
+    field: field as FeedSortingFields,
+    order: order as SortOrder,
+  };
+}
 
 const FeedFilter = () => {
   const { t } = useTranslation();
@@ -42,6 +50,16 @@ const FeedFilter = () => {
   const state = useAppSelector(feedFilterSelector);
   const window = useAppSelector((state) => windowSelector(state.feedFilter));
   const dispatch = useAppDispatch();
+
+  const sortValue = useMemo(() => sort.activeField + "-" + sort.sortOrder, [sort]);
+
+  const onChangeSort = useCallback(
+    (value: SortActionValues) => {
+      const values = parseSorting(value);
+      sortDispatch(sortActions.setSorting(values.field, values.order));
+    },
+    [sortDispatch],
+  );
 
   return (
     <Stack>
@@ -59,16 +77,9 @@ const FeedFilter = () => {
         <Box sx={flexSpaceBetween}>
           <Typography>{t("feed.customize")}</Typography>
           <IconButton onClick={() => dispatch(toggleOpened())}>
-            <Settings />
+            <InternalIcon icon="settings" />
           </IconButton>
         </Box>
-        <Box sx={flexSpaceBetween}>
-          <Typography>{t("sort.word")}</Typography>
-          <IconButton onClick={() => sortDispatch(sortActions.toggle(FeedSortingFields.date))}>
-            {sort.sortOrder === SortOrder.desc ? <Sort /> : <Sort sx={rotateY180} />}
-          </IconButton>
-        </Box>
-
         <Collapse in={state.isOpened}>
           <Spacing v={1} />
           <TextInput
@@ -93,6 +104,7 @@ const FeedFilter = () => {
             />
           </FormGroup>
         </Collapse>
+        <SortContextMenu value={sortValue as SortActionValues} onChange={onChangeSort} />
       </Card>
     </Stack>
   );

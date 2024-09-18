@@ -22,6 +22,8 @@ interface ComponentProps {
   onSelect: (value: any) => void;
 }
 
+const menuWrapperStyles = { minWidth: 180 };
+
 const ContextMenu = ({ trigger, popupContent, open, onChangeOpen, onSelect }: ComponentProps) => {
   const [triggerElement, setTriggerElement] = useState<Element | null>(null);
   const context = useMemo(
@@ -40,7 +42,7 @@ const ContextMenu = ({ trigger, popupContent, open, onChangeOpen, onSelect }: Co
     <>
       {trigger(context, setTriggerElement)}
       <Menu open={open} onClose={context.close} anchorEl={triggerElement}>
-        <Stack>{popupContent(context)}</Stack>
+        <Stack sx={menuWrapperStyles}>{popupContent(context)}</Stack>
       </Menu>
     </>
   );

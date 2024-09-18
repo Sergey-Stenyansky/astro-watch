@@ -15,12 +15,19 @@
       "rangeError": "Укажите дату между {{fromText}} и {{toText}}"
     }
   },
+  "menu": {
+    "pickFromList": "Выберите из списка"
+  },
   "feed": {
     "pickDate": "Выберите дату",
     "customize": "Настроить Feed",
     "dateFrom": "Дата с",
     "dateTo": "Дата по",
     "name": "Название",
+    "sort": {
+      "name": "По названию",
+      "date": "По дате"
+    },
     "astroObjectFields": {
       "isPotentiallyHazardous": "Потенциально опасен",
       "isSentryObject": "Объект Sentry",

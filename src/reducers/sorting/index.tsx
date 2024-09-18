@@ -21,6 +21,7 @@ export type SortingReducerState<T extends string> = {
 export enum SortingActionTypes {
   toggle = "toggle",
   setOrder = "setOrder",
+  setSorting = "setSorting",
   toggleOrder = "toggleOrder",
 }
 
@@ -41,6 +42,10 @@ export type SortingActions<T extends string> =
     }
   | {
       type: SortingActionTypes.toggleOrder;
+    }
+  | {
+      type: SortingActionTypes.setSorting;
+      payload: { field: T; order: SortOrder };
     };
 
 export function sortingReducer<T extends string>(
@@ -67,6 +72,12 @@ export function sortingReducer<T extends string>(
       const order = sortFieldToggler(field, state.sortOrder);
       return assocPath(["sortOrder"], order)(state) as SortingReducerState<T>;
     }
+    case SortingActionTypes.setSorting: {
+      return compose(
+        assocPath(["activeField"], action.payload.field),
+        assocPath(["sortOrder"], action.payload.order),
+      )(state) as SortingReducerState<T>;
+    }
   }
   return state;
 }
@@ -85,5 +96,10 @@ export const sortActions = {
   toggleOrder: () =>
     ({
       type: SortingActionTypes.toggle,
+    } as const),
+  setSorting: <T extends string>(field: T, order: SortOrder) =>
+    ({
+      type: SortingActionTypes.setSorting,
+      payload: { field, order },
     } as const),
 };

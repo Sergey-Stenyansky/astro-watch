@@ -1,24 +1,27 @@
 import { SortingReducerState, SortOrder } from "@/reducers/sorting";
 import { AstroObjectInterface } from "@/services/api/schema/feed";
 import { assignDefault } from "@/util/object";
-import dayjs from "dayjs";
+import { getDateSorter, getNameSorter } from "@/util/sorting";
 
 export enum FeedSortingFields {
   date = "date",
+  name = "name",
 }
 
 export type FeedSortingState = SortingReducerState<FeedSortingFields>;
 
-const sortByDate = (order: SortOrder) => (a: AstroObjectInterface, b: AstroObjectInterface) => {
-  const dateA = a.closeApproachData[0].closeApproachDate;
-  const dateB = b.closeApproachData[0].closeApproachDate;
-  switch (order) {
-    case SortOrder.asc:
-      return dayjs(dateA).diff(dateB, "days");
-    case SortOrder.desc:
-      return dayjs(dateB).diff(dateA, "days");
-  }
-  return 0;
+const sortByDate = (order: SortOrder) => {
+  const sorter = getDateSorter(order);
+  return (a: AstroObjectInterface, b: AstroObjectInterface) => {
+    const dateA = a.closeApproachData[0].closeApproachDate;
+    const dateB = b.closeApproachData[0].closeApproachDate;
+    return sorter(dateA, dateB);
+  };
+};
+
+const sortByName = (order: SortOrder) => {
+  const sorter = getNameSorter(order);
+  return (a: AstroObjectInterface, b: AstroObjectInterface) => sorter(a.name, b.name);
 };
 
 export const applySort = (
@@ -29,8 +32,11 @@ export const applySort = (
   switch (sortBy) {
     case FeedSortingFields.date:
       return items.slice().sort(sortByDate(order));
+    case FeedSortingFields.name:
+      return items.slice().sort(sortByName(order));
+    default:
+      return items;
   }
-  return items;
 };
 
 export const createFeedSorting = (config: Partial<FeedSortingState> = {}): FeedSortingState =>
@@ -42,6 +48,10 @@ export const createFeedSorting = (config: Partial<FeedSortingState> = {}): FeedS
       sortFields: {
         [FeedSortingFields.date]: {
           name: "date",
+          values: [SortOrder.desc, SortOrder.asc],
+        },
+        [FeedSortingFields.name]: {
+          name: "name",
           values: [SortOrder.desc, SortOrder.asc],
         },
       },

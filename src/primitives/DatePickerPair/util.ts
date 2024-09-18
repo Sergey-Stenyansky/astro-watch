@@ -37,16 +37,16 @@ export function getSuccessResult(): DatePickerPairValidationResult {
 
 export const errors = {
   invalidDate: () => i18n.t("datePicker.errors.invalidDate"),
-  fromError: (from: string) => i18n.t("datePicker.errors.fromError", { from }),
-  toError: (to: string) => i18n.t("datePicker.errors.toError", { to }),
-  rangeError: (from: string, to: string) => i18n.t("datePicker.errors.rangeError", { to, from }),
+  fromError: (from: Dayjs) =>
+    i18n.t("datePicker.errors.fromError", { fromText: formatDate(from, DateFormat.shortDate) }),
+  toError: (to: Dayjs) =>
+    i18n.t("datePicker.errors.toError", { toText: formatDate(to, DateFormat.shortDate) }),
+  rangeError: (from: Dayjs, to: Dayjs) => {
+    const fromText = formatDate(from, DateFormat.shortDate);
+    const toText = formatDate(to, DateFormat.shortDate);
+    return i18n.t("datePicker.errors.rangeError", { fromText, toText });
+  },
 };
 
-export function validateRange(value: Dayjs, from: Dayjs, to: Dayjs) {
-  const valid = isDateInRange(value, from, to);
-  const fromText = formatDate(from, DateFormat.shortDate);
-  const toText = formatDate(to, DateFormat.shortDate);
-  return valid
-    ? ([true, undefined] as const)
-    : ([false, errors.rangeError(fromText, toText)] as const);
-}
+export const validateRange = (value: Dayjs, from: Dayjs, to: Dayjs) =>
+  isDateInRange(value, from, to) ? "" : errors.rangeError(from, to);

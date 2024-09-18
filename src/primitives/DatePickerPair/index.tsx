@@ -10,7 +10,6 @@ import { flexColumn, flexJcStart, flexStart } from "@/theme/commonStyles";
 import formatDate, { DateFormat } from "@/util/date/format";
 
 import {
-  toDayjsDate,
   isDateInRange,
   minDateDefault,
   maxDateDefault,
@@ -20,6 +19,9 @@ import {
   errors,
 } from "./util";
 import { DatePickerPairRangeType, DatePickerPairValidationResult, DateRangeProps } from "./types";
+import { timeRange } from "@/util/date/window";
+
+import { useDatePair } from "./hooks";
 
 interface ComponentProps {
   firstDate: string | null;
@@ -59,19 +61,8 @@ const DatePickerPair = ({
   const [second, setSecond] = useState(secondDate);
   const [errorState, setErrorState] = useState<DatePickerPairValidationResult | null>(null);
 
-  const oldDates = useMemo(() => {
-    return {
-      first: toDayjsDate(firstDate),
-      second: toDayjsDate(secondDate),
-    };
-  }, [firstDate, secondDate]);
-
-  const dates = useMemo(() => {
-    return {
-      first: toDayjsDate(first),
-      second: toDayjsDate(second),
-    };
-  }, [first, second]);
+  const oldDates = useDatePair(firstDate, secondDate);
+  const dates = useDatePair(first, second);
 
   const validateDateValue = useCallback(
     (newFirst: Dayjs | null, newSecond: Dayjs | null) => {
@@ -83,58 +74,50 @@ const DatePickerPair = ({
       if (newSecond !== null) {
         secondValid = newSecond.isValid() && isDateInRange(newSecond, allowFrom, allowTo);
       }
-      if (!firstValid) {
-        return getErrorResult({ first: errors.invalidDate() });
-      }
-      if (!secondValid) {
-        return getErrorResult({ second: errors.invalidDate() });
-      }
-      if (!allowedRange || newFirst === null || newSecond === null) {
-        return getSuccessResult();
-      }
+      if (!firstValid) return getErrorResult({ first: errors.invalidDate() });
+      if (!secondValid) return getErrorResult({ second: errors.invalidDate() });
       const { first, second } = oldDates;
-      if (!secondDate && first && first.isValid()) {
-        const from = first;
-        const to = from.add(allowedRange.count - 1, allowedRange.unit);
-        const [valid, error] = validateRange(newSecond, from, to);
-        return valid ? getSuccessResult() : getErrorResult({ second: error });
+      if (!allowedRange || first === null || second === null) return getSuccessResult();
+      if (newSecond === null && newFirst !== null) {
+        const range = timeRange(second, -allowedRange.count, allowedRange.unit);
+        const error = validateRange(newFirst, range[0], range[1]);
+        return error ? getErrorResult({ first: error }) : getSuccessResult();
       }
-      if (!firstDate && second && second.isValid()) {
-        const to = second;
-        const from = to.subtract(allowedRange.count - 1, allowedRange.unit);
-        const [valid, error] = validateRange(newFirst, from, to);
-        return valid ? getSuccessResult() : getErrorResult({ first: error });
+      if (newFirst === null && newSecond !== null) {
+        const range = timeRange(first, allowedRange.count, allowedRange.unit);
+        const error = validateRange(newSecond, range[0], range[1]);
+        return error ? getErrorResult({ second: error }) : getSuccessResult();
       }
-      const from = first!;
-      const to = from.add(allowedRange.count - 1, allowedRange.unit);
-      const [valid, error] = validateRange(newSecond, from, to);
-      return valid ? getSuccessResult() : getErrorResult({ range: error });
+      if (newFirst === null || newSecond === null) return getSuccessResult();
+      const range = timeRange(newFirst, allowedRange.count, allowedRange.unit);
+      const error = validateRange(newSecond, range[0], range[1]);
+      return error ? getErrorResult({ range: error }) : getSuccessResult();
     },
-    [allowFrom, allowTo, allowedRange, firstDate, secondDate, oldDates],
+    [allowFrom, allowTo, allowedRange, oldDates],
   );
 
   const onChangeFirst = useCallback(
     (date: Dayjs | null) => {
-      const result = validateDateValue(date, toDayjsDate(secondDate));
+      const result = validateDateValue(date, null);
       const formattedDate = formatDate(date, DateFormat.shortDateISO);
       const nextDate = result.valid ? formattedDate : firstDate;
       setErrorState(result);
       setFirst(formattedDate);
       onChangeFirstDate(nextDate);
     },
-    [firstDate, secondDate, setFirst, onChangeFirstDate, validateDateValue],
+    [firstDate, setFirst, onChangeFirstDate, validateDateValue],
   );
 
   const onChangeSecond = useCallback(
     (date: Dayjs | null) => {
-      const result = validateDateValue(toDayjsDate(firstDate), date);
+      const result = validateDateValue(null, date);
       const formattedDate = formatDate(date, DateFormat.shortDateISO);
       const nextDate = result.valid ? formattedDate : secondDate;
       setErrorState(result);
       setSecond(formattedDate);
       onChangeSecondDate(nextDate);
     },
-    [firstDate, secondDate, setSecond, onChangeSecondDate, validateDateValue],
+    [secondDate, setSecond, onChangeSecondDate, validateDateValue],
   );
 
   const dateRanges = useMemo<DatePickerPairRangeType | undefined>(() => {
@@ -142,16 +125,12 @@ const DatePickerPair = ({
     const { first, second } = oldDates;
     let firstRange, secondRange;
     if (first && first.isValid()) {
-      secondRange = {
-        from: first,
-        to: first.add(allowedRange.count - 1, allowedRange.unit),
-      };
+      const window = timeRange(first, allowedRange.count, allowedRange.unit);
+      secondRange = { from: window[0], to: window[1] };
     }
     if (second && second.isValid()) {
-      firstRange = {
-        from: second.subtract(allowedRange.count - 1, allowedRange.unit),
-        to: second,
-      };
+      const window = timeRange(second, -allowedRange.count, allowedRange.unit);
+      firstRange = { from: window[0], to: window[1] };
     }
     return { first: firstRange, second: secondRange };
   }, [oldDates, allowedRange]);

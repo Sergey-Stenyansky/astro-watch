@@ -10,9 +10,9 @@
   "datePicker": {
     "errors": {
       "invalidDate": "Неверное значение даты",
-      "fromError": "Укажите дату от {{from}}",
-      "toError": "Укажите дату до {{from}}",
-      "rangeError": "Укажите дату между {{from}} и {{to}}"
+      "fromError": "Укажите дату от {{fromText}}",
+      "toError": "Укажите дату до {{toText}}",
+      "rangeError": "Укажите дату между {{fromText}} и {{toText}}"
     }
   },
   "feed": {

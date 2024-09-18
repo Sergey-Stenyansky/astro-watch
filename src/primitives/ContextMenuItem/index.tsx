@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import { MenuItem, ListItemText } from "@mui/material";
 
 import InternalIcon, { InternalIcons } from "../InternalIcon";
@@ -32,4 +30,4 @@ const ContextMenuItem = ({
   );
 };
 
-export default memo(ContextMenuItem);
+export default ContextMenuItem;

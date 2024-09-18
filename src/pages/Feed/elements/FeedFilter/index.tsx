@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useCallback, useMemo } from "react";
+import { ChangeEvent, memo, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Stack, Typography, FormGroup, Box, Collapse, IconButton } from "@mui/material";
 import TextInput from "@/primitives/TextInput";
@@ -51,7 +51,7 @@ const FeedFilter = () => {
   const window = useAppSelector((state) => windowSelector(state.feedFilter));
   const dispatch = useAppDispatch();
 
-  const sortValue = useMemo(() => sort.activeField + "-" + sort.sortOrder, [sort]);
+  const sortValue = sort.activeField + "-" + sort.sortOrder;
 
   const onChangeSort = useCallback(
     (value: SortActionValues) => {

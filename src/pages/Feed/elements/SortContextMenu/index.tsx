@@ -18,6 +18,20 @@ interface ComponentProps {
   onChange: (value: SortActionValues) => void;
 }
 
+function getValueText(value: string | undefined, t: any) {
+  const item = sortActionItems.find((item) => item.value === value);
+  if (!item) return t("menu.pickFromList");
+  const [, order] = item.value.split("-");
+  switch (order) {
+    case "asc":
+      return item.text + ` (${t("sort.asc")})`;
+    case "desc":
+      return item.text + ` (${t("sort.desc")})`;
+    default:
+      return item.text;
+  }
+}
+
 const SortContextMenu = ({ value, onChange }: ComponentProps) => {
   const { t } = useTranslation();
   const [sortOpened, setSortOpened] = useToggle(false);
@@ -30,13 +44,7 @@ const SortContextMenu = ({ value, onChange }: ComponentProps) => {
         ({ toggle }, ref) => (
           <List ref={ref}>
             <ListItemButton onClick={toggle} sx={{ padding: "0" }}>
-              <ListItemText
-                primary={t("sort.word")}
-                secondary={
-                  sortActionItems.find((item) => item.value === value)?.text ||
-                  t("menu.pickFromList")
-                }
-              />
+              <ListItemText primary={t("sort.word")} secondary={getValueText(value, t)} />
             </ListItemButton>
           </List>
         ),

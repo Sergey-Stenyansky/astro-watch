@@ -37,7 +37,7 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
       missDistance: null,
       orbitingBody: "",
       isSentryObject: null,
-      isOpened: true,
+      isOpened: false,
     },
     config,
   );

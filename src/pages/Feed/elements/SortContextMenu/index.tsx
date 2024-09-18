@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo } from "react";
 
 import { useToggle } from "react-use";
 
@@ -40,32 +40,26 @@ const SortContextMenu = ({ value, onChange }: ComponentProps) => {
       open={sortOpened}
       onChangeOpen={setSortOpened}
       onSelect={onChange}
-      trigger={useCallback(
-        ({ toggle }, ref) => (
-          <List ref={ref}>
-            <ListItemButton onClick={toggle} sx={{ padding: "0" }}>
-              <ListItemText primary={t("sort.word")} secondary={getValueText(value, t)} />
-            </ListItemButton>
-          </List>
-        ),
-        [value, t],
+      trigger={(context, ref) => (
+        <List ref={ref}>
+          <ListItemButton onClick={context.toggle} sx={{ padding: "0" }}>
+            <ListItemText primary={t("sort.word")} secondary={getValueText(value, t)} />
+          </ListItemButton>
+        </List>
       )}
-      popupContent={useCallback(
-        ({ submit }) => (
-          <>
-            {sortActionItems.map((action) => (
-              <ContextMenuItem
-                key={action.value}
-                icon={action.icon}
-                value={action.value}
-                primary={action.text}
-                onClick={submit}
-                selected={action.value === value}
-              />
-            ))}
-          </>
-        ),
-        [value],
+      popupContent={(context) => (
+        <>
+          {sortActionItems.map((action) => (
+            <ContextMenuItem
+              key={action.value}
+              icon={action.icon}
+              value={action.value}
+              primary={action.text}
+              onClick={context.submit}
+              selected={action.value === value}
+            />
+          ))}
+        </>
       )}
     />
   );

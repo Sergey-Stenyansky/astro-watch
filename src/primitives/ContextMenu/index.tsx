@@ -1,10 +1,9 @@
 import { memo, useMemo, useState, ReactElement } from "react";
 
 import { Menu, Stack } from "@mui/material";
+import { isBoolean } from "@/util/type";
 
 type ContextMenuArgs = {
-  open: () => void;
-  close: () => void;
   toggle: () => void;
   submit: (value: any) => void;
 };
@@ -28,9 +27,7 @@ const ContextMenu = ({ trigger, popupContent, open, onChangeOpen, onSelect }: Co
   const [triggerElement, setTriggerElement] = useState<Element | null>(null);
   const context = useMemo(
     () => ({
-      open: () => onChangeOpen(true),
-      close: () => onChangeOpen(false),
-      toggle: () => onChangeOpen(!open),
+      toggle: (value?: boolean) => (isBoolean(value) ? onChangeOpen(value) : onChangeOpen(!open)),
       submit: (value: any) => {
         onSelect(value);
         onChangeOpen(false);
@@ -41,7 +38,7 @@ const ContextMenu = ({ trigger, popupContent, open, onChangeOpen, onSelect }: Co
   return (
     <>
       {trigger(context, setTriggerElement)}
-      <Menu open={open} onClose={context.close} anchorEl={triggerElement}>
+      <Menu open={open} onClose={() => context.toggle(false)} anchorEl={triggerElement}>
         <Stack sx={menuWrapperStyles}>{popupContent(context)}</Stack>
       </Menu>
     </>

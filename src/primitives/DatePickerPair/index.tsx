@@ -5,8 +5,7 @@ import { Dayjs } from "dayjs";
 
 import { memo, useCallback, useMemo, useState } from "react";
 
-import Spacing from "@/primitives/Spacing";
-import { flexColumn, flexJcStart, flexStart } from "@/theme/commonStyles";
+import { flexColumn, tableTwoColumns, flexStart } from "@/theme/commonStyles";
 import formatDate, { DateFormat } from "@/util/date/format";
 
 import {
@@ -138,30 +137,33 @@ const DatePickerPair = ({
   return (
     <Box sx={containerStyles}>
       {label && <Typography mb="4px">{label}</Typography>}
-      <Box sx={flexJcStart}>
-        <Box sx={containerStyles}>
-          <DatePicker
-            label={firstLabel}
-            value={dates.first}
-            format={DateFormat.shortDate}
-            minDate={dateRanges?.first?.from || allowFrom}
-            maxDate={dateRanges?.first?.to || allowTo}
-            onChange={onChangeFirst}
-          />
-          <ErrorLabel text={errorState?.issues?.first} />
-        </Box>
-        <Spacing h={2} />
-        <Box sx={containerStyles}>
-          <DatePicker
-            label={secondLabel}
-            value={dates.second}
-            format={DateFormat.shortDate}
-            minDate={dateRanges?.second?.from || allowFrom}
-            maxDate={dateRanges?.second?.to || allowTo}
-            onChange={onChangeSecond}
-          />
-          <ErrorLabel text={errorState?.issues?.second} />
-        </Box>
+      <Box sx={tableTwoColumns}>
+        <DatePicker
+          label={firstLabel}
+          value={dates.first}
+          format={DateFormat.shortDate}
+          minDate={dateRanges?.first?.from || allowFrom}
+          maxDate={dateRanges?.first?.to || allowTo}
+          onChange={onChangeFirst}
+          slotProps={{
+            textField: {
+              helperText: <ErrorLabel text={errorState?.issues?.first} />,
+            },
+          }}
+        />
+        <DatePicker
+          label={secondLabel}
+          value={dates.second}
+          format={DateFormat.shortDate}
+          minDate={dateRanges?.second?.from || allowFrom}
+          maxDate={dateRanges?.second?.to || allowTo}
+          onChange={onChangeSecond}
+          slotProps={{
+            textField: {
+              helperText: <ErrorLabel text={errorState?.issues?.second} />,
+            },
+          }}
+        />
       </Box>
       <ErrorLabel text={errorState?.issues?.range} />
     </Box>

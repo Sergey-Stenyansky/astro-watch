@@ -16,6 +16,13 @@ export const flexJcStart = {
   justifyContent: "start",
 };
 
+export const tableTwoColumns = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: 2,
+  width: "100%",
+};
+
 export const flexStart = {
   display: "flex",
   alignItems: "start",

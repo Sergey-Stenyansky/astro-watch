@@ -7,21 +7,12 @@ import { FeedFilter } from "@/core/filter/feed";
 const FeedContextProvider = ({ children }: PropsWithChildren<{}>) => {
   const [sort, sortDispatch] = useReducer(sortingReducer<FeedSortingFields>, {}, createFeedSorting);
   const filter = useMemo(() => new FeedFilter(), []);
-
-  return (
-    <FeedContext.Provider
-      value={useMemo(
-        () => ({
-          filter,
-          sort,
-          sortDispatch,
-        }),
-        [filter, sort, sortDispatch],
-      )}
-    >
-      {children}
-    </FeedContext.Provider>
+  const contextValue = useMemo(
+    () => ({ filter, sort, sortDispatch }),
+    [filter, sort, sortDispatch],
   );
+
+  return <FeedContext.Provider value={contextValue}>{children}</FeedContext.Provider>;
 };
 
 export default FeedContextProvider;

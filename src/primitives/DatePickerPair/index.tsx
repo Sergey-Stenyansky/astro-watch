@@ -39,7 +39,7 @@ const containerStyles = [flexStart, flexColumn];
 
 const ErrorLabel = (props: { text?: string | null }) =>
   props.text ? (
-    <Typography mt="4px" color="error">
+    <Typography component="span" mt="4px" color="error">
       {props.text}
     </Typography>
   ) : null;

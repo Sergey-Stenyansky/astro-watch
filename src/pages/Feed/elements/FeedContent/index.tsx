@@ -1,6 +1,6 @@
 import { useGetAtroFeedQuery } from "@/services/api";
-import { useMemo, useState } from "react";
-import { useAppSelector } from "@/store";
+import { useEffect, useMemo, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { Pagination, Stack, Typography } from "@mui/material";
 
 import Spacing from "@/primitives/Spacing";
@@ -17,14 +17,22 @@ import { applySort } from "../../sorting";
 import { paginate } from "@/util/pagination";
 
 import useDebouncedValue from "@/hooks/useDebouncedValue";
-import { windowSelector } from "@/reducers/feed/feedFilter";
+import { windowSelector } from "@/reducers/feed/selectors";
+import { assignFilter } from "@/reducers/feed/feedFilter";
 
 const FeedContent = () => {
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
   const timeWindow = useAppSelector((state) => windowSelector(state.feedFilter));
 
-  const { data, isFetching, isError } = useGetAtroFeedQuery(useDebouncedValue(timeWindow));
+  const { items, isFetching, isError } = useGetAtroFeedQuery(useDebouncedValue(timeWindow), {
+    selectFromResult: (result) => ({
+      items: result.data?.nearEarthObjects || [],
+      isFetching: result.isFetching,
+      isError: result.isError,
+    }),
+  });
 
   const { sort, filter } = useFeedContext();
 
@@ -32,12 +40,16 @@ const FeedContent = () => {
 
   const filterState = useAppSelector((state) => state.feedFilter);
 
+  useEffect(() => {
+    filter.init(items);
+    dispatch(assignFilter(filter.plainObject));
+  }, [dispatch, items, filter]);
+
   const content = useMemo(() => {
-    const items = data?.nearEarthObjects || [];
     const filtered = filter.apply(filterState, items);
     const sorted = applySort(filtered, sort.activeField, sort.sortOrder);
     return paginate(sorted, page, 8);
-  }, [sort.activeField, sort.sortOrder, filterState, page, filter, data]);
+  }, [items, filter, filterState, sort.activeField, sort.sortOrder, page]);
 
   return (
     <>

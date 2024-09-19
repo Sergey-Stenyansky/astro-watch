@@ -1,12 +1,5 @@
-import { SortingReducerState, SortOrder } from "@/reducers/sorting";
+import { SortOrder } from "@/reducers/sorting";
 import dayjs from "dayjs";
-
-export enum FeedSortingFields {
-  date = "date",
-  name = "name",
-}
-
-export type FeedSortingState = SortingReducerState<FeedSortingFields>;
 
 export function getDateSorter(order: SortOrder) {
   switch (order) {

@@ -36,7 +36,7 @@ const AstroObjectCard = ({ item }: ComponentProps) => {
       <Spacing v={1} />
       {item.estimatedDiameter.feet && (
         <CardCell
-          text={t("feed.astroObjectFields.estimatedDiameter")}
+          text={t("feed.diameter")}
           value={diameterFormatter(item.estimatedDiameter.feet)}
         />
       )}

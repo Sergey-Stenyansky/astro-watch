@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useCallback } from "react";
+import { ChangeEvent, memo, useCallback, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Stack, Typography, FormGroup, Box, Collapse, IconButton } from "@mui/material";
 import TextInput from "@/primitives/TextInput";
@@ -9,9 +9,10 @@ import {
   setIsSentryObject,
   setStartDate,
   setEndDate,
-  windowSelector,
-  feedFilterSelector,
+  setDiameter,
 } from "@/reducers/feed/feedFilter";
+
+import { windowSelector, feedFilterSelector } from "@/reducers/feed/selectors";
 
 import Spacing from "@/primitives/Spacing";
 import Checkbox from "@/primitives/Checkbox";
@@ -28,7 +29,11 @@ import { DateRangeProps } from "@/primitives/DatePickerPair/types";
 import InternalIcon from "@/primitives/InternalIcon";
 import SortContextMenu from "../SortContextMenu";
 import { SortActionValues } from "../SortContextMenu/types";
-import { FeedSortingFields } from "@/util/sorting";
+import { FeedSortingFields } from "@/pages/Feed/sorting";
+import RangeSlider from "@/primitives/RangeSlider";
+
+import { round } from "@/util/number";
+import { formatRangeLabel } from "@/pages/Feed/util";
 
 const feedDateRange: DateRangeProps = {
   count: 7,
@@ -45,7 +50,7 @@ function parseSorting(value: string) {
 
 const FeedFilter = () => {
   const { t } = useTranslation();
-  const { sortDispatch, sort } = useFeedContext();
+  const { sortDispatch, sort, filter } = useFeedContext();
 
   const state = useAppSelector(feedFilterSelector);
   const window = useAppSelector((state) => windowSelector(state.feedFilter));
@@ -60,6 +65,11 @@ const FeedFilter = () => {
     },
     [sortDispatch],
   );
+
+  const diameterLabel = useMemo(() => {
+    if (!state.diameter) return "";
+    return formatRangeLabel(state.diameter);
+  }, [state.diameter]);
 
   return (
     <Stack>
@@ -103,6 +113,21 @@ const FeedFilter = () => {
               onChange={(value: boolean) => dispatch(setIsSentryObject(value))}
             />
           </FormGroup>
+          <Spacing v={1} />
+          <RangeSlider
+            label={
+              <Typography>
+                {t("feed.diameter")} {diameterLabel}
+              </Typography>
+            }
+            min={filter.diameter.range[0]}
+            max={filter.diameter.range[1]}
+            value={state.diameter}
+            debounce={300}
+            formatValueLabel={round}
+            onChange={useCallback((value: number[]) => dispatch(setDiameter(value)), [dispatch])}
+            style={{ padding: "0 8px" }}
+          />
         </Collapse>
         <SortContextMenu value={sortValue as SortActionValues} onChange={onChangeSort} />
       </Card>

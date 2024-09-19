@@ -26,6 +26,7 @@
     "dateFrom": "Дата с",
     "dateTo": "Дата по",
     "name": "Название",
+    "diameter": "Диаметр в футах",
     "sort": {
       "name": "По названию",
       "date": "По дате"
@@ -33,7 +34,6 @@
     "astroObjectFields": {
       "isPotentiallyHazardous": "Потенциально опасен",
       "isSentryObject": "Объект Sentry",
-      "estimatedDiameter": "Диаметр",
       "closeApproachDate": "Дата приближения",
       "missDistance": "Расстояние подлета",
       "relativeVelocity": "Скорость",

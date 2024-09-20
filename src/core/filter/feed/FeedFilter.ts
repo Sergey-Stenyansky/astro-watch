@@ -4,7 +4,7 @@ import type { FeedFilterState } from "@/reducers/feed/feedFilter";
 
 import NameFilter from "./NameFilter";
 import HazardousFilter from "./HazardousFilter";
-import SentryFilter from "./SentriFilter";
+import SentryFilter from "./SentryFilter";
 import DiameterFilter from "./DiameterFilter";
 import RelativeVelocityFilter from "./RelativeVelocityFilter";
 import AbsoluteMagnitudeFilter from "./AbsoluteMagnitudeFilter";

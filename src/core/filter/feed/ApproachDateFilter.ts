@@ -37,51 +37,50 @@ const compareFuns: Record<ApproachDateCriteria, DateCompare> = {
   [ApproachDateCriteria.past]: past,
 };
 
+const groupItems = (item: AstroObjectInterface) => {
+  const today = dayjs();
+  const date = dayjs(item.closeApproachData[0].closeApproachDate);
+  if (thisDay(date)) {
+    return ApproachDateCriteria.today;
+  }
+  if (tomorrow(date)) {
+    return ApproachDateCriteria.tomorrow;
+  }
+  if (withinWeek(date, today)) {
+    return ApproachDateCriteria.withinWeek;
+  }
+  if (withinMonth(date, today)) {
+    return ApproachDateCriteria.withinMonth;
+  }
+  if (withinYear(date, today)) {
+    return ApproachDateCriteria.withinYear;
+  }
+  if (aboveYear(date, today)) {
+    return ApproachDateCriteria.sometime;
+  }
+  return ApproachDateCriteria.past;
+};
+
+const criteriaFactory = (name: string) => {
+  const today = dayjs();
+  const checkFun = (item: AstroObjectInterface) => {
+    const checkFun = compareFuns[name as ApproachDateCriteria];
+    const date = dayjs(item.closeApproachData[0].closeApproachDate);
+    if (!date.isValid()) return false;
+    return checkFun(date, today);
+  };
+
+  return { name, checkFun, label: i18n.t("feed.dateCriteria" + "." + name) };
+};
+
 export class ApproachDateFilter extends CriteriaListFilter<AstroObjectInterface> {
   constructor() {
     super(CriteriaLogic.or);
   }
 
   buildCriteria(items: AstroObjectInterface[]) {
-    const today = dayjs();
-
-    function groupItems(item: AstroObjectInterface): ApproachDateCriteria {
-      const date = dayjs(item.closeApproachData[0].closeApproachDate);
-      if (thisDay(date)) {
-        return ApproachDateCriteria.today;
-      }
-      if (tomorrow(date)) {
-        return ApproachDateCriteria.tomorrow;
-      }
-      if (withinWeek(date, today)) {
-        return ApproachDateCriteria.withinWeek;
-      }
-      if (withinMonth(date, today)) {
-        return ApproachDateCriteria.withinMonth;
-      }
-      if (withinYear(date, today)) {
-        return ApproachDateCriteria.withinWeek;
-      }
-      if (aboveYear(date, today)) {
-        return ApproachDateCriteria.sometime;
-      }
-      return ApproachDateCriteria.past;
-    }
-
-    const groups = groupBy(groupItems, items);
-
-    const criteriaFactory = (name: string) => {
-      const checkFun = (item: AstroObjectInterface) => {
-        const checkFun = compareFuns[name as ApproachDateCriteria];
-        const date = dayjs(item.closeApproachData[0].closeApproachDate);
-        if (!date.isValid()) return false;
-        return checkFun(date, today);
-      };
-
-      return { name, checkFun, label: i18n.t("feed.dateCriteria" + "." + name) };
-    };
-
     const result: FlagCriteria[] = [];
+    const groups = groupBy(groupItems, items);
 
     if (groups.today) {
       result.push(criteriaFactory(ApproachDateCriteria.today));

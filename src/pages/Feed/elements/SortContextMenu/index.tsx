@@ -21,15 +21,7 @@ interface ComponentProps {
 function getValueText(value: string | undefined, t: any) {
   const item = sortActionItems.find((item) => item.value === value);
   if (!item) return t("menu.pickFromList");
-  const [, order] = item.value.split("-");
-  switch (order) {
-    case "asc":
-      return item.text + ` (${t("sort.asc")})`;
-    case "desc":
-      return item.text + ` (${t("sort.desc")})`;
-    default:
-      return item.text;
-  }
+  return item.selectedText;
 }
 
 const SortContextMenu = ({ value, onChange }: ComponentProps) => {
@@ -42,7 +34,7 @@ const SortContextMenu = ({ value, onChange }: ComponentProps) => {
       onSelect={onChange}
       trigger={(context, ref) => (
         <List ref={ref}>
-          <ListItemButton onClick={context.toggle} sx={{ padding: "0" }}>
+          <ListItemButton onClick={context.toggle} sx={{ padding: 0 }}>
             <ListItemText primary={t("sort.word")} secondary={getValueText(value, t)} />
           </ListItemButton>
         </List>

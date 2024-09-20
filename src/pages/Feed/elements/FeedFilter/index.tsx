@@ -11,6 +11,7 @@ import {
   setEndDate,
   setDiameter,
   setRelativeVelocity,
+  setAbsoluteMagnitude,
 } from "@/reducers/feed/feedFilter";
 
 import { windowSelector, feedFilterSelector } from "@/reducers/feed/selectors";
@@ -135,6 +136,25 @@ const FeedFilter = () => {
             formatValueLabel={round}
             onChange={useCallback(
               (value: number[]) => dispatch(setRelativeVelocity(value)),
+              [dispatch],
+            )}
+            style={sliderStyle}
+          />
+          <Spacing v={1} />
+          <RangeSlider
+            label={
+              <SliderLabelLayout
+                text={t("feed.absoluteMagnitude")}
+                value={state.absoluteMagnitude}
+              />
+            }
+            min={filter.absoluteMagnitude.range[0]}
+            max={filter.absoluteMagnitude.range[1]}
+            value={state.absoluteMagnitude}
+            debounce={300}
+            formatValueLabel={round}
+            onChange={useCallback(
+              (value: number[]) => dispatch(setAbsoluteMagnitude(value)),
               [dispatch],
             )}
             style={sliderStyle}

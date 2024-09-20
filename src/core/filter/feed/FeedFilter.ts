@@ -7,6 +7,7 @@ import HazardousFilter from "./HazardousFilter";
 import SentryFilter from "./SentriFilter";
 import DiameterFilter from "./DiameterFilter";
 import RelativeVelocityFilter from "./RelativeVelocityFilter";
+import AbsoluteMagnitudeFilter from "./AbsoluteMagnitudeFilter";
 
 export interface FeedFilterFields extends Record<string, FilterField<any>> {
   name: NameFilter;
@@ -14,6 +15,7 @@ export interface FeedFilterFields extends Record<string, FilterField<any>> {
   sentry: SentryFilter;
   diameter: DiameterFilter;
   relativeVelocity: RelativeVelocityFilter;
+  absoluteMagnitude: AbsoluteMagnitudeFilter;
 }
 
 export type FeedFilterType = Filter<AstroObjectInterface, FeedFilterFields>;
@@ -25,6 +27,7 @@ function createFilter(): FeedFilterType {
     sentry: new SentryFilter(),
     diameter: new DiameterFilter(),
     relativeVelocity: new RelativeVelocityFilter(),
+    absoluteMagnitude: new AbsoluteMagnitudeFilter(),
   });
 }
 
@@ -47,6 +50,9 @@ export class FeedFilter {
     if (state.relativeVelocity) {
       fields.relativeVelocity.value = state.relativeVelocity;
     }
+    if (state.absoluteMagnitude) {
+      fields.absoluteMagnitude.value = state.absoluteMagnitude;
+    }
     return this.filter.apply(items);
   }
 
@@ -54,6 +60,7 @@ export class FeedFilter {
     return {
       diameter: this.diameter.plainObject,
       relativeVelocity: this.relativeVelocity.plainObject,
+      absoluteMagnitude: this.absoluteMagnitude.plainObject,
     };
   }
 
@@ -63,5 +70,9 @@ export class FeedFilter {
 
   get relativeVelocity() {
     return this.filter.filters.relativeVelocity;
+  }
+
+  get absoluteMagnitude() {
+    return this.filter.filters.absoluteMagnitude;
   }
 }

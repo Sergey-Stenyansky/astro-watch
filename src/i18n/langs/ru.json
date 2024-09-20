@@ -28,6 +28,7 @@
     "name": "Название",
     "diameter": "Диаметр в футах",
     "relativeVelocity": "Скорость в км/c",
+    "absoluteMagnitude": "Абсолютная звездная величина",
     "sort": {
       "name": "По названию",
       "date": "По дате"
@@ -36,8 +37,7 @@
       "isPotentiallyHazardous": "Потенциально опасен",
       "isSentryObject": "Объект Sentry",
       "closeApproachDate": "Дата приближения",
-      "missDistance": "Расстояние подлета",
-      "absoluteMagnitude": "Абсолютная звездная величина"
+      "missDistance": "Расстояние подлета"
     }
   }
 }

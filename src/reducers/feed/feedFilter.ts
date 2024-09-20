@@ -13,9 +13,9 @@ export type FeedFilterState = {
   startDate: string | null;
   endDate: string | null;
   name: string;
-  absoluteMagnitude: number | null;
   diameter: number[] | null;
   relativeVelocity: number[] | null;
+  absoluteMagnitude: number[] | null;
   isHazardous: boolean | null;
   closeApproachDate: Date | null;
   missDistance: number | null;
@@ -47,7 +47,7 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
 const defaultWindow = getDefaultFeedWindow();
 const initialState = getInitialState(defaultWindow);
 
-function setStateRange(value: number[] | null, newValue: number[]) {
+function setRange(value: number[] | null, newValue: number[]) {
   return value ? clampRange(value, newValue) : newValue;
 }
 
@@ -64,12 +64,15 @@ export const feedFilterSlice = createSlice({
       });
     },
     assignFilter(state, { payload }: PayloadAction<FeedFilter["plainObject"]>) {
-      const { diameter, relativeVelocity } = payload;
+      const { diameter, relativeVelocity, absoluteMagnitude } = payload;
       if (validateRange(diameter.range)) {
-        state.diameter = setStateRange(state.diameter, diameter.range);
+        state.diameter = setRange(state.diameter, diameter.range);
       }
       if (validateRange(relativeVelocity.range)) {
-        state.relativeVelocity = setStateRange(state.relativeVelocity, relativeVelocity.range);
+        state.relativeVelocity = setRange(state.relativeVelocity, relativeVelocity.range);
+      }
+      if (validateRange(absoluteMagnitude.range)) {
+        state.absoluteMagnitude = setRange(state.absoluteMagnitude, absoluteMagnitude.range);
       }
       return state;
     },

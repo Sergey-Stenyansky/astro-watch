@@ -52,10 +52,7 @@ const AstroObjectCard = ({ item }: ComponentProps) => {
         text={t("feed.astroObjectFields.missDistance")}
         value={Number(approachData.missDistance.kilometers).toFixed(2)}
       />
-      <CardCell
-        text={t("feed.astroObjectFields.absoluteMagnitude")}
-        value={item.absoluteMagnitudeH}
-      />
+      <CardCell text={t("feed.absoluteMagnitude")} value={item.absoluteMagnitudeH} />
       <CardCell
         text={t("feed.astroObjectFields.isSentryObject")}
         value={item.isSentryObject ? <CheckCircle color="success" /> : <Cancel color="error" />}

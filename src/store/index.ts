@@ -11,9 +11,9 @@ const store = configureStore({
   middleware: (gDM) => gDM().concat(api.middleware),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
-export const useAppSelector = useSelector.withTypes<RootState>();
+export const useAppSelector = useSelector.withTypes<AppState>();
 
 export default store;

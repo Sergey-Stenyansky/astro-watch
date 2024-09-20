@@ -7,6 +7,9 @@ export abstract class FilterField<T> {
     return items.filter(this.checkFun);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  init(_: T[]) {}
+
   abstract checkFun(item: T): boolean;
 
   abstract get isApplied(): boolean;
@@ -14,6 +17,10 @@ export abstract class FilterField<T> {
 
 export class Filter<T, F extends Record<string, FilterField<any>>> {
   constructor(public filters: F) {}
+
+  init(items: T[]) {
+    this.fieldValues.forEach((f) => f.init(items));
+  }
 
   apply = (items: T[]) => {
     const checkFuns = this.fieldValues.map((f) => f.apply);

@@ -1,7 +1,12 @@
 {
   "envConfigs": {
     "development": {
-      "baseUrl": "https://api.nasa.gov/neo/rest/v1"
+      "baseUrl": "https://api.nasa.gov/neo/rest/v1",
+      "apiKey": "DEMO_KEY"
+    },
+    "production": {
+      "baseUrl": "https://api.nasa.gov/neo/rest/v1",
+      "apiKey": "DEMO_KEY"
     }
   },
   "env": "development"

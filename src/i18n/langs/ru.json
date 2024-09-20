@@ -4,17 +4,40 @@
     "noElements": "Нет элементов для отображения",
     "tryChangeSearch": "Попробуйте изменить поисковой запрос"
   },
+  "sort": {
+    "word": "Сортировка",
+    "asc": "по возрастанию",
+    "desc": "по убыванию"
+  },
+  "datePicker": {
+    "errors": {
+      "invalidDate": "Неверное значение даты",
+      "fromError": "Укажите дату от {{fromText}}",
+      "toError": "Укажите дату до {{toText}}",
+      "rangeError": "Укажите дату между {{fromText}} и {{toText}}"
+    }
+  },
+  "menu": {
+    "pickFromList": "Выберите из списка"
+  },
   "feed": {
+    "pickDate": "Выберите дату",
     "customize": "Настроить Feed",
+    "dateFrom": "Дата с",
+    "dateTo": "Дата по",
     "name": "Название",
+    "diameter": "Диаметр в футах",
+    "relativeVelocity": "Скорость в км/c",
+    "absoluteMagnitude": "Абсолютная звездная величина",
+    "sort": {
+      "name": "По названию",
+      "date": "По дате"
+    },
     "astroObjectFields": {
       "isPotentiallyHazardous": "Потенциально опасен",
       "isSentryObject": "Объект Sentry",
-      "estimatedDiameter": "Диаметр",
       "closeApproachDate": "Дата приближения",
-      "missDistance": "Расстояние подлета",
-      "relativeVelocity": "Скорость",
-      "absoluteMagnitude": "Абсолютная звездная величина"
+      "missDistance": "Расстояние подлета"
     }
   }
 }

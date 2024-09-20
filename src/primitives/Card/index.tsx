@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import Card from "@mui/material/Card";
 
-import { memo, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export type CardElevation = 1 | 2 | 3;
 
@@ -22,4 +22,4 @@ const CardComponent = ({ children, elevation = 3 }: ComponentProps) => (
   </Card>
 );
 
-export default memo(CardComponent);
+export default CardComponent;

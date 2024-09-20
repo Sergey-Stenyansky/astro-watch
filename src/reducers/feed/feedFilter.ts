@@ -4,17 +4,20 @@ import { assignDefault } from "@/util/object";
 import { setStateFactory, togglerFactory } from "@/util/redux/factories";
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import astroApi from "@/services/api";
+import { getDefaultFeedWindow } from "@/util/date/window";
+import { FeedFilter } from "@/core/filter/feed/FeedFilter";
+
+import { clampRange, validateRange } from "@/util/number";
 
 export type FeedFilterState = {
-  startDate: Date | null;
-  endDate: Date | null;
+  startDate: string | null;
+  endDate: string | null;
   name: string;
-  absoluteMagnitude: number | null;
-  diameter: number | null;
+  diameter: number[] | null;
+  relativeVelocity: number[] | null;
+  absoluteMagnitude: number[] | null;
   isHazardous: boolean | null;
   closeApproachDate: Date | null;
-  relativeVelocity: number | null;
   missDistance: number | null;
   orbitingBody: string;
   isSentryObject: boolean | null;
@@ -35,42 +38,55 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
       missDistance: null,
       orbitingBody: "",
       isSentryObject: null,
-      isOpened: true,
+      isOpened: false,
     },
     config,
   );
 }
 
-const initialState = getInitialState();
+const defaultWindow = getDefaultFeedWindow();
+const initialState = getInitialState(defaultWindow);
+
+function setRange(value: number[] | null, newValue: number[]) {
+  return value ? clampRange(value, newValue) : newValue;
+}
 
 export const feedFilterSlice = createSlice({
   name: "feedFilter",
   reducers: {
-    setStartDate(state, { payload }: PayloadAction<Date>) {
-      assignDefault(state, { startDate: payload, endDate: state.endDate });
-    },
-    setEndDate(state, { payload }: PayloadAction<Date>) {
-      assignDefault(state, { startDate: state.endDate, endDate: payload });
-    },
+    setStartDate: setStateFactory("startDate"),
+    setEndDate: setStateFactory("endDate"),
     clearFilter(state) {
-      assignDefault(state, { startDate: state.startDate, endDate: state.endDate });
+      return assignDefault(state, {
+        startDate: state.startDate,
+        endDate: state.endDate,
+        isOpened: state.isOpened,
+      });
+    },
+    assignFilter(state, { payload }: PayloadAction<FeedFilter["plainObject"]>) {
+      const { diameter, relativeVelocity, absoluteMagnitude } = payload;
+      if (validateRange(diameter.range)) {
+        state.diameter = setRange(state.diameter, diameter.range);
+      }
+      if (validateRange(relativeVelocity.range)) {
+        state.relativeVelocity = setRange(state.relativeVelocity, relativeVelocity.range);
+      }
+      if (validateRange(absoluteMagnitude.range)) {
+        state.absoluteMagnitude = setRange(state.absoluteMagnitude, absoluteMagnitude.range);
+      }
+      return state;
     },
     setName: setStateFactory("name"),
     setAbsoluteMagnitude: setStateFactory("absoluteMagnitude"),
-    setDiameter: setStateFactory("diameter"),
     setIsHazardous: setStateFactory("isHazardous"),
     setCloseApproachDate: setStateFactory("closeApproachDate"),
     setRelativeVelocity: setStateFactory("relativeVelocity"),
+    setDiameter: setStateFactory("diameter"),
     setMissDistance: setStateFactory("missDistance"),
     setOrbitingBody: setStateFactory("orbitingBody"),
     setIsSentryObject: setStateFactory("isSentryObject"),
     setIsOpened: setStateFactory("isOpened"),
     toggleOpened: togglerFactory("isOpened"),
-  },
-  extraReducers: (builder) => {
-    builder.addMatcher(astroApi.endpoints.getAtroFeed.matchFulfilled, (state) => {
-      state.isOpened = false;
-    });
   },
   initialState,
 });
@@ -81,7 +97,6 @@ export const {
   clearFilter,
   setName,
   setAbsoluteMagnitude,
-  setDiameter,
   setIsHazardous,
   setCloseApproachDate,
   setRelativeVelocity,
@@ -90,6 +105,8 @@ export const {
   setIsSentryObject,
   toggleOpened,
   setIsOpened,
+  setDiameter,
+  assignFilter,
 } = feedFilterSlice.actions;
 
 export default feedFilterSlice.reducer;

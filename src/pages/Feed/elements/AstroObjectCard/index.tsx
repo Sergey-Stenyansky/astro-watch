@@ -14,6 +14,7 @@ import { flexSpaceBetween, overlowEllipsis } from "@/theme/commonStyles";
 
 import { diameterFormatter } from "./util";
 import { useTranslation } from "react-i18next";
+import formatDate, { DateFormat } from "@/util/date/format";
 
 interface ComponentProps {
   item: AstroObjectInterface;
@@ -35,26 +36,23 @@ const AstroObjectCard = ({ item }: ComponentProps) => {
       <Spacing v={1} />
       {item.estimatedDiameter.feet && (
         <CardCell
-          text={t("feed.astroObjectFields.estimatedDiameter")}
+          text={t("feed.diameter")}
           value={diameterFormatter(item.estimatedDiameter.feet)}
         />
       )}
       <CardCell
         text={t("feed.astroObjectFields.closeApproachDate")}
-        value={approachData.closeApproachDate}
+        value={formatDate(approachData.closeApproachDate, DateFormat.shortDate)}
       />
       <CardCell
-        text={t("feed.astroObjectFields.relativeVelocity")}
+        text={t("feed.relativeVelocity")}
         value={Number(approachData.relativeVelocity.kilometersPerSecond).toFixed(2)}
       />
       <CardCell
         text={t("feed.astroObjectFields.missDistance")}
         value={Number(approachData.missDistance.kilometers).toFixed(2)}
       />
-      <CardCell
-        text={t("feed.astroObjectFields.absoluteMagnitude")}
-        value={item.absoluteMagnitudeH}
-      />
+      <CardCell text={t("feed.absoluteMagnitude")} value={item.absoluteMagnitudeH} />
       <CardCell
         text={t("feed.astroObjectFields.isSentryObject")}
         value={item.isSentryObject ? <CheckCircle color="success" /> : <Cancel color="error" />}

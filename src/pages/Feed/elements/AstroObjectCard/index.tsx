@@ -45,7 +45,7 @@ const AstroObjectCard = ({ item }: ComponentProps) => {
         value={formatDate(approachData.closeApproachDate, DateFormat.shortDate)}
       />
       <CardCell
-        text={t("feed.astroObjectFields.relativeVelocity")}
+        text={t("feed.relativeVelocity")}
         value={Number(approachData.relativeVelocity.kilometersPerSecond).toFixed(2)}
       />
       <CardCell

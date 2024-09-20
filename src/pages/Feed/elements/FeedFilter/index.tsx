@@ -1,4 +1,4 @@
-import { ChangeEvent, memo, useCallback, useMemo } from "react";
+import { ChangeEvent, memo, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { Stack, Typography, FormGroup, Box, Collapse, IconButton } from "@mui/material";
 import TextInput from "@/primitives/TextInput";
@@ -10,6 +10,7 @@ import {
   setStartDate,
   setEndDate,
   setDiameter,
+  setRelativeVelocity,
 } from "@/reducers/feed/feedFilter";
 
 import { windowSelector, feedFilterSelector } from "@/reducers/feed/selectors";
@@ -22,31 +23,34 @@ import { flexSpaceBetween, fullWidth } from "@/theme/commonStyles";
 import { useTranslation } from "react-i18next";
 import { useFeedContext } from "@/pages/Feed/context";
 
-import { sortActions, SortOrder } from "@/reducers/sorting";
+import { sortActions } from "@/reducers/sorting";
 import DatePickerPair from "@/primitives/DatePickerPair";
 import { DateRangeProps } from "@/primitives/DatePickerPair/types";
 
 import InternalIcon from "@/primitives/InternalIcon";
 import SortContextMenu from "../SortContextMenu";
 import { SortActionValues } from "../SortContextMenu/types";
-import { FeedSortingFields } from "@/pages/Feed/sorting";
 import RangeSlider from "@/primitives/RangeSlider";
 
 import { round } from "@/util/number";
 import { formatRangeLabel } from "@/pages/Feed/util";
+import { parseSorting } from "@/pages/Feed/util";
 
 const feedDateRange: DateRangeProps = {
   count: 7,
   unit: "days",
 };
 
-function parseSorting(value: string) {
-  const [field, order] = value.split("-");
-  return {
-    field: field as FeedSortingFields,
-    order: order as SortOrder,
-  };
-}
+const sliderStyle = { padding: "0 8px" };
+
+const SliderLabelLayout = ({ text, value }: { text: string; value?: number[] | null }) => {
+  const valueLabel = value ? formatRangeLabel(value) : "";
+  return (
+    <Typography>
+      {text} {valueLabel}
+    </Typography>
+  );
+};
 
 const FeedFilter = () => {
   const { t } = useTranslation();
@@ -65,11 +69,6 @@ const FeedFilter = () => {
     },
     [sortDispatch],
   );
-
-  const diameterLabel = useMemo(() => {
-    if (!state.diameter) return "";
-    return formatRangeLabel(state.diameter);
-  }, [state.diameter]);
 
   return (
     <Stack>
@@ -115,18 +114,30 @@ const FeedFilter = () => {
           </FormGroup>
           <Spacing v={1} />
           <RangeSlider
-            label={
-              <Typography>
-                {t("feed.diameter")} {diameterLabel}
-              </Typography>
-            }
+            label={<SliderLabelLayout text={t("feed.diameter")} value={state.diameter} />}
             min={filter.diameter.range[0]}
             max={filter.diameter.range[1]}
             value={state.diameter}
             debounce={300}
             formatValueLabel={round}
             onChange={useCallback((value: number[]) => dispatch(setDiameter(value)), [dispatch])}
-            style={{ padding: "0 8px" }}
+            style={sliderStyle}
+          />
+          <Spacing v={1} />
+          <RangeSlider
+            label={
+              <SliderLabelLayout text={t("feed.relativeVelocity")} value={state.relativeVelocity} />
+            }
+            min={filter.relativeVelocity.range[0]}
+            max={filter.relativeVelocity.range[1]}
+            value={state.relativeVelocity}
+            debounce={300}
+            formatValueLabel={round}
+            onChange={useCallback(
+              (value: number[]) => dispatch(setRelativeVelocity(value)),
+              [dispatch],
+            )}
+            style={sliderStyle}
           />
         </Collapse>
         <SortContextMenu value={sortValue as SortActionValues} onChange={onChangeSort} />

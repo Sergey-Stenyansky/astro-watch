@@ -15,9 +15,9 @@ export type FeedFilterState = {
   name: string;
   absoluteMagnitude: number | null;
   diameter: number[] | null;
+  relativeVelocity: number[] | null;
   isHazardous: boolean | null;
   closeApproachDate: Date | null;
-  relativeVelocity: number | null;
   missDistance: number | null;
   orbitingBody: string;
   isSentryObject: boolean | null;
@@ -63,13 +63,13 @@ export const feedFilterSlice = createSlice({
         isOpened: state.isOpened,
       });
     },
-    setDiameter(state, { payload }: PayloadAction<number[]>) {
-      state.diameter = payload;
-    },
     assignFilter(state, { payload }: PayloadAction<FeedFilter["plainObject"]>) {
-      const { diameter } = payload;
+      const { diameter, relativeVelocity } = payload;
       if (validateRange(diameter.range)) {
         state.diameter = setStateRange(state.diameter, diameter.range);
+      }
+      if (validateRange(relativeVelocity.range)) {
+        state.relativeVelocity = setStateRange(state.relativeVelocity, relativeVelocity.range);
       }
       return state;
     },
@@ -78,6 +78,7 @@ export const feedFilterSlice = createSlice({
     setIsHazardous: setStateFactory("isHazardous"),
     setCloseApproachDate: setStateFactory("closeApproachDate"),
     setRelativeVelocity: setStateFactory("relativeVelocity"),
+    setDiameter: setStateFactory("diameter"),
     setMissDistance: setStateFactory("missDistance"),
     setOrbitingBody: setStateFactory("orbitingBody"),
     setIsSentryObject: setStateFactory("isSentryObject"),

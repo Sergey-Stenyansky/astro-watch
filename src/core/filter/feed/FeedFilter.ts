@@ -6,22 +6,25 @@ import NameFilter from "./NameFilter";
 import HazardousFilter from "./HazardousFilter";
 import SentryFilter from "./SentriFilter";
 import DiameterFilter from "./DiameterFilter";
+import RelativeVelocityFilter from "./RelativeVelocityFilter";
 
 export interface FeedFilterFields extends Record<string, FilterField<any>> {
-  nameFilter: NameFilter;
-  hazardousFilter: HazardousFilter;
-  sentryFilter: SentryFilter;
-  diameterFilter: DiameterFilter;
+  name: NameFilter;
+  hazardous: HazardousFilter;
+  sentry: SentryFilter;
+  diameter: DiameterFilter;
+  relativeVelocity: RelativeVelocityFilter;
 }
 
 export type FeedFilterType = Filter<AstroObjectInterface, FeedFilterFields>;
 
 function createFilter(): FeedFilterType {
   return new Filter({
-    nameFilter: new NameFilter(),
-    hazardousFilter: new HazardousFilter(),
-    sentryFilter: new SentryFilter(),
-    diameterFilter: new DiameterFilter(),
+    name: new NameFilter(),
+    hazardous: new HazardousFilter(),
+    sentry: new SentryFilter(),
+    diameter: new DiameterFilter(),
+    relativeVelocity: new RelativeVelocityFilter(),
   });
 }
 
@@ -35,23 +38,30 @@ export class FeedFilter {
   apply(state: FeedFilterState, items: AstroObjectInterface[]): AstroObjectInterface[] {
     const fields = this.filter.filters;
 
-    fields.nameFilter.value = state.name;
-    fields.hazardousFilter.value = state.isHazardous || false;
-    fields.sentryFilter.value = state.isSentryObject || false;
+    fields.name.value = state.name;
+    fields.hazardous.value = state.isHazardous || false;
+    fields.sentry.value = state.isSentryObject || false;
     if (state.diameter) {
-      fields.diameterFilter.value = state.diameter;
+      fields.diameter.value = state.diameter;
     }
-
+    if (state.relativeVelocity) {
+      fields.relativeVelocity.value = state.relativeVelocity;
+    }
     return this.filter.apply(items);
   }
 
   get plainObject() {
     return {
       diameter: this.diameter.plainObject,
+      relativeVelocity: this.relativeVelocity.plainObject,
     };
   }
 
   get diameter() {
-    return this.filter.filters.diameterFilter;
+    return this.filter.filters.diameter;
+  }
+
+  get relativeVelocity() {
+    return this.filter.filters.relativeVelocity;
   }
 }

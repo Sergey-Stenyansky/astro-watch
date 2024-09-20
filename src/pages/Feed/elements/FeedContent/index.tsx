@@ -18,7 +18,7 @@ import { paginate } from "@/util/pagination";
 
 import useDebouncedValue from "@/hooks/useDebouncedValue";
 import { windowSelector } from "@/reducers/feed/selectors";
-import { assignFilter } from "@/reducers/feed/feedFilter";
+import { initFromFilter } from "@/reducers/feed/feedFilter";
 
 const FeedContent = () => {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ const FeedContent = () => {
 
   useEffect(() => {
     filter.init(items);
-    dispatch(assignFilter(filter.plainObject));
+    dispatch(initFromFilter(filter.plainObject));
   }, [dispatch, items, filter]);
 
   const content = useMemo(() => {

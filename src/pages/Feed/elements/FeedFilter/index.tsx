@@ -12,6 +12,7 @@ import {
   setDiameter,
   setRelativeVelocity,
   setAbsoluteMagnitude,
+  setDateCriteria,
 } from "@/reducers/feed/feedFilter";
 
 import { windowSelector, feedFilterSelector } from "@/reducers/feed/selectors";
@@ -36,6 +37,7 @@ import RangeSlider from "@/primitives/RangeSlider";
 import { round } from "@/util/number";
 import { formatRangeLabel } from "@/pages/Feed/util";
 import { parseSorting } from "@/pages/Feed/util";
+import CheckboxGroup from "@/primitives/CheckboxGroup";
 
 const feedDateRange: DateRangeProps = {
   count: 7,
@@ -113,6 +115,12 @@ const FeedFilter = () => {
               onChange={(value: boolean) => dispatch(setIsSentryObject(value))}
             />
           </FormGroup>
+          <Spacing v={1} />
+          <CheckboxGroup
+            label={t("feed.closeApproachDate")}
+            items={state.approachDateCriteria || []}
+            onToggle={(name: string) => dispatch(setDateCriteria({ name }))}
+          />
           <Spacing v={1} />
           <RangeSlider
             label={<SliderLabelLayout text={t("feed.diameter")} value={state.diameter} />}

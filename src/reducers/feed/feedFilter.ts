@@ -8,6 +8,8 @@ import { getDefaultFeedWindow } from "@/util/date/window";
 import { FeedFilter } from "@/core/filter/feed/FeedFilter";
 
 import { clampRange, validateRange } from "@/util/number";
+import { CheckboxGroupItem } from "@/primitives/CheckboxGroup/types";
+import { isBoolean } from "@/util/type";
 
 export type FeedFilterState = {
   startDate: string | null;
@@ -18,6 +20,7 @@ export type FeedFilterState = {
   absoluteMagnitude: number[] | null;
   isHazardous: boolean | null;
   closeApproachDate: Date | null;
+  approachDateCriteria: CheckboxGroupItem[] | null;
   missDistance: number | null;
   orbitingBody: string;
   isSentryObject: boolean | null;
@@ -33,6 +36,7 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
       absoluteMagnitude: null,
       diameter: null,
       isHazardous: null,
+      approachDateCriteria: null,
       closeApproachDate: null,
       relativeVelocity: null,
       missDistance: null,
@@ -51,6 +55,8 @@ function setRange(value: number[] | null, newValue: number[]) {
   return value ? clampRange(value, newValue) : newValue;
 }
 
+const emptyDateCriteria: CheckboxGroupItem[] = [];
+
 export const feedFilterSlice = createSlice({
   name: "feedFilter",
   reducers: {
@@ -63,8 +69,8 @@ export const feedFilterSlice = createSlice({
         isOpened: state.isOpened,
       });
     },
-    assignFilter(state, { payload }: PayloadAction<FeedFilter["plainObject"]>) {
-      const { diameter, relativeVelocity, absoluteMagnitude } = payload;
+    initFromFilter(state, { payload }: PayloadAction<FeedFilter["plainObject"]>) {
+      const { diameter, relativeVelocity, absoluteMagnitude, approachDate } = payload;
       if (validateRange(diameter.range)) {
         state.diameter = setRange(state.diameter, diameter.range);
       }
@@ -74,6 +80,17 @@ export const feedFilterSlice = createSlice({
       if (validateRange(absoluteMagnitude.range)) {
         state.absoluteMagnitude = setRange(state.absoluteMagnitude, absoluteMagnitude.range);
       }
+      state.approachDateCriteria = emptyDateCriteria;
+      approachDate.criteriaList.forEach((c) => {
+        state.approachDateCriteria!.push(c);
+      });
+      return state;
+    },
+    setDateCriteria(state, { payload }: PayloadAction<{ name: string; value?: boolean }>) {
+      if (!state.approachDateCriteria) return state;
+      const criteria = state.approachDateCriteria.find((item) => item.name === payload.name);
+      if (!criteria) return state;
+      criteria.value = isBoolean(payload.value) ? payload.value : !criteria.value;
       return state;
     },
     setName: setStateFactory("name"),
@@ -106,7 +123,8 @@ export const {
   toggleOpened,
   setIsOpened,
   setDiameter,
-  assignFilter,
+  initFromFilter,
+  setDateCriteria,
 } = feedFilterSlice.actions;
 
 export default feedFilterSlice.reducer;

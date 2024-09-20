@@ -29,6 +29,16 @@
     "diameter": "Диаметр в футах",
     "relativeVelocity": "Скорость в км/c",
     "absoluteMagnitude": "Абсолютная звездная величина",
+    "closeApproachDate": "Дата приближения",
+    "dateCriteria": {
+      "today": "Сегодня",
+      "tomorrow": "Завтра",
+      "withinWeek": "На этой неделе",
+      "withinMonth": "В этом месяце",
+      "withinYear": "В этом году",
+      "sometime": "Когда-нибудь",
+      "past": "Прошлые даты"
+    },
     "sort": {
       "name": "По названию",
       "date": "По дате"
@@ -36,7 +46,6 @@
     "astroObjectFields": {
       "isPotentiallyHazardous": "Потенциально опасен",
       "isSentryObject": "Объект Sentry",
-      "closeApproachDate": "Дата приближения",
       "missDistance": "Расстояние подлета"
     }
   }

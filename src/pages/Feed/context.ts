@@ -4,7 +4,7 @@ import { createContext, Dispatch, useContext } from "react";
 import { SortingActions } from "@/reducers/sorting";
 
 import { FeedSortingFields } from "./sorting";
-import { FeedFilter } from "@/core/filter/feed";
+import { FeedFilter } from "@/core/filter/feed/FeedFilter";
 
 export type FeedContextType = {
   sort: FeedSortingState;

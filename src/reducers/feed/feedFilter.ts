@@ -5,7 +5,7 @@ import { setStateFactory, togglerFactory } from "@/util/redux/factories";
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import { getDefaultFeedWindow } from "@/util/date/window";
-import { FeedFilter } from "@/core/filter/feed";
+import { FeedFilter } from "@/core/filter/feed/FeedFilter";
 
 import { clampRange, validateRange } from "@/util/number";
 

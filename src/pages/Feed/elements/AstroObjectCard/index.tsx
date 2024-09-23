@@ -14,7 +14,8 @@ import Cancel from "@mui/icons-material/Cancel";
 import CardCell from "@/primitives/Cells/CardCell";
 import { flexSpaceBetween, overlowEllipsis } from "@/theme/commonStyles";
 
-import { diameterFormatter } from "./util";
+import { diameterFormatter } from "@/util/format/diameter";
+
 import { useTranslation } from "react-i18next";
 import formatDate, { DateFormat } from "@/util/date/format";
 import { AppRoutes } from "@/core/appRoutes";

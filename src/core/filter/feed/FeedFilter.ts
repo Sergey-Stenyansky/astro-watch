@@ -49,13 +49,13 @@ export class FeedFilter {
     fields.sentry.value = state.isSentryObject || false;
 
     if (state.diameter) {
-      fields.diameter.value = state.diameter;
+      fields.diameter.value = [...state.diameter];
     }
     if (state.relativeVelocity) {
-      fields.relativeVelocity.value = state.relativeVelocity;
+      fields.relativeVelocity.value = [...state.relativeVelocity];
     }
     if (state.absoluteMagnitude) {
-      fields.absoluteMagnitude.value = state.absoluteMagnitude;
+      fields.absoluteMagnitude.value = [...state.absoluteMagnitude];
     }
 
     if (state.approachDateCriteria) {

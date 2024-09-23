@@ -4,10 +4,11 @@ import type { FeedFilterState } from "@/reducers/feed/feedFilter";
 
 import NameFilter from "./NameFilter";
 import HazardousFilter from "./HazardousFilter";
-import SentryFilter from "./SentriFilter";
+import SentryFilter from "./SentryFilter";
 import DiameterFilter from "./DiameterFilter";
 import RelativeVelocityFilter from "./RelativeVelocityFilter";
 import AbsoluteMagnitudeFilter from "./AbsoluteMagnitudeFilter";
+import { ApproachDateFilter } from "./ApproachDateFilter";
 
 export interface FeedFilterFields extends Record<string, FilterField<any>> {
   name: NameFilter;
@@ -16,6 +17,7 @@ export interface FeedFilterFields extends Record<string, FilterField<any>> {
   diameter: DiameterFilter;
   relativeVelocity: RelativeVelocityFilter;
   absoluteMagnitude: AbsoluteMagnitudeFilter;
+  approachDate: ApproachDateFilter;
 }
 
 export type FeedFilterType = Filter<AstroObjectInterface, FeedFilterFields>;
@@ -28,6 +30,7 @@ function createFilter(): FeedFilterType {
     diameter: new DiameterFilter(),
     relativeVelocity: new RelativeVelocityFilter(),
     absoluteMagnitude: new AbsoluteMagnitudeFilter(),
+    approachDate: new ApproachDateFilter(),
   });
 }
 
@@ -44,15 +47,23 @@ export class FeedFilter {
     fields.name.value = state.name;
     fields.hazardous.value = state.isHazardous || false;
     fields.sentry.value = state.isSentryObject || false;
+
     if (state.diameter) {
-      fields.diameter.value = state.diameter;
+      fields.diameter.value = [...state.diameter];
     }
     if (state.relativeVelocity) {
-      fields.relativeVelocity.value = state.relativeVelocity;
+      fields.relativeVelocity.value = [...state.relativeVelocity];
     }
     if (state.absoluteMagnitude) {
-      fields.absoluteMagnitude.value = state.absoluteMagnitude;
+      fields.absoluteMagnitude.value = [...state.absoluteMagnitude];
     }
+
+    if (state.approachDateCriteria) {
+      fields.approachDate.criteriaList.forEach((criteria, index) => {
+        criteria.value = state.approachDateCriteria?.[index]?.value || false;
+      });
+    }
+
     return this.filter.apply(items);
   }
 
@@ -61,6 +72,7 @@ export class FeedFilter {
       diameter: this.diameter.plainObject,
       relativeVelocity: this.relativeVelocity.plainObject,
       absoluteMagnitude: this.absoluteMagnitude.plainObject,
+      approachDate: this.approachDate.plainObject,
     };
   }
 
@@ -74,5 +86,9 @@ export class FeedFilter {
 
   get absoluteMagnitude() {
     return this.filter.filters.absoluteMagnitude;
+  }
+
+  get approachDate() {
+    return this.filter.filters.approachDate;
   }
 }

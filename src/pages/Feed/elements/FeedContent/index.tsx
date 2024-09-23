@@ -18,7 +18,10 @@ import { paginate } from "@/util/pagination";
 
 import useDebouncedValue from "@/hooks/useDebouncedValue";
 import { windowSelector } from "@/reducers/feed/selectors";
-import { assignFilter } from "@/reducers/feed/feedFilter";
+import { initFromFilter } from "@/reducers/feed/feedFilter";
+import { AstroObjectInterface } from "@/services/api/schema/feed";
+
+const emptyContent: AstroObjectInterface[] = [];
 
 const FeedContent = () => {
   const { t } = useTranslation();
@@ -28,7 +31,7 @@ const FeedContent = () => {
 
   const { items, isFetching, isError } = useGetAtroFeedQuery(useDebouncedValue(timeWindow), {
     selectFromResult: (result) => ({
-      items: result.data?.nearEarthObjects || [],
+      items: result.data?.nearEarthObjects || emptyContent,
       isFetching: result.isFetching,
       isError: result.isError,
     }),
@@ -42,7 +45,7 @@ const FeedContent = () => {
 
   useEffect(() => {
     filter.init(items);
-    dispatch(assignFilter(filter.plainObject));
+    dispatch(initFromFilter(filter.plainObject));
   }, [dispatch, items, filter]);
 
   const content = useMemo(() => {

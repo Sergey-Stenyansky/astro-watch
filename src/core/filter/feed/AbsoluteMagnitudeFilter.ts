@@ -21,14 +21,14 @@ export default class AbsoluteMagnitudeFilter extends FilterField<AstroObjectInte
     this.range[1] = items.reduce((max, current) => {
       const h = current.absoluteMagnitudeH;
       if (!h) return max;
-      return Math.max(+h, max);
+      return Math.max(h, max);
     }, -Infinity);
   }
 
   checkFun = (item: AstroObjectInterface) => {
     const h = item.absoluteMagnitudeH;
     if (!h) return false;
-    return Number(h) >= this.value[0] && Number(h) <= this.value[1];
+    return h >= this.value[0] && h <= this.value[1];
   };
 
   get isApplied(): boolean {

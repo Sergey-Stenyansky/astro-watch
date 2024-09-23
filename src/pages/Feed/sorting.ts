@@ -44,7 +44,7 @@ export const createFeedSorting = (config: Partial<FeedSortingState> = {}): FeedS
     {
       activeField: FeedSortingFields.date,
       defaultField: FeedSortingFields.date,
-      sortOrder: SortOrder.desc,
+      sortOrder: SortOrder.asc,
       sortFields: {
         [FeedSortingFields.date]: {
           name: "date",

@@ -11,3 +11,7 @@ export function clampRange(value: number[], range: number[]) {
 export function validateRange(value: number[]) {
   return value.length === 2 && value[0] <= value[1];
 }
+
+export function inRange(value: number, range: number[]) {
+  return value >= range[0] && value <= range[1];
+}

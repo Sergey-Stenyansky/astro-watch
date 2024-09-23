@@ -41,7 +41,7 @@ const AstroObjectCard = ({ item }: ComponentProps) => {
         />
       )}
       <CardCell
-        text={t("feed.astroObjectFields.closeApproachDate")}
+        text={t("feed.closeApproachDate")}
         value={formatDate(approachData.closeApproachDate, DateFormat.shortDate)}
       />
       <CardCell

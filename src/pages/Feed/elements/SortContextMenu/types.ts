@@ -11,5 +11,6 @@ export enum SortActionValues {
 export type SortActionItem = {
   value: SortActionValues;
   text: string;
+  selectedText?: string;
   icon?: ReactElement | InternalIcons;
 };

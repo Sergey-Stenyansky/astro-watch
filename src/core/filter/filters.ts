@@ -15,6 +15,47 @@ export abstract class FilterField<T> {
   abstract get isApplied(): boolean;
 }
 
+export enum CriteriaLogic {
+  or,
+  and,
+}
+
+export type FlagCriteria = {
+  name: string;
+  label?: string;
+  value?: boolean;
+  checkFun: (value: any) => boolean;
+};
+
+export abstract class CriteriaListFilter<T> extends FilterField<T> {
+  criteriaList: FlagCriteria[] = [];
+
+  constructor(public logic: CriteriaLogic) {
+    super();
+  }
+
+  init(items: T[]): void {
+    this.criteriaList = this.buildCriteria(items);
+  }
+
+  abstract buildCriteria(items: T[]): FlagCriteria[];
+
+  checkFun = (item: T) => {
+    if (this.logic === CriteriaLogic.and) {
+      return this.appliedCriteria.every((c) => c.value && c.checkFun(item));
+    }
+    return this.appliedCriteria.some((c) => c.value && c.checkFun(item));
+  };
+
+  get isApplied() {
+    return this.appliedCriteria.length > 0;
+  }
+
+  get appliedCriteria() {
+    return this.criteriaList.filter((c) => c.value);
+  }
+}
+
 export class Filter<T, F extends Record<string, FilterField<any>>> {
   constructor(public filters: F) {}
 

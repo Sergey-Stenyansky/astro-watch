@@ -52,10 +52,8 @@ const defaultWindow = getDefaultFeedWindow();
 const initialState = getInitialState(defaultWindow);
 
 function setRange(value: number[] | null, newValue: number[]) {
-  return value ? clampRange(value, newValue) : newValue;
+  return value ? clampRange(value, newValue) : [...newValue];
 }
-
-const emptyDateCriteria: CheckboxGroupItem[] = [];
 
 export const feedFilterSlice = createSlice({
   name: "feedFilter",
@@ -80,7 +78,7 @@ export const feedFilterSlice = createSlice({
       if (validateRange(absoluteMagnitude.range)) {
         state.absoluteMagnitude = setRange(state.absoluteMagnitude, absoluteMagnitude.range);
       }
-      state.approachDateCriteria = emptyDateCriteria;
+      state.approachDateCriteria = [];
       approachDate.criteriaList.forEach((c) => {
         state.approachDateCriteria!.push(c);
       });

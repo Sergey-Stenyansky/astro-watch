@@ -1,4 +1,4 @@
-import type { AstroObjectInterface } from "@/services/api/schema/feed";
+import type { AstroObjectInterface } from "@/services/api/schema/astroObject";
 import { FilterField, Filter } from "@/core/filter/filters";
 import type { FeedFilterState } from "@/reducers/feed/feedFilter";
 

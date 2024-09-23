@@ -7,7 +7,12 @@ export type PageConfig = {
 export const pages: PageConfig[] = [
   {
     name: "Feed",
-    path: "/",
+    path: "/feed",
+    isActive: true,
+  },
+  {
+    name: "Detail",
+    path: "detail/:id",
     isActive: true,
   },
   {

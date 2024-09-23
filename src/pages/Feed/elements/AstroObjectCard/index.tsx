@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import type { AstroObjectInterface } from "@/services/api/schema/feed";
+import type { AstroObjectInterface } from "@/services/api/schema/astroObject";
 
 import { Link, Typography, Box } from "@mui/material";
 

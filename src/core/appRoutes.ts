@@ -3,7 +3,7 @@ export class AppRoutes {
     return "/feed";
   }
 
-  static getDetailUrl(id: number) {
+  static getDetailUrl(id: number | string) {
     return `/detail/${id}`;
   }
 

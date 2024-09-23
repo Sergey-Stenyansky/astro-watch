@@ -2,7 +2,7 @@ import { defineConfig, PluginOption, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import checker from "vite-plugin-checker";
 
-import { fileURLToPath, URL } from "node:url";
+import { fileURLToPath, URL } from "url";
 
 function buildPlugins(env: Record<string, string>) {
   const plugins: PluginOption[] = [];

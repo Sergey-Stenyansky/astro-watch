@@ -32,10 +32,11 @@ export default tseslint.config(
     },
     settings: {
       "import/resolver": {
-        "eslint-import-resolver-custom-alias": {
-          alias: {
-            "@": "./src",
-          },
+        alias: {
+          map: [
+            ["@", "./src"],
+            ["msw/browser", "./node_modules/msw/browser"],
+          ],
           extensions: [".ts", ".js", ".tsx", ".jsx"],
         },
       },

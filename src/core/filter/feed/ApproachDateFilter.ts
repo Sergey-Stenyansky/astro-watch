@@ -1,4 +1,4 @@
-import { AstroObjectInterface } from "@/services/api/schema/feed";
+import type { AstroObjectInterface } from "@/services/api/schema/astroObject";
 import { CriteriaListFilter, CriteriaLogic, type FlagCriteria } from "../filters";
 import { groupBy, omit } from "ramda";
 import dayjs, { Dayjs } from "dayjs";

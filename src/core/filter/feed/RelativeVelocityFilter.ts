@@ -1,4 +1,4 @@
-import type { AstroObjectInterface } from "@/services/api/schema/feed";
+import type { AstroObjectInterface } from "@/services/api/schema/astroObject";
 import { FilterField } from "@/core/filter/filters";
 
 export default class RelativeVelocitFilter extends FilterField<AstroObjectInterface> {

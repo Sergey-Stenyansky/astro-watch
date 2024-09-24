@@ -80,7 +80,7 @@
       "orbitDeterminationDate": "Дата определения орбиты",
       "firstObservationDate": "Первое наблюдение",
       "lastObservationDate": "Последнее наблюдение",
-      "dataArcInDays": "Последнее наблюдение",
+      "dataArcInDays": "data-arc в днях",
       "observationsUsed": "Количество наблюдений",
       "orbitUncertainty": "Параметр неопределенности",
       "minimumOrbitIntersection": "Минимальное пересечение",
@@ -97,7 +97,7 @@
       "perihelionTime": "Время перицентра",
       "meanAnomaly": "Средняя аномалия",
       "meanMotion": "Среднее движение",
-      "equinox": "Равноденствие",
+      "equinox": "Эпоха",
       "orbitClass": {
         "word": "Класс орбиты",
         "type": "Тип",

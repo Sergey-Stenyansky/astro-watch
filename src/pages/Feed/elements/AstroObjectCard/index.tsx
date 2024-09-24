@@ -1,8 +1,10 @@
 import { memo } from "react";
 
-import type { AstroObjectInterface } from "@/services/api/schema/feed";
+import type { AstroObjectInterface } from "@/services/api/schema/astroObject";
 
 import { Link, Typography, Box } from "@mui/material";
+
+import { Link as AppLink } from "react-router-dom";
 
 import Card from "@/primitives/Card";
 import Spacing from "@/primitives/Spacing";
@@ -12,23 +14,24 @@ import Cancel from "@mui/icons-material/Cancel";
 import CardCell from "@/primitives/Cells/CardCell";
 import { flexSpaceBetween, overlowEllipsis } from "@/theme/commonStyles";
 
-import { diameterFormatter } from "./util";
+import { diameterFormatter } from "@/util/format/diameter";
+
 import { useTranslation } from "react-i18next";
 import formatDate, { DateFormat } from "@/util/date/format";
-
-interface ComponentProps {
-  item: AstroObjectInterface;
-}
+import { AppRoutes } from "@/core/appRoutes";
 
 const linkStyles = [{ maxWidth: 800 }, overlowEllipsis];
+const nameStyles = { textDecoration: "none", color: "inherit", flex: 1 };
 
-const AstroObjectCard = ({ item }: ComponentProps) => {
+const AstroObjectCard = ({ item }: { item: AstroObjectInterface }) => {
   const approachData = item.closeApproachData[0];
   const { t } = useTranslation();
   return (
     <Card>
       <Box sx={flexSpaceBetween}>
-        <Typography variant="h5">{item.name}</Typography>
+        <AppLink style={nameStyles} to={AppRoutes.getDetailUrl(item.id)}>
+          <Typography variant="h5">{item.name}</Typography>
+        </AppLink>
         <Link sx={linkStyles} href={item.nasaJplUrl}>
           {item.nasaJplUrl}
         </Link>

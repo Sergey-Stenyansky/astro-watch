@@ -1,5 +1,5 @@
 import { SortingReducerState, SortOrder } from "@/reducers/sorting";
-import { AstroObjectInterface } from "@/services/api/schema/feed";
+import { AstroObjectInterface } from "@/services/api/schema/astroObject";
 import { assignDefault } from "@/util/object";
 import { getDateSorter, getNameSorter } from "@/util/sorting";
 

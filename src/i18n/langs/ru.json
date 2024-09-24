@@ -4,6 +4,18 @@
     "noElements": "Нет элементов для отображения",
     "tryChangeSearch": "Попробуйте изменить поисковой запрос"
   },
+  "navigation": {
+    "back": "Назад"
+  },
+  "declensions": {
+    "element": {
+      "one": "элемент",
+      "few": "элемента",
+      "many": "элементов"
+    }
+  },
+  "hide": "Скрыть",
+  "show": "Показать",
   "sort": {
     "word": "Сортировка",
     "asc": "по возрастанию",
@@ -49,6 +61,52 @@
       "isPotentiallyHazardous": "Потенциально опасен",
       "isSentryObject": "Объект Sentry",
       "missDistance": "Расстояние подлета"
+    }
+  },
+  "orbitingBodies": {
+    "mercury": "Меркурий",
+    "venus": "Венера",
+    "earth": "Земля",
+    "mars": "Марс",
+    "jupiter": "Юпитер",
+    "saturn": "Сатурн",
+    "neptune": "Нептун",
+    "uranus": "Уран",
+    "pluto": "Плутон"
+  },
+  "detail": {
+    "onlyFutureDates": "Только будущие даты",
+    "orbitingBody": "Тело орбиты",
+    "orbitalData": {
+      "word": "Данные орбиты",
+      "orbitId": "ID орбиты",
+      "orbitDeterminationDate": "Дата определения орбиты",
+      "firstObservationDate": "Первое наблюдение",
+      "lastObservationDate": "Последнее наблюдение",
+      "dataArcInDays": "data-arc в днях",
+      "observationsUsed": "Количество наблюдений",
+      "orbitUncertainty": "Параметр неопределенности",
+      "minimumOrbitIntersection": "Минимальное пересечение",
+      "jupiterTisserandInvariant": "Инвариант Тиссерана",
+      "epochOsculation": "Оскуляция",
+      "eccentricity": "Эксцентриситет",
+      "semiMajorAxis": "Большая полуось",
+      "inclination": "Наклонение",
+      "ascendingNodeLongitude": "Долгота восходящего узла",
+      "orbitalPeriod": "Период орбиты",
+      "perihelionArgument": "Аргумент перицентра",
+      "perihelionDistance": "Расстояние перицентра",
+      "aphelionDistance": "Расстояние апоцентра",
+      "perihelionTime": "Время перицентра",
+      "meanAnomaly": "Средняя аномалия",
+      "meanMotion": "Среднее движение",
+      "equinox": "Эпоха",
+      "orbitClass": {
+        "word": "Класс орбиты",
+        "type": "Тип",
+        "description": "Описание",
+        "range": "Разброс"
+      }
     }
   }
 }

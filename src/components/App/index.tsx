@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { Provider } from "react-redux";
 import store from "@/store";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AsyncView from "@/components/AsyncView";
 import { pages } from "@/pages";
 import theme from "@/theme";
@@ -10,6 +10,7 @@ import MainLayout from "../MainLayout";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AppRoutes } from "@/core/appRoutes";
 
 const App = () => {
   const routesElement = (
@@ -20,6 +21,8 @@ const App = () => {
           .map((page) => (
             <Route key={page.path} path={page.path} element={<AsyncView name={page.name} />} />
           ))}
+        <Route path="/" element={<Navigate to={AppRoutes.getDefaultUrl()} replace />} />
+        <Route path="*" element={<Navigate to={AppRoutes.getDefaultUrl()} replace />} />
       </Route>
     </Routes>
   );

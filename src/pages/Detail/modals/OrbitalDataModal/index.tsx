@@ -10,9 +10,12 @@ import {
   DialogContent,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
-import Close from "@mui/icons-material/Close";
 import { OrbitalDataInterface } from "@/services/api/schema/orbitalData";
+import formatDate, { DateFormat } from "@/util/date/format";
+import InternalIcon from "@/primitives/InternalIcon";
+import { flex1 } from "@/theme/commonStyles";
+
+import styles from "./styles.module.css";
 
 interface ModalProps {
   opened: boolean;
@@ -20,33 +23,35 @@ interface ModalProps {
   data: OrbitalDataInterface;
 }
 
+const appBarClasses = { root: styles.appBar };
+
 const OrbitalDataModal = ({ opened, onChangeOpened, data }: ModalProps) => {
   const { t } = useTranslation();
   return (
     <Dialog fullScreen open={opened} onClose={onChangeOpened} scroll="body">
-      <AppBar sx={{ position: "relative" }}>
-        <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={() => onChangeOpened(false)}>
-            <Close />
-          </IconButton>
-          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+      <AppBar position="relative" color="transparent" classes={appBarClasses}>
+        <Toolbar variant="dense">
+          <Typography sx={flex1} variant="h6" component="div">
             {t("detail.orbitalData.word")}
           </Typography>
+          <IconButton edge="end" color="inherit" onClick={() => onChangeOpened(false)}>
+            <InternalIcon icon="close" />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <DialogContent>
         <CardCell text={t("detail.orbitalData.orbitId")} value={data.orbitId} />
         <CardCell
           text={t("detail.orbitalData.orbitDeterminationDate")}
-          value={data.orbitDeterminationDate}
+          value={formatDate(data.orbitDeterminationDate, DateFormat.fullDateISO)}
         />
         <CardCell
           text={t("detail.orbitalData.firstObservationDate")}
-          value={data.firstObservationDate}
+          value={formatDate(data.firstObservationDate, DateFormat.shortDateISO)}
         />
         <CardCell
           text={t("detail.orbitalData.lastObservationDate")}
-          value={data.lastObservationDate}
+          value={formatDate(data.lastObservationDate, DateFormat.shortDateISO)}
         />
         <CardCell text={t("detail.orbitalData.dataArcInDays")} value={data.dataArcInDays} />
         <CardCell text={t("detail.orbitalData.observationsUsed")} value={data.observationsUsed} />

@@ -1,6 +1,6 @@
 import CardCell from "@/primitives/Cells/CardCell";
 
-import { Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Typography, Accordion, AccordionSummary, AccordionDetails, Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import formatDate, { DateFormat } from "@/util/date/format";
@@ -18,13 +18,14 @@ const ApproachDataItem = ({ item }: { item: CloseApproachDataInterface }) => {
     <Accordion expanded={opened} onChange={setOpened}>
       <AccordionSummary expandIcon={<ArrowDropDown />}>
         <Typography fontWeight="fontWeightBold">
-          {formatDate(item.closeApproachDate, DateFormat.shortDate)}
+          {formatDate(item.closeApproachDateFull, DateFormat.fullDate)}
         </Typography>
       </AccordionSummary>
+      <Divider />
       <AccordionDetails>
         <CardCell
           text={t("feed.closeApproachDate")}
-          value={formatDate(item.closeApproachDate, DateFormat.shortDate)}
+          value={formatDate(item.closeApproachDateFull, DateFormat.fullDate)}
         />
         <CardCell
           text={t("feed.relativeVelocity")}

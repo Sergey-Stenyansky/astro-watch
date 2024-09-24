@@ -14,12 +14,12 @@ import { useFeedContext } from "@/pages/Feed/context";
 
 import { applySort } from "../../sorting";
 
-import { paginate } from "@/util/pagination";
+import { calculateTotalPages, paginate } from "@/util/pagination";
 
 import useDebouncedValue from "@/hooks/useDebouncedValue";
 import { windowSelector } from "@/reducers/feed/selectors";
 import { initFromFilter } from "@/reducers/feed/feedFilter";
-import { AstroObjectInterface } from "@/services/api/schema/feed";
+import { AstroObjectInterface } from "@/services/api/schema/astroObject";
 
 const emptyContent: AstroObjectInterface[] = [];
 
@@ -51,7 +51,9 @@ const FeedContent = () => {
   const content = useMemo(() => {
     const filtered = filter.apply(filterState, items);
     const sorted = applySort(filtered, sort.activeField, sort.sortOrder);
-    return paginate(sorted, page, 8);
+    const totalPages = calculateTotalPages(sorted.length, 8);
+    const clampedPage = Math.min(page, totalPages);
+    return paginate(sorted, clampedPage, 8);
   }, [items, filter, filterState, sort.activeField, sort.sortOrder, page]);
 
   return (

@@ -27,6 +27,8 @@ import { getShowAllButtonText } from "./util";
 import { useApproachData } from "./hooks";
 import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
 
+import PageHeader from "@/primitives/PageHeader";
+
 const linkStyles = [{ maxWidth: 600 }, overlowEllipsis];
 
 const empty: CloseApproachDataInterface[] = [];
@@ -54,6 +56,7 @@ const Detail = () => {
 
   return (
     <>
+      <PageHeader title={data.name} />
       <Card>
         <Box sx={flexSpaceBetween}>
           <Link sx={linkStyles} href={data.nasaJplUrl}>

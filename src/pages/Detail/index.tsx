@@ -15,21 +15,21 @@ import Cancel from "@mui/icons-material/Cancel";
 import { diameterFormatter } from "@/util/format/diameter";
 import { useToggle } from "react-use";
 
-import { useMemo } from "react";
-import dayjs from "dayjs";
 import Checkbox from "@/primitives/Checkbox";
-import { flexCenter } from "@/theme/commonStyles";
-import i18n from "@/i18n";
-import { getElementDeclension } from "@/util/wordDeclinations/element";
+import { flexCenter, flexSpaceBetween } from "@/theme/commonStyles";
 import OrbitalDataModal from "./modals/OrbitalDataModal";
 import ApproachDataItem from "./elements/ApproachDataItem";
 
-const APPROACH_DATA_LIMIT = 30;
+import { overlowEllipsis } from "@/theme/commonStyles";
 
-function getShowAllButtonText(total: number, limited: boolean) {
-  const count = total - APPROACH_DATA_LIMIT;
-  return limited ? `${i18n.t("show")} ${count} ${getElementDeclension(count)}` : i18n.t("hide");
-}
+import { APPROACH_DATA_LIMIT } from "./common";
+import { getShowAllButtonText } from "./util";
+import { useApproachData } from "./hooks";
+import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
+
+const linkStyles = [{ maxWidth: 600 }, overlowEllipsis];
+
+const empty: CloseApproachDataInterface[] = [];
 
 const Detail = () => {
   const { id } = useParams();
@@ -42,22 +42,7 @@ const Detail = () => {
 
   const [orbitalDataOpened, toggleOrbitalData] = useToggle(false);
 
-  const approachData = useMemo(() => {
-    let items = data?.closeApproachData || [];
-    let total = items.length;
-    if (excludePast) {
-      const today = dayjs();
-      items = items.filter((item) => {
-        const date = dayjs(item.closeApproachDateFull);
-        return date.isAfter(today);
-      });
-      total = items.length;
-    }
-    if (limitItems) {
-      items = items.slice(0, APPROACH_DATA_LIMIT);
-    }
-    return { items, total };
-  }, [excludePast, data, limitItems]);
+  const approachData = useApproachData(data?.closeApproachData || empty, excludePast, limitItems);
 
   if (!isFetching && isError) {
     return <Navigate to={AppRoutes.getDefaultUrl()} />;
@@ -70,7 +55,14 @@ const Detail = () => {
   return (
     <>
       <Card>
-        <Link href={data.nasaJplUrl}>{data.nasaJplUrl}</Link>
+        <Box sx={flexSpaceBetween}>
+          <Link sx={linkStyles} href={data.nasaJplUrl}>
+            {data.nasaJplUrl}
+          </Link>
+          <Button variant="text" onClick={toggleOrbitalData}>
+            {t("detail.orbitalData.word")}
+          </Button>
+        </Box>
         <Spacing v={1} />
         {data.estimatedDiameter.feet && (
           <CardCell
@@ -87,12 +79,11 @@ const Detail = () => {
           <CardCell text={t("feed.astroObjectFields.isPotentiallyHazardous")} color="error" />
         )}
         <Spacing v={1} />
-        <Box>
-          <Button variant="text" onClick={toggleOrbitalData}>
-            {t("detail.orbitalData.word")}
-          </Button>
-        </Box>
-        <Checkbox label="Только будущие" checked={excludePast} onChange={setExcludePast} />
+        <Checkbox
+          label={t("detail.onlyFutureDates")}
+          checked={excludePast}
+          onChange={setExcludePast}
+        />
         {approachData.items.map((item) => (
           <ApproachDataItem key={item.closeApproachDateFull} item={item} />
         ))}

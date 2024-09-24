@@ -7,13 +7,15 @@ import { AstroFeedResponseSchema, AstroFeedResponse } from "@/services/api/schem
 import { baseQuery } from "./util/query";
 
 import deployment from "@/deployment/deployment.json";
-import { AstroDetailResponse, AstroDetailResponseSchema } from "./schema/asteroidDetail";
+import { AstroDetailResponse, AstroDetailResponseSchema } from "./schema/detail";
+
+import { AstroBrowseResponse, AstroBrowseResponseSchema } from "./schema/browse";
 
 const getApiKey = () => deployment.envConfigs[deployment.env as "development"].apiKey;
 
 const astroApi = createApi({
   baseQuery,
-  tagTypes: ["feed", "neo"],
+  tagTypes: ["feed", "neo", "browse"],
   endpoints: (builder) => ({
     getAtroFeed: builder.query<AstroFeedResponse, AstroFeedRequest>({
       query: (req) => ({
@@ -37,9 +39,20 @@ const astroApi = createApi({
       providesTags: ["neo"],
       extraOptions: { decoder: AstroDetailResponseSchema },
     }),
+    getAstroBrowse: builder.query<AstroBrowseResponse, number>({
+      query: (page) => ({
+        url: "browse",
+        params: {
+          api_key: getApiKey(),
+          page,
+        },
+      }),
+      providesTags: ["browse"],
+      extraOptions: { decoder: AstroBrowseResponseSchema },
+    }),
   }),
 });
 
-export const { useGetAtroFeedQuery, useGetAtroDetailQuery } = astroApi;
+export const { useGetAtroFeedQuery, useGetAtroDetailQuery, useGetAstroBrowseQuery } = astroApi;
 
 export default astroApi;

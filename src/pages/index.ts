@@ -7,7 +7,7 @@ export type PageConfig = {
 export const pages: PageConfig[] = [
   {
     name: "Feed",
-    path: "/feed",
+    path: "feed",
     isActive: true,
   },
   {
@@ -16,8 +16,8 @@ export const pages: PageConfig[] = [
     isActive: true,
   },
   {
-    name: "Test",
-    path: "test",
-    isActive: false,
+    name: "Browse",
+    path: "browse",
+    isActive: true,
   },
 ];

@@ -2,7 +2,9 @@ import dayjs, { Dayjs } from "dayjs";
 
 export enum DateFormat {
   shortDate = "DD.MM.YYYY",
+  fullDate = "DD.MM.YYYY HH:mm:ss",
   shortDateISO = "YYYY-MM-DD",
+  fullDateISO = "YYYY-MM-DD HH:mm:ss",
 }
 
 export default function formatDate(

@@ -6,19 +6,8 @@ import CardCell from "@/primitives/Cells/CardCell";
 import Card from "@/primitives/Card";
 import Spacing from "@/primitives/Spacing";
 
-import {
-  Typography,
-  Box,
-  Skeleton,
-  Link,
-  Chip,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@mui/material";
+import { Box, Skeleton, Link, Chip, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
-import formatDate, { DateFormat } from "@/util/date/format";
 
 import CheckCircle from "@mui/icons-material/CheckCircle";
 import Cancel from "@mui/icons-material/Cancel";
@@ -26,50 +15,34 @@ import Cancel from "@mui/icons-material/Cancel";
 import { diameterFormatter } from "@/util/format/diameter";
 import { useToggle } from "react-use";
 
-import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
-import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
-import { useMemo } from "react";
-import dayjs from "dayjs";
 import Checkbox from "@/primitives/Checkbox";
-import { flexCenter } from "@/theme/commonStyles";
-import i18n from "@/i18n";
-import { getElementDeclension } from "@/util/wordDeclinations/element";
+import { flexCenter, flexSpaceBetween } from "@/theme/commonStyles";
+import OrbitalDataModal from "./modals/OrbitalDataModal";
+import ApproachDataItem from "./elements/ApproachDataItem";
 
-const ApproachDataItem = ({ item }: { item: CloseApproachDataInterface }) => {
-  const { t } = useTranslation();
-  const [opened, setOpened] = useToggle(false);
+import { overlowEllipsis } from "@/theme/commonStyles";
 
+import { APPROACH_DATA_LIMIT } from "./common";
+import { getShowAllButtonText } from "./util";
+import { useApproachData } from "./hooks";
+import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
+
+import DetailPageHeader from "./elements/DetailPageHeader";
+
+const PlaceHolder = () => {
   return (
-    <Accordion expanded={opened} onChange={setOpened}>
-      <AccordionSummary expandIcon={<ArrowDropDown />}>
-        <Typography fontWeight="fontWeightBold">
-          {formatDate(item.closeApproachDate, DateFormat.shortDate)}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <CardCell
-          text={t("feed.closeApproachDate")}
-          value={formatDate(item.closeApproachDate, DateFormat.shortDate)}
-        />
-        <CardCell
-          text={t("feed.relativeVelocity")}
-          value={Number(item.relativeVelocity.kilometersPerSecond).toFixed(2)}
-        />
-        <CardCell
-          text={t("feed.astroObjectFields.missDistance")}
-          value={Number(item.missDistance.kilometers).toFixed(2)}
-        />
-      </AccordionDetails>
-    </Accordion>
+    <>
+      <DetailPageHeader />
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+    </>
   );
 };
 
-const APPROACH_DATA_LIMIT = 30;
+const linkStyles = [{ maxWidth: 600 }, overlowEllipsis];
 
-function getShowAllButtonText(total: number, limited: boolean) {
-  const count = total - APPROACH_DATA_LIMIT;
-  return limited ? `${i18n.t("show")} ${count} ${getElementDeclension(count)}` : i18n.t("hide");
-}
+const empty: CloseApproachDataInterface[] = [];
 
 const Detail = () => {
   const { id } = useParams();
@@ -80,35 +53,30 @@ const Detail = () => {
   const [excludePast, setExcludePast] = useToggle(true);
   const [limitItems, setLimitItems] = useToggle(true);
 
-  const approachData = useMemo(() => {
-    let items = data?.closeApproachData || [];
-    let total = items.length;
-    if (excludePast) {
-      const today = dayjs();
-      items = items.filter((item) => {
-        const date = dayjs(item.closeApproachDateFull);
-        return date.isAfter(today);
-      });
-      total = items.length;
-    }
-    if (limitItems) {
-      items = items.slice(0, APPROACH_DATA_LIMIT);
-    }
-    return { items, total };
-  }, [excludePast, data, limitItems]);
+  const [orbitalDataOpened, toggleOrbitalData] = useToggle(false);
+
+  const approachData = useApproachData(data?.closeApproachData || empty, excludePast, limitItems);
 
   if (!isFetching && isError) {
     return <Navigate to={AppRoutes.getDefaultUrl()} />;
   }
 
   if (!data) {
-    return <Skeleton width="100%" height={300} />;
+    return <PlaceHolder />;
   }
 
   return (
     <>
+      <DetailPageHeader title={data.name} />
       <Card>
-        <Link href={data.nasaJplUrl}>{data.nasaJplUrl}</Link>
+        <Box sx={flexSpaceBetween}>
+          <Link sx={linkStyles} href={data.nasaJplUrl}>
+            {data.nasaJplUrl}
+          </Link>
+          <Button variant="text" onClick={toggleOrbitalData}>
+            {t("detail.orbitalData.word")}
+          </Button>
+        </Box>
         <Spacing v={1} />
         {data.estimatedDiameter.feet && (
           <CardCell
@@ -124,7 +92,12 @@ const Detail = () => {
         {data.isPotentiallyHazardous && (
           <CardCell text={t("feed.astroObjectFields.isPotentiallyHazardous")} color="error" />
         )}
-        <Checkbox label="Только будущие" checked={excludePast} onChange={setExcludePast} />
+        <Spacing v={1} />
+        <Checkbox
+          label={t("detail.onlyFutureDates")}
+          checked={excludePast}
+          onChange={setExcludePast}
+        />
         {approachData.items.map((item) => (
           <ApproachDataItem key={item.closeApproachDateFull} item={item} />
         ))}
@@ -140,6 +113,11 @@ const Detail = () => {
             </Box>
           </>
         )}
+        <OrbitalDataModal
+          opened={orbitalDataOpened}
+          onChangeOpened={toggleOrbitalData}
+          data={data.orbitalData}
+        />
       </Card>
     </>
   );

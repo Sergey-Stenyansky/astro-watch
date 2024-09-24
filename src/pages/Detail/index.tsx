@@ -27,7 +27,18 @@ import { getShowAllButtonText } from "./util";
 import { useApproachData } from "./hooks";
 import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
 
-import PageHeader from "@/primitives/PageHeader";
+import DetailPageHeader from "./elements/DetailPageHeader";
+
+const PlaceHolder = () => {
+  return (
+    <>
+      <DetailPageHeader />
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+    </>
+  );
+};
 
 const linkStyles = [{ maxWidth: 600 }, overlowEllipsis];
 
@@ -51,12 +62,12 @@ const Detail = () => {
   }
 
   if (!data) {
-    return <Skeleton width="100%" height={300} />;
+    return <PlaceHolder />;
   }
 
   return (
     <>
-      <PageHeader title={data.name} />
+      <DetailPageHeader title={data.name} />
       <Card>
         <Box sx={flexSpaceBetween}>
           <Link sx={linkStyles} href={data.nasaJplUrl}>

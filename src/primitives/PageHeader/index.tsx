@@ -4,7 +4,7 @@ import { memo, ReactNode } from "react";
 import { flex1, flexSpaceBetween } from "@/theme/commonStyles";
 
 interface ComponentProps {
-  title: string;
+  title?: string;
   leftContent?: ReactNode;
   rightContent?: ReactNode;
 }

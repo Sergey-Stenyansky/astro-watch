@@ -4,6 +4,9 @@
     "noElements": "Нет элементов для отображения",
     "tryChangeSearch": "Попробуйте изменить поисковой запрос"
   },
+  "navigation": {
+    "back": "Назад"
+  },
   "declensions": {
     "element": {
       "one": "элемент",

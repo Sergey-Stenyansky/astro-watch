@@ -1,7 +1,5 @@
 import { memo } from "react";
 
-// import { highlightStyle } from "primitives/Highlight/style.css";
-
 export interface HighlightInterface {
   search?: string;
   children: React.ReactNode;

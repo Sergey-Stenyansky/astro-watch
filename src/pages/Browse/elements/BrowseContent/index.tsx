@@ -135,9 +135,9 @@ const BrowseContent = () => {
           setPage(0);
         }}
         labelDisplayedRows={({ from, to, count }) => (
-          <Typography>{`${from}–${to} ${t("pagination.of")} ${count}`}</Typography>
+          <Typography component="span">{`${from}–${to} ${t("pagination.of")} ${count}`}</Typography>
         )}
-        labelRowsPerPage={<Typography>{t("pagination.perPage")}</Typography>}
+        labelRowsPerPage={<Typography component="span">{t("pagination.perPage")}</Typography>}
       />
     </>
   );

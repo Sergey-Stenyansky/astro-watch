@@ -14,16 +14,16 @@ export const handlers = [
       statusText: "Success",
     });
   }),
-  http.get(`${RequestManager.baseUrl}/neo/*`, async () => {
+  http.get(`${RequestManager.baseUrl}/neo/browse`, async () => {
     await asyncTimeout(300);
-    return HttpResponse.json(detail, {
+    return HttpResponse.json(browse, {
       status: 200,
       statusText: "Success",
     });
   }),
-  http.get(`${RequestManager.baseUrl}/browse`, async () => {
+  http.get(`${RequestManager.baseUrl}/neo/*`, async () => {
     await asyncTimeout(300);
-    return HttpResponse.json(browse, {
+    return HttpResponse.json(detail, {
       status: 200,
       statusText: "Success",
     });

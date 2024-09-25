@@ -15,7 +15,7 @@ const getApiKey = () => deployment.envConfigs[deployment.env as "development"].a
 
 const astroApi = createApi({
   baseQuery,
-  tagTypes: ["feed", "neo", "browse"],
+  tagTypes: ["feed", "neo", "neo/browse"],
   endpoints: (builder) => ({
     getAtroFeed: builder.query<AstroFeedResponse, AstroFeedRequest>({
       query: (req) => ({
@@ -41,14 +41,14 @@ const astroApi = createApi({
     }),
     getAstroBrowse: builder.query<AstroBrowseResponse, AstroBrowseRequest>({
       query: ({ page, perPage }) => ({
-        url: "browse",
+        url: "neo/browse",
         params: {
           api_key: getApiKey(),
           page,
           number: perPage,
         },
       }),
-      providesTags: ["browse"],
+      providesTags: ["neo/browse"],
       extraOptions: { decoder: AstroBrowseResponseSchema },
     }),
   }),

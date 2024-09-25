@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { assignDefault } from "@/util/object";
-import { setStateFactory, togglerFactory } from "@/util/redux/factories";
+import { setStateFactory } from "@/util/redux/factories";
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import { getDefaultFeedWindow } from "@/util/date/window";
@@ -24,7 +24,6 @@ export type FeedFilterState = {
   missDistance: number | null;
   orbitingBody: string;
   isSentryObject: boolean | null;
-  isOpened: boolean;
 };
 
 function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState {
@@ -42,7 +41,6 @@ function getInitialState(config: Partial<FeedFilterState> = {}): FeedFilterState
       missDistance: null,
       orbitingBody: "",
       isSentryObject: null,
-      isOpened: false,
     },
     config,
   );
@@ -64,7 +62,6 @@ export const feedFilterSlice = createSlice({
       return assignDefault(state, {
         startDate: state.startDate,
         endDate: state.endDate,
-        isOpened: state.isOpened,
       });
     },
     initFromFilter(state, { payload }: PayloadAction<FeedFilter["plainObject"]>) {
@@ -100,8 +97,6 @@ export const feedFilterSlice = createSlice({
     setMissDistance: setStateFactory("missDistance"),
     setOrbitingBody: setStateFactory("orbitingBody"),
     setIsSentryObject: setStateFactory("isSentryObject"),
-    setIsOpened: setStateFactory("isOpened"),
-    toggleOpened: togglerFactory("isOpened"),
   },
   initialState,
 });
@@ -118,8 +113,6 @@ export const {
   setMissDistance,
   setOrbitingBody,
   setIsSentryObject,
-  toggleOpened,
-  setIsOpened,
   setDiameter,
   initFromFilter,
   setDateCriteria,

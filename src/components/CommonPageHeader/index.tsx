@@ -6,19 +6,24 @@ import InternalIcon from "@/primitives/InternalIcon";
 import { useAppNavigation } from "@/components/AppNavigation/context";
 import { useAppDrawerContext } from "@/components/AppDrawer/context";
 
-const DetailPageHeader = (props: { title?: string }) => {
+interface ComponentProps {
+  title?: string;
+  withBackButton?: boolean;
+}
+
+const CommonPageHeader = ({ title, withBackButton }: ComponentProps) => {
   const { t } = useTranslation();
   const appNavigation = useAppNavigation();
   const { appDrawer } = useAppDrawerContext();
   return (
     <PageHeader
-      title={props.title}
+      title={title}
       leftContent={
         <>
           <IconButton onClick={appDrawer.open}>
             <InternalIcon icon="menu" color="primary" />
           </IconButton>
-          {appNavigation.isEmpty ? null : (
+          {appNavigation.isEmpty || !withBackButton ? null : (
             <Button
               variant="text"
               startIcon={<InternalIcon icon="arrow_back" />}
@@ -33,4 +38,4 @@ const DetailPageHeader = (props: { title?: string }) => {
   );
 };
 
-export default DetailPageHeader;
+export default CommonPageHeader;

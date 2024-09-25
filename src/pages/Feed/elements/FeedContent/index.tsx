@@ -1,18 +1,18 @@
 import { useGetAtroFeedQuery } from "@/services/api";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { Pagination, Stack, Typography } from "@mui/material";
+import { Pagination, Stack } from "@mui/material";
 
 import Spacing from "@/primitives/Spacing";
 import { useTranslation } from "react-i18next";
-import { flexCenter, paginationContainerStyle, textAlignCenter } from "@/theme/commonStyles";
+import { flexCenter, paginationContainerStyle } from "@/theme/commonStyles";
 import Placeholder from "@/primitives/Placeholder";
 import AstroObjectCard from "../AstroObjectCard";
 import SkeletonPlaceholder from "../SkeletonPlaceholder";
 import FeedFilterComponent from "../FeedFilter";
 import { useFeedContext } from "@/pages/Feed/context";
 
-import { applySort } from "../../sorting";
+import { applySort } from "@/pages/Feed/sorting";
 
 import { paginate } from "@/util/pagination";
 
@@ -20,6 +20,7 @@ import useDebouncedValue from "@/hooks/useDebouncedValue";
 import { windowSelector } from "@/reducers/feed/selectors";
 import { initFromFilter } from "@/reducers/feed/feedFilter";
 import { AstroObjectInterface } from "@/services/api/schema/astroObject";
+import CommonPageHeader from "@/components/CommonPageHeader";
 
 const emptyContent: AstroObjectInterface[] = [];
 
@@ -56,10 +57,7 @@ const FeedContent = () => {
 
   return (
     <>
-      <Typography sx={textAlignCenter} variant="h2">
-        {t("astroWatch")}
-      </Typography>
-      <Spacing v={2} />
+      <CommonPageHeader title={t("astroWatch")} />
       <FeedFilterComponent />
       <Spacing v={2} />
       <Stack spacing={1} useFlexGap={true} sx={flexCenter}>

@@ -25,12 +25,12 @@ import { useApproachData } from "./hooks";
 import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
 import InternalIcon from "@/primitives/InternalIcon";
 
-import DetailPageHeader from "./elements/DetailPageHeader";
+import CommonPageHeader from "@/components/CommonPageHeader";
 
 const PlaceHolder = () => {
   return (
     <>
-      <DetailPageHeader />
+      <CommonPageHeader withBackButton />
       <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
       <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
       <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
@@ -65,7 +65,7 @@ const Detail = () => {
 
   return (
     <>
-      <DetailPageHeader title={data.name} />
+      <CommonPageHeader withBackButton title={data.name} />
       <Card>
         <Box sx={flexSpaceBetween}>
           <Link sx={linkStyles} href={data.nasaJplUrl}>

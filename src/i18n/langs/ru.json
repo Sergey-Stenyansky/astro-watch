@@ -1,5 +1,7 @@
 {
   "astroWatch": "Astro watch",
+  "yes": "Да",
+  "no": "Нет",
   "search": {
     "noElements": "Нет элементов для отображения",
     "tryChangeSearch": "Попробуйте изменить поисковой запрос"
@@ -107,6 +109,16 @@
         "description": "Описание",
         "range": "Разброс"
       }
+    }
+  },
+  "browse": {
+    "tableHeaders": {
+      "name": "Название",
+      "date": "Дата",
+      "diameter": "Диаметр",
+      "sentryObject": "Объект Sentry",
+      "hazardous": "Опасен",
+      "link": "Ссылка"
     }
   }
 }

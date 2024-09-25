@@ -26,6 +26,8 @@ export const AstroObjectExtendedSchema = AstroObjectSchema.extend({
   orbitalData: o.orbital_data,
 }));
 
+export type AstroObjectOrbitalDataInterface = z.infer<typeof AstroObjectExtendedSchema>;
+
 export const AstroBrowseResponseSchema = object({
   links: LinksSchema,
   page: PaginationSchema,

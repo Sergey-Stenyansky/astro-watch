@@ -1,9 +1,10 @@
-import { useGetAstroBrowseQuery } from "@/services/api";
+import BrowseContextProvider from "./BrowseContextProvider";
+import BrowseContent from "./elements/BrowseContent";
 
-const Browse = () => {
-  const { data } = useGetAstroBrowseQuery(0);
-
-  return <>{JSON.stringify(data)}</>;
-};
+const Browse = () => (
+  <BrowseContextProvider>
+    <BrowseContent />
+  </BrowseContextProvider>
+);
 
 export default Browse;

@@ -19,7 +19,7 @@ import { paginate } from "@/util/pagination";
 import useDebouncedValue from "@/hooks/useDebouncedValue";
 import { windowSelector } from "@/reducers/feed/selectors";
 import { initFromFilter } from "@/reducers/feed/feedFilter";
-import { AstroObjectInterface } from "@/services/api/schema/feed";
+import { AstroObjectInterface } from "@/services/api/schema/astroObject";
 
 const emptyContent: AstroObjectInterface[] = [];
 

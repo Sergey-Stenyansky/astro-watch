@@ -22,3 +22,14 @@ export function getNameSorter(order: SortOrder) {
       return (a: string, b: string) => a.localeCompare(b);
   }
 }
+
+export function getNumberSorter(order: SortOrder) {
+  switch (order) {
+    case SortOrder.asc:
+      return (a: number, b: number) => a - b;
+    case SortOrder.desc:
+      return (a: number, b: number) => b - a;
+    default:
+      return (a: number, b: number) => a - b;
+  }
+}

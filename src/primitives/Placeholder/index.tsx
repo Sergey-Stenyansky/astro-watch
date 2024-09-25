@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Paper, Typography } from "@mui/material";
 import { flexCenter, flexColumn } from "@/theme/commonStyles";
 import Spacing from "../Spacing";
-import { Search } from "@mui/icons-material";
+import InternalIcon from "../InternalIcon";
 
 interface ComponentProps {
   primaryText: string;
@@ -19,7 +19,7 @@ const Placeholder = ({ primaryText, secondaryText, width = 540, height = 200 }: 
           {primaryText}
         </Typography>
         <Spacing h={1} />
-        <Search fontSize="large" color="disabled" />
+        <InternalIcon icon="search" size="large" color="disabled" />
       </div>
       <Spacing v={1} />
       {secondaryText && <Typography>{secondaryText}</Typography>}

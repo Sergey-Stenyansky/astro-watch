@@ -12,6 +12,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { AppRoutes } from "@/core/appRoutes";
 import { AppNavigationProvider } from "../AppNavigation/provider";
+import AppDrawerContextProvider from "../AppDrawer/AppDrawerContextProvider";
 
 const App = () => {
   const routesElement = (
@@ -32,14 +33,16 @@ const App = () => {
     <StrictMode>
       <Provider store={store}>
         <BrowserRouter>
-          <AppNavigationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <ThemeProvider theme={theme}>
-                {routesElement}
-                <CssBaseline />
-              </ThemeProvider>
-            </LocalizationProvider>
-          </AppNavigationProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <AppNavigationProvider>
+              <AppDrawerContextProvider>
+                <ThemeProvider theme={theme}>
+                  {routesElement}
+                  <CssBaseline />
+                </ThemeProvider>
+              </AppDrawerContextProvider>
+            </AppNavigationProvider>
+          </LocalizationProvider>
         </BrowserRouter>
       </Provider>
     </StrictMode>

@@ -2,6 +2,11 @@
   "astroWatch": "Astro watch",
   "yes": "Да",
   "no": "Нет",
+  "mainMenu": {
+    "feed": "Ближайшие",
+    "browse": "Поиск",
+    "nav": "Навигация"
+  },
   "search": {
     "noElements": "Нет элементов для отображения",
     "tryChangeSearch": "Попробуйте изменить поисковой запрос"

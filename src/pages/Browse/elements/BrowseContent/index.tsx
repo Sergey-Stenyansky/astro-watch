@@ -93,7 +93,9 @@ const BrowseContent = () => {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  {formatDate(item.closeApproachData[0].closeApproachDate, DateFormat.shortDate)}
+                  <Typography>
+                    {formatDate(item.closeApproachData[0].closeApproachDate, DateFormat.shortDate)}
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography>

@@ -28,6 +28,8 @@ import { useTranslation } from "react-i18next";
 import { flex1 } from "@/theme/commonStyles";
 import TextInput from "@/primitives/TextInput";
 
+import TablePagination from "@mui/material/TablePagination";
+
 import Highlight from "@/primitives/Highlight";
 
 const toolbarStyles = {
@@ -36,7 +38,9 @@ const toolbarStyles = {
 };
 
 const BrowseContent = () => {
-  const { data, isFetching, isError } = useGetAstroBrowseQuery(0);
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(20);
+  const { data, isFetching, isError } = useGetAstroBrowseQuery({ page, perPage });
   const [searchValue, setSearchValue] = useState("");
 
   const { sort } = useBrowseContext();
@@ -45,7 +49,6 @@ const BrowseContent = () => {
 
   const items = useMemo(() => {
     const items = (data?.nearEarthObjects || []).slice();
-
     return applySort(items, sort.activeField, sort.sortOrder);
   }, [data, sort]);
 
@@ -83,17 +86,23 @@ const BrowseContent = () => {
             {items.map((item) => (
               <TableRow key={item.id}>
                 <TableCell component="th">
-                  <Highlight search={searchValue}>{item.name}</Highlight>
+                  <Typography>
+                    <Highlight search={searchValue}>{item.name}</Highlight>
+                  </Typography>
                 </TableCell>
                 <TableCell>
                   {formatDate(item.closeApproachData[0].closeApproachDate, DateFormat.shortDate)}
                 </TableCell>
                 <TableCell>
-                  {item.estimatedDiameter.feet
-                    ? diameterFormatter(item.estimatedDiameter.feet)
-                    : ""}
+                  <Typography>
+                    {item.estimatedDiameter.feet
+                      ? diameterFormatter(item.estimatedDiameter.feet)
+                      : ""}
+                  </Typography>
                 </TableCell>
-                <TableCell align="center">{yesOrNo(item.isSentryObject)}</TableCell>
+                <TableCell align="center">
+                  <Typography>{yesOrNo(item.isSentryObject)}</Typography>
+                </TableCell>
                 <TableCell align="center">
                   <Typography
                     fontWeight={item.isPotentiallyHazardous ? "fontWeightBold" : "fontWeightNormal"}
@@ -114,6 +123,22 @@ const BrowseContent = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[20, 50, 100]}
+        component="div"
+        count={data?.page.totalElements || 20}
+        rowsPerPage={perPage}
+        page={page}
+        onPageChange={(_, page) => setPage(page)}
+        onRowsPerPageChange={(e: ChangeEvent<HTMLInputElement>) => {
+          setPerPage(+e.target.value);
+          setPage(0);
+        }}
+        labelDisplayedRows={({ from, to, count }) => (
+          <Typography>{`${from}–${to} ${t("pagination.of")} ${count}`}</Typography>
+        )}
+        labelRowsPerPage={<Typography>{t("pagination.perPage")}</Typography>}
+      />
     </>
   );
 };

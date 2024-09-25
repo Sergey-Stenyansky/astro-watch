@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { AstroFeedRequest } from "@/services/api/requests";
+import { AstroBrowseRequest, AstroFeedRequest } from "@/services/api/requests";
 
 import { AstroFeedResponseSchema, AstroFeedResponse } from "@/services/api/schema/feed";
 
@@ -39,12 +39,13 @@ const astroApi = createApi({
       providesTags: ["neo"],
       extraOptions: { decoder: AstroDetailResponseSchema },
     }),
-    getAstroBrowse: builder.query<AstroBrowseResponse, number>({
-      query: (page) => ({
+    getAstroBrowse: builder.query<AstroBrowseResponse, AstroBrowseRequest>({
+      query: ({ page, perPage }) => ({
         url: "browse",
         params: {
           api_key: getApiKey(),
           page,
+          number: perPage,
         },
       }),
       providesTags: ["browse"],

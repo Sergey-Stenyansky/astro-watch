@@ -9,6 +9,10 @@
   "navigation": {
     "back": "Назад"
   },
+  "pagination": {
+    "perPage": "Показывать на странице",
+    "of": "из"
+  },
   "declensions": {
     "element": {
       "one": "элемент",

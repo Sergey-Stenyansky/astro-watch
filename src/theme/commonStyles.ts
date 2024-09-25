@@ -29,6 +29,14 @@ export const flexStart = {
   justifyContent: "center",
 };
 
+export const centerContent = {
+  top: "50%",
+  left: "50%",
+  transform: "translateX(-50%) translateY(-50%)",
+};
+
+export const positionRelative = { position: "relative" };
+
 export const textAlignCenter = { textAlign: "center" };
 export const flexColumn = { flexDirection: "column" };
 export const rotateY180 = { transform: "scaleY(-1)" };

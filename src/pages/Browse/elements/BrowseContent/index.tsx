@@ -25,12 +25,13 @@ import BrowseTableHead from "@/pages/Browse/elements/BrowseTableHead";
 import { useBrowseContext } from "@/pages/Browse/context";
 import TablePlaceholder from "@/primitives/TablePlaceholder";
 import { useTranslation } from "react-i18next";
-import { flex1 } from "@/theme/commonStyles";
+import { flex1, positionRelative } from "@/theme/commonStyles";
 import TextInput from "@/primitives/TextInput";
 
 import TablePagination from "@mui/material/TablePagination";
 
 import Highlight from "@/primitives/Highlight";
+import SpinnerOverlay from "@/primitives/SpinnerOverlay";
 
 const toolbarStyles = {
   pl: { sm: 2 },
@@ -40,7 +41,7 @@ const toolbarStyles = {
 const BrowseContent = () => {
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(20);
-  const { data, isFetching, isError } = useGetAstroBrowseQuery({ page, perPage });
+  const { data, isFetching, isLoading, isError } = useGetAstroBrowseQuery({ page, perPage });
   const [searchValue, setSearchValue] = useState("");
 
   const { sort } = useBrowseContext();
@@ -52,7 +53,7 @@ const BrowseContent = () => {
     return applySort(items, sort.activeField, sort.sortOrder);
   }, [data, sort]);
 
-  if (!isFetching && isError) {
+  if (!isLoading && isError) {
     return <Navigate to={AppRoutes.getDefaultUrl()} />;
   }
 
@@ -82,7 +83,8 @@ const BrowseContent = () => {
       <TableContainer component={Paper}>
         <Table size="small">
           <BrowseTableHead />
-          <TableBody>
+          <TableBody sx={positionRelative}>
+            {isFetching && <SpinnerOverlay />}
             {items.map((item) => (
               <TableRow key={item.id}>
                 <TableCell component="th">

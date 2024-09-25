@@ -96,7 +96,6 @@ const FeedFilter = () => {
           <Spacing v={1} />
           <TextInput
             sx={fullWidth}
-            size="small"
             label={t("feed.name")}
             value={state.name}
             onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setName(e.target.value))}

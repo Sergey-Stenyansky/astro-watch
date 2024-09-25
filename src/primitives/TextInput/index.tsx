@@ -10,9 +10,10 @@ interface ComponentProps extends Omit<TextFieldProps, "variant"> {
   onClear?: () => void;
 }
 
-const TextInput = ({ onClear, ...innerProps }: ComponentProps, ref: Ref<any>) => (
+const TextInput = ({ onClear, size = "small", ...innerProps }: ComponentProps, ref: Ref<any>) => (
   <TextField
     {...innerProps}
+    size={size}
     ref={ref}
     slotProps={{
       input: {

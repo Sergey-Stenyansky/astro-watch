@@ -112,6 +112,7 @@
     }
   },
   "browse": {
+    "asteroids": "Астероиды",
     "tableHeaders": {
       "name": "Название",
       "date": "Дата",

@@ -38,6 +38,7 @@ export const applySort = (
   sortBy: BrowseSortingFields,
   order: SortOrder,
 ) => {
+  if (order === SortOrder.off) return items;
   switch (sortBy) {
     case BrowseSortingFields.date:
       return items.slice().sort(sortByDate(order));
@@ -53,21 +54,21 @@ export const applySort = (
 export const createBrowseSorting = (config: Partial<BrowseSortingState> = {}): BrowseSortingState =>
   assignDefault(
     {
-      activeField: BrowseSortingFields.date,
-      defaultField: BrowseSortingFields.date,
-      sortOrder: SortOrder.asc,
+      activeField: BrowseSortingFields.name,
+      defaultField: BrowseSortingFields.name,
+      sortOrder: SortOrder.off,
       sortFields: {
         [BrowseSortingFields.date]: {
           name: "date",
-          values: [SortOrder.desc, SortOrder.asc],
+          values: [SortOrder.off, SortOrder.desc, SortOrder.asc],
         },
         [BrowseSortingFields.name]: {
           name: "name",
-          values: [SortOrder.desc, SortOrder.asc],
+          values: [SortOrder.off, SortOrder.desc, SortOrder.asc],
         },
         [BrowseSortingFields.diameter]: {
           name: "diameter",
-          values: [SortOrder.desc, SortOrder.asc],
+          values: [SortOrder.off, SortOrder.desc, SortOrder.asc],
         },
       },
     },

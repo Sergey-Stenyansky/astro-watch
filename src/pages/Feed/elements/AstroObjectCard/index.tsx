@@ -9,10 +9,9 @@ import { Link as AppLink } from "react-router-dom";
 import Card from "@/primitives/Card";
 import Spacing from "@/primitives/Spacing";
 
-import CheckCircle from "@mui/icons-material/CheckCircle";
-import Cancel from "@mui/icons-material/Cancel";
 import CardCell from "@/primitives/Cells/CardCell";
 import { flexSpaceBetween, overlowEllipsis } from "@/theme/commonStyles";
+import InternalIcon from "@/primitives/InternalIcon";
 
 import { diameterFormatter } from "@/util/format/diameter";
 
@@ -58,7 +57,13 @@ const AstroObjectCard = ({ item }: { item: AstroObjectInterface }) => {
       <CardCell text={t("feed.absoluteMagnitude")} value={item.absoluteMagnitudeH} />
       <CardCell
         text={t("feed.astroObjectFields.isSentryObject")}
-        value={item.isSentryObject ? <CheckCircle color="success" /> : <Cancel color="error" />}
+        value={
+          item.isSentryObject ? (
+            <InternalIcon icon="check_circle" color="success" />
+          ) : (
+            <InternalIcon icon="cancel" color="error" />
+          )
+        }
       />
       {item.isPotentiallyHazardous && (
         <CardCell text={t("feed.astroObjectFields.isPotentiallyHazardous")} color="error" />

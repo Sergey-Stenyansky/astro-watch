@@ -5,6 +5,11 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import OpenInNew from "@mui/icons-material/OpenInNew";
 import Cancel from "@mui/icons-material/Cancel";
 import CheckCircle from "@mui/icons-material/CheckCircle";
+import Menu from "@mui/icons-material/Menu";
+import ManageSearch from "@mui/icons-material/ManageSearch";
+import Search from "@mui/icons-material/Search";
+import Article from "@mui/icons-material/Article";
+import ArticleOutlined from "@mui/icons-material/ArticleOutlined";
 
 export const icons = {
   settings: Settings,
@@ -14,4 +19,9 @@ export const icons = {
   open_in_new: OpenInNew,
   cancel: Cancel,
   check_circle: CheckCircle,
+  menu: Menu,
+  manage_search: ManageSearch,
+  search: Search,
+  article: Article,
+  article_outlined: ArticleOutlined,
 };

@@ -12,6 +12,7 @@ import {
   TableRow,
   Toolbar,
   Typography,
+  Box,
 } from "@mui/material";
 import { useMemo, useState, ChangeEvent } from "react";
 import { Navigate } from "react-router-dom";
@@ -32,6 +33,7 @@ import TablePagination from "@mui/material/TablePagination";
 
 import Highlight from "@/primitives/Highlight";
 import SpinnerOverlay from "@/primitives/SpinnerOverlay";
+import CommonPageHeader from "@/components/CommonPageHeader";
 
 const toolbarStyles = {
   pl: { sm: 2 },
@@ -59,21 +61,23 @@ const BrowseContent = () => {
 
   if (!items.length) {
     return (
-      <TableContainer component={Paper}>
-        <Table size="small">
-          <BrowseTableHead />
-          <TablePlaceholder title={t("search.noElements")} colSpan={6} />
-        </Table>
-      </TableContainer>
+      <>
+        <CommonPageHeader title={t("browse.asteroids")} />
+        <TableContainer component={Paper}>
+          <Table size="small">
+            <BrowseTableHead />
+            <TablePlaceholder title={t("search.noElements")} colSpan={6} />
+          </Table>
+        </TableContainer>
+      </>
     );
   }
 
   return (
     <>
+      <CommonPageHeader title={t("browse.asteroids")} />
       <Toolbar sx={toolbarStyles}>
-        <Typography variant="h5" sx={flex1}>
-          {t("browse.asteroids")}
-        </Typography>
+        <Box sx={flex1} />
         <TextInput
           value={searchValue}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}

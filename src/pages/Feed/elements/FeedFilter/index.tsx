@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { Stack, Typography, FormGroup, Box, Collapse, IconButton } from "@mui/material";
 import TextInput from "@/primitives/TextInput";
 import {
-  toggleOpened,
   setName,
   setIsHazardous,
   setIsSentryObject,
@@ -38,6 +37,7 @@ import { round } from "@/util/number";
 import { formatRangeLabel } from "@/pages/Feed/util";
 import { parseSorting } from "@/pages/Feed/util";
 import CheckboxGroup from "@/primitives/CheckboxGroup";
+import { useToggle } from "react-use";
 
 const feedDateRange: DateRangeProps = {
   count: 7,
@@ -65,6 +65,8 @@ const FeedFilter = () => {
 
   const sortValue = sort.activeField + "-" + sort.sortOrder;
 
+  const [isOpened, setIsOpened] = useToggle(false);
+
   const onChangeSort = useCallback(
     (value: SortActionValues) => {
       const values = parseSorting(value);
@@ -88,11 +90,11 @@ const FeedFilter = () => {
         />
         <Box sx={flexSpaceBetween}>
           <Typography>{t("feed.customize")}</Typography>
-          <IconButton onClick={() => dispatch(toggleOpened())}>
+          <IconButton onClick={setIsOpened}>
             <InternalIcon icon="settings" />
           </IconButton>
         </Box>
-        <Collapse in={state.isOpened}>
+        <Collapse in={isOpened}>
           <Spacing v={1} />
           <TextInput
             sx={fullWidth}

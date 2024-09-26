@@ -14,7 +14,7 @@ import { useFeedContext } from "@/pages/Feed/context";
 
 import { applySort } from "@/pages/Feed/sorting";
 
-import { paginate } from "@/util/pagination";
+import { calculateTotalPages, paginate } from "@/util/pagination";
 
 import useDebouncedValue from "@/hooks/useDebouncedValue";
 import { windowSelector } from "@/reducers/feed/selectors";
@@ -52,7 +52,9 @@ const FeedContent = () => {
   const content = useMemo(() => {
     const filtered = filter.apply(filterState, items);
     const sorted = applySort(filtered, sort.activeField, sort.sortOrder);
-    return paginate(sorted, page, 8);
+    const totalPages = calculateTotalPages(sorted.length, 8);
+    const clampedPage = Math.min(page, totalPages);
+    return paginate(sorted, clampedPage, 8);
   }, [items, filter, filterState, sort.activeField, sort.sortOrder, page]);
 
   return (

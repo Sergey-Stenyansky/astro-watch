@@ -55,22 +55,24 @@ export const Default: Story = {
   decorators: [
     (Story, context) => {
       const [args, setArgs] = useArgs<StoryArgs>();
-      return Story({
-        ...context,
-        args: {
-          ...context.allArgs,
-          firstDate: convertDate(args.firstDate),
-          secondDate: convertDate(args.secondDate),
-          onChangeFirstDate: (value: string | null) => {
-            if (!value) return;
-            setArgs({ ...args, firstDate: convertDate(value) });
-          },
-          onChangeSecondDate: (value: string | null) => {
-            if (!value) return;
-            setArgs({ ...args, secondDate: convertDate(value) });
-          },
-        },
-      });
+      return (
+        <Story
+          {...context}
+          args={{
+            ...context.allArgs,
+            firstDate: convertDate(args.firstDate),
+            secondDate: convertDate(args.secondDate),
+            onChangeFirstDate: (value: string | null) => {
+              if (!value) return;
+              setArgs({ ...args, firstDate: convertDate(value) });
+            },
+            onChangeSecondDate: (value: string | null) => {
+              if (!value) return;
+              setArgs({ ...args, secondDate: convertDate(value) });
+            },
+          }}
+        />
+      );
     },
   ],
 };
@@ -88,24 +90,26 @@ export const WithAllowedRange: Story = {
   decorators: [
     (Story, context) => {
       const [args, setArgs] = useArgs<StoryArgs>();
-      return Story({
-        ...context,
-        args: {
-          ...context.allArgs,
-          allowFrom: dayjs(args.allowFrom),
-          allowTo: dayjs(args.allowTo),
-          firstDate: convertDate(args.firstDate),
-          secondDate: convertDate(args.secondDate),
-          onChangeFirstDate: (value: string | null) => {
-            if (!value) return;
-            setArgs({ ...args, firstDate: convertDate(value) });
-          },
-          onChangeSecondDate: (value: string | null) => {
-            if (!value) return;
-            setArgs({ ...args, secondDate: convertDate(value) });
-          },
-        },
-      });
+      return (
+        <Story
+          {...context}
+          args={{
+            ...context.allArgs,
+            allowFrom: dayjs(args.allowFrom),
+            allowTo: dayjs(args.allowTo),
+            firstDate: convertDate(args.firstDate),
+            secondDate: convertDate(args.secondDate),
+            onChangeFirstDate: (value: string | null) => {
+              if (!value) return;
+              setArgs({ ...args, firstDate: convertDate(value) });
+            },
+            onChangeSecondDate: (value: string | null) => {
+              if (!value) return;
+              setArgs({ ...args, secondDate: convertDate(value) });
+            },
+          }}
+        />
+      );
     },
   ],
 };

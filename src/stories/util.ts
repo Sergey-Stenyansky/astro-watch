@@ -8,6 +8,7 @@ export const controls = {
   date: () => ({ control: "date" }) as const,
   text: () => ({ control: "text" }) as const,
   object: () => ({ control: "object" }) as const,
+  radio: (options: string[]) => ({ control: "radio", options }) as const,
   number: (min?: number, max?: number, step?: number) =>
     ({ control: "number", min, max, step }) as const,
 };

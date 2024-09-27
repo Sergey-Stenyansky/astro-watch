@@ -5,6 +5,7 @@ import CommonPageHeader from "@/components/CommonPageHeader";
 import { BrowserRouter } from "react-router-dom";
 import AppDrawerContextProvider from "@/components/AppDrawer/AppDrawerContextProvider";
 import { AppNavigationProvider } from "@/components/AppNavigation/provider";
+import AppThemeProvider from "@/theme/provider";
 
 const meta = {
   title: "Astro Watch/Components/AppDrawer",
@@ -21,8 +22,10 @@ const meta = {
       <BrowserRouter>
         <AppNavigationProvider>
           <AppDrawerContextProvider>
-            <CommonPageHeader title="Example" />
-            <Story />
+            <AppThemeProvider>
+              <CommonPageHeader title="Example" />
+              <Story />
+            </AppThemeProvider>
           </AppDrawerContextProvider>
         </AppNavigationProvider>
       </BrowserRouter>

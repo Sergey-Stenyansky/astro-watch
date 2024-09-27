@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 
 import { fn } from "@storybook/test";
 
-import SortContextMenu from "@/pages/Feed/elements/SortContextMenu";
+import SortContextMenu, { SortContextMenuProps } from "@/pages/Feed/elements/SortContextMenu";
 import { controls } from "../util";
 
 import { useArgs } from "@storybook/preview-api";
@@ -22,26 +23,18 @@ const meta = {
 } satisfies Meta<typeof SortContextMenu>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  parameters: {
-    controls: {
-      exclude: /^onChange$/g,
-    },
+export const Default: StoryFn<SortContextMenuProps> = (props) => {
+  const [args, setArgs] = useArgs<{ value: SortActionValues }>();
+  const onChange = (value: SortActionValues) => {
+    setArgs({ ...args, value });
+    action("onChange")(value);
+  };
+  return <SortContextMenu {...props} onChange={onChange} />;
+};
+
+Default.parameters = {
+  controls: {
+    exclude: /^onChange$/g,
   },
-  decorators: [
-    (Story, context) => {
-      const [args, setArgs] = useArgs<{ value: SortActionValues }>();
-      return (
-        <Story
-          args={{
-            ...context.allArgs,
-            ...args,
-            onChange: (value: SortActionValues) => setArgs({ ...args, value }),
-          }}
-        />
-      );
-    },
-  ],
 };

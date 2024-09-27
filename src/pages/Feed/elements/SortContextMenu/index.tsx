@@ -13,7 +13,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useTranslation } from "react-i18next";
 
-interface ComponentProps {
+export interface SortContextMenuProps {
   value?: SortActionValues;
   onChange: (value: SortActionValues) => void;
 }
@@ -24,7 +24,7 @@ function getValueText(value: string | undefined, t: any) {
   return item.selectedText;
 }
 
-const SortContextMenu = ({ value, onChange }: ComponentProps) => {
+const SortContextMenu = ({ value, onChange }: SortContextMenuProps) => {
   const { t } = useTranslation();
   const [sortOpened, setSortOpened] = useToggle(false);
   return (

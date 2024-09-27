@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import AstroObjectCard from "@/pages/Feed/elements/AstroObjectCard";
+import { BrowserRouter } from "react-router-dom";
 
 const meta = {
   title: "Astro Watch/Feed/AstroObjectCard",
@@ -8,7 +9,13 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {},
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
 } satisfies Meta<typeof AstroObjectCard>;
 
 export default meta;

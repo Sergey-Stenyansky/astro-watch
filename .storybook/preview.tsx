@@ -4,6 +4,7 @@ import type { Preview } from "@storybook/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { AppNavigationProvider } from "../src/components/AppNavigation/provider";
+import AppDrawerContextProvider from "../src/components/AppDrawer/AppDrawerContextProvider";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -26,18 +27,20 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <BrowserRouter>
+        <BrowserRouter>
+          <I18nextProvider i18n={i18n}>
             <AppNavigationProvider>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <ThemeProvider theme={theme}>
-                  <Story />
-                  <CssBaseline />
+                  <AppDrawerContextProvider>
+                    <Story />
+                    <CssBaseline />
+                  </AppDrawerContextProvider>
                 </ThemeProvider>
               </LocalizationProvider>
             </AppNavigationProvider>
-          </BrowserRouter>
-        </I18nextProvider>
+          </I18nextProvider>
+        </BrowserRouter>
       </Provider>
     ),
   ],

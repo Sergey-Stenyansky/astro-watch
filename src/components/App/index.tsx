@@ -33,16 +33,16 @@ const App = () => {
     <StrictMode>
       <Provider store={store}>
         <BrowserRouter>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <AppNavigationProvider>
-              <AppDrawerContextProvider>
-                <ThemeProvider theme={theme}>
+          <AppNavigationProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <ThemeProvider theme={theme}>
+                <AppDrawerContextProvider>
                   {routesElement}
                   <CssBaseline />
-                </ThemeProvider>
-              </AppDrawerContextProvider>
-            </AppNavigationProvider>
-          </LocalizationProvider>
+                </AppDrawerContextProvider>
+              </ThemeProvider>
+            </LocalizationProvider>
+          </AppNavigationProvider>
         </BrowserRouter>
       </Provider>
     </StrictMode>

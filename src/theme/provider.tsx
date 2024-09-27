@@ -1,8 +1,9 @@
-import { PropsWithChildren, useMemo, useState } from "react";
+import { PropsWithChildren, useLayoutEffect, useMemo, useState } from "react";
 import { AppThemeContext } from "./context";
 import { PaletteMode, ThemeProvider } from "@mui/material";
 import { themeFactory } from "./factory";
 import { isString } from "@/util/type";
+import { useLocalStorage } from "react-use";
 
 function modeToggler(mode: PaletteMode) {
   switch (mode) {
@@ -16,7 +17,8 @@ function modeToggler(mode: PaletteMode) {
 }
 
 export default function AppThemeProvider({ children }: PropsWithChildren<{}>) {
-  const [mode, setMode] = useState<PaletteMode>("light");
+  const [localMode, setLocalMode] = useLocalStorage<PaletteMode>("mode");
+  const [mode, setMode] = useState<PaletteMode>(localMode || "light");
   const theme = useMemo(() => themeFactory({ mode }), [mode]);
   const contextValue = useMemo(
     () => ({
@@ -31,6 +33,7 @@ export default function AppThemeProvider({ children }: PropsWithChildren<{}>) {
     }),
     [theme, setMode, mode],
   );
+  useLayoutEffect(() => setLocalMode(mode), [mode, setLocalMode]);
   return (
     <ThemeProvider theme={theme}>
       <AppThemeContext.Provider value={contextValue}>{children}</AppThemeContext.Provider>

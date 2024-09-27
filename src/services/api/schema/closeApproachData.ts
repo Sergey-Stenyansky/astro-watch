@@ -32,7 +32,7 @@ export const CloseApproachDataSchema = object({
       kilometers: obj.miss_distance.kilometers,
       miles: obj.miss_distance.miles,
     },
-    orbitingDody: obj.orbiting_body,
+    orbitingBody: obj.orbiting_body,
   };
 });
 

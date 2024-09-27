@@ -37,7 +37,7 @@ const ApproachDataItem = ({ item }: { item: CloseApproachDataInterface }) => {
         />
         <CardCell
           text={t("detail.orbitingBody")}
-          value={t(`orbitingBodies.${item.orbitingDody.toLocaleLowerCase()}`, item.orbitingDody)}
+          value={t(`orbitingBodies.${item.orbitingBody.toLocaleLowerCase()}`, item.orbitingBody)}
         />
       </AccordionDetails>
     </Accordion>

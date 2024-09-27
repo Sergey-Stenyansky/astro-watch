@@ -4,15 +4,15 @@ import store from "@/store";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AsyncView from "@/components/AsyncView";
 import { pages } from "@/pages";
-import theme from "@/theme";
 import MainLayout from "../MainLayout";
 
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { AppRoutes } from "@/core/appRoutes";
-import { AppNavigationProvider } from "../AppNavigation/provider";
-import AppDrawerContextProvider from "../AppDrawer/AppDrawerContextProvider";
+import { AppNavigationProvider } from "@/components/AppNavigation/provider";
+import AppDrawerContextProvider from "@/components/AppDrawer/AppDrawerContextProvider";
+import AppThemeProvider from "@/theme/provider";
 
 const App = () => {
   const routesElement = (
@@ -35,12 +35,12 @@ const App = () => {
         <BrowserRouter>
           <AppNavigationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <ThemeProvider theme={theme}>
+              <AppThemeProvider>
                 <AppDrawerContextProvider>
                   {routesElement}
                   <CssBaseline />
                 </AppDrawerContextProvider>
-              </ThemeProvider>
+              </AppThemeProvider>
             </LocalizationProvider>
           </AppNavigationProvider>
         </BrowserRouter>

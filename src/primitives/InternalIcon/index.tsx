@@ -9,12 +9,13 @@ interface InternalIconProps {
   icon: InternalIcons;
   size?: IconFontSize;
   color?: IconColor;
+  htmlColor?: string;
   sx?: SxProps;
 }
 
-function InternalIcon({ icon, size, color, sx }: InternalIconProps) {
+function InternalIcon({ icon, size, color, htmlColor, sx }: InternalIconProps) {
   const Component = icons[icon];
-  return <Component fontSize={size} color={color} sx={sx} />;
+  return <Component fontSize={size} color={color} htmlColor={htmlColor} sx={sx} />;
 }
 
 export default memo(InternalIcon);

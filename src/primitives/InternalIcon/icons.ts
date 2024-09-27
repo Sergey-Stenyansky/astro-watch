@@ -10,6 +10,8 @@ import ManageSearch from "@mui/icons-material/ManageSearch";
 import Search from "@mui/icons-material/Search";
 import Article from "@mui/icons-material/Article";
 import ArticleOutlined from "@mui/icons-material/ArticleOutlined";
+import LightMode from "@mui/icons-material/LightMode";
+import DarkMode from "@mui/icons-material/DarkMode";
 
 export const icons = {
   settings: Settings,
@@ -24,4 +26,6 @@ export const icons = {
   search: Search,
   article: Article,
   article_outlined: ArticleOutlined,
+  light_mode: LightMode,
+  dark_mode: DarkMode,
 };

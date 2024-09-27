@@ -5,13 +5,15 @@ import PageHeader from "@/primitives/PageHeader";
 import InternalIcon from "@/primitives/InternalIcon";
 import { useAppNavigation } from "@/components/AppNavigation/context";
 import { useAppDrawerContext } from "@/components/AppDrawer/context";
+import AppThemeModeToggler from "../AppThemeModeToggler";
 
 interface ComponentProps {
   title?: string;
   withBackButton?: boolean;
+  withoutMode?: boolean;
 }
 
-const CommonPageHeader = ({ title, withBackButton }: ComponentProps) => {
+const CommonPageHeader = ({ title, withBackButton, withoutMode }: ComponentProps) => {
   const { t } = useTranslation();
   const appNavigation = useAppNavigation();
   const { appDrawer } = useAppDrawerContext();
@@ -34,6 +36,7 @@ const CommonPageHeader = ({ title, withBackButton }: ComponentProps) => {
           )}
         </>
       }
+      rightContent={!withoutMode && <AppThemeModeToggler />}
     />
   );
 };

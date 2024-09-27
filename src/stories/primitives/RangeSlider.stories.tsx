@@ -5,7 +5,7 @@ import RangeSlider from "@/primitives/RangeSlider";
 import { controls } from "../util";
 
 const meta = {
-  title: "Primitives/RangeSlider",
+  title: "Astro Watch/Primitives/RangeSlider",
   component: RangeSlider,
   parameters: {
     layout: "centered",

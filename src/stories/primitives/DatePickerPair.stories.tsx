@@ -10,7 +10,7 @@ import formatDate, { DateFormat } from "@/util/date/format";
 import { convertDate, controls } from "../util";
 
 const meta = {
-  title: "Primitives/DatePickerPair",
+  title: "Astro Watch/Primitives/DatePickerPair",
   component: DatePickerPair,
   parameters: {
     layout: "centered",

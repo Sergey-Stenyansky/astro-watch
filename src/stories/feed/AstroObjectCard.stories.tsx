@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import AstroObjectCard from "@/pages/Feed/elements/AstroObjectCard";
 
 const meta = {
-  title: "Feed/AstroObjectCard",
+  title: "Astro Watch/Feed/AstroObjectCard",
   component: AstroObjectCard,
   parameters: {
     layout: "centered",

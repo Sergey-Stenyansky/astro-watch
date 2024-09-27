@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 import Checkbox from "@/primitives/Checkbox";
 
 const meta = {
-  title: "Primitives/Checkbox",
+  title: "Astro Watch/Primitives/Checkbox",
   component: Checkbox,
   parameters: {
     layout: "centered",

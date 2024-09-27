@@ -4,7 +4,7 @@ import AppDrawer from "@/components/AppDrawer";
 import CommonPageHeader from "@/components/CommonPageHeader";
 
 const meta = {
-  title: "Components/AppDrawer",
+  title: "Astro Watch/Components/AppDrawer",
   component: AppDrawer,
   parameters: {
     layout: "centered",

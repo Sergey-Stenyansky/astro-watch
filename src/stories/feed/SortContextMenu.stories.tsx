@@ -9,7 +9,7 @@ import { useArgs } from "@storybook/preview-api";
 import { SortActionValues } from "@/pages/Feed/elements/SortContextMenu/types";
 
 const meta = {
-  title: "Feed/SortContextMenu",
+  title: "Astro Watch/Feed/SortContextMenu",
   component: SortContextMenu,
   parameters: {
     layout: "centered",

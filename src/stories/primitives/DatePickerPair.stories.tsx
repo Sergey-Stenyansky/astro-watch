@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useArgs } from "@storybook/preview-api";
+import { action } from "@storybook/addon-actions";
 import { fn } from "@storybook/test";
 
-import DatePickerPair from "@/primitives/DatePickerPair";
+import DatePickerPair, { DatePickerPairProps } from "@/primitives/DatePickerPair";
 
 import dayjs from "dayjs";
 import formatDate, { DateFormat } from "@/util/date/format";
@@ -37,8 +38,6 @@ const meta = {
 } satisfies Meta<typeof DatePickerPair>;
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
 type StoryArgs = {
   allowFrom: number;
   allowTo: number;
@@ -46,70 +45,64 @@ type StoryArgs = {
   secondDate: number | string;
 };
 
-export const Default: Story = {
-  parameters: {
-    controls: {
-      exclude: /^(allowTo|allowFrom|allowedRange|onChangeFirstDate|onChangeSecondDate)$/g,
-    },
-  },
-  decorators: [
-    (Story, context) => {
-      const [args, setArgs] = useArgs<StoryArgs>();
-      return (
-        <Story
-          {...context}
-          args={{
-            ...context.allArgs,
-            firstDate: convertDate(args.firstDate),
-            secondDate: convertDate(args.secondDate),
-            onChangeFirstDate: (value: string | null) => {
-              if (!value) return;
-              setArgs({ ...args, firstDate: convertDate(value) });
-            },
-            onChangeSecondDate: (value: string | null) => {
-              if (!value) return;
-              setArgs({ ...args, secondDate: convertDate(value) });
-            },
-          }}
-        />
-      );
-    },
-  ],
+export const Default: StoryFn<DatePickerPairProps> = (props) => {
+  const [args, setArgs] = useArgs<StoryArgs>();
+  const onChangeFirstDate = (value: string | null) => {
+    if (!value) return;
+    setArgs({ ...args, firstDate: convertDate(value) });
+    action("onChangeFirstDate")(value);
+  };
+  const onChangeSecondDate = (value: string | null) => {
+    if (!value) return;
+    setArgs({ ...args, secondDate: convertDate(value) });
+    action("onChangeSecondDate")(value);
+  };
+  return (
+    <DatePickerPair
+      {...props}
+      firstDate={convertDate(args.firstDate)}
+      secondDate={convertDate(args.secondDate)}
+      onChangeFirstDate={onChangeFirstDate}
+      onChangeSecondDate={onChangeSecondDate}
+    />
+  );
 };
 
-export const WithAllowedRange: Story = {
-  args: {
-    allowFrom: dayjs(),
-    allowTo: dayjs().add(7, "days"),
+Default.parameters = {
+  controls: {
+    exclude: /^(allowTo|allowFrom|allowedRange|onChangeFirstDate|onChangeSecondDate)$/g,
   },
-  parameters: {
-    controls: {
-      exclude: /^(allowedRange|onChangeFirstDate|onChangeSecondDate)$/g,
-    },
+};
+
+export const WithAllowedRange: StoryFn<DatePickerPairProps> = (props) => {
+  const [args, setArgs] = useArgs<StoryArgs>();
+  const onChangeFirstDate = (value: string | null) => {
+    if (!value) return;
+    setArgs({ ...args, firstDate: convertDate(value) });
+    action("onChangeFirstDate")(value);
+  };
+  const onChangeSecondDate = (value: string | null) => {
+    if (!value) return;
+    setArgs({ ...args, secondDate: convertDate(value) });
+    action("onChangeSecondDate")(value);
+  };
+  return (
+    <DatePickerPair
+      {...props}
+      allowFrom={dayjs(args.allowFrom)}
+      allowTo={dayjs(args.allowTo)}
+      firstDate={convertDate(args.firstDate)}
+      secondDate={convertDate(args.secondDate)}
+      onChangeFirstDate={onChangeFirstDate}
+      onChangeSecondDate={onChangeSecondDate}
+    />
+  );
+};
+
+WithAllowedRange.args = { allowFrom: dayjs(), allowTo: dayjs().add(7, "days") };
+
+WithAllowedRange.parameters = {
+  controls: {
+    exclude: /^(allowedRange|onChangeFirstDate|onChangeSecondDate)$/g,
   },
-  decorators: [
-    (Story, context) => {
-      const [args, setArgs] = useArgs<StoryArgs>();
-      return (
-        <Story
-          {...context}
-          args={{
-            ...context.allArgs,
-            allowFrom: dayjs(args.allowFrom),
-            allowTo: dayjs(args.allowTo),
-            firstDate: convertDate(args.firstDate),
-            secondDate: convertDate(args.secondDate),
-            onChangeFirstDate: (value: string | null) => {
-              if (!value) return;
-              setArgs({ ...args, firstDate: convertDate(value) });
-            },
-            onChangeSecondDate: (value: string | null) => {
-              if (!value) return;
-              setArgs({ ...args, secondDate: convertDate(value) });
-            },
-          }}
-        />
-      );
-    },
-  ],
 };

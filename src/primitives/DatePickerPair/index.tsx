@@ -22,7 +22,7 @@ import { timeRange } from "@/util/date/window";
 
 import { useDatePair } from "./hooks";
 
-interface ComponentProps {
+export interface DatePickerPairProps {
   firstDate: string | null;
   onChangeFirstDate: (value: string | null) => void;
   secondDate: string | null;
@@ -55,7 +55,7 @@ const DatePickerPair = ({
   firstLabel,
   secondLabel,
   label,
-}: ComponentProps) => {
+}: DatePickerPairProps) => {
   const [first, setFirst] = useState(firstDate);
   const [second, setSecond] = useState(secondDate);
   const [errorState, setErrorState] = useState<DatePickerPairValidationResult | null>(null);

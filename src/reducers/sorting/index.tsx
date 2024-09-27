@@ -87,19 +87,19 @@ export const sortActions = {
     ({
       type: SortingActionTypes.toggle,
       payload,
-    } as const),
+    }) as const,
   setOrder: (payload: SortOrder) =>
     ({
       type: SortingActionTypes.toggle,
       payload,
-    } as const),
+    }) as const,
   toggleOrder: () =>
     ({
       type: SortingActionTypes.toggle,
-    } as const),
+    }) as const,
   setSorting: <T extends string>(field: T, order: SortOrder) =>
     ({
       type: SortingActionTypes.setSorting,
       payload: { field, order },
-    } as const),
+    }) as const,
 };

@@ -3,7 +3,7 @@ import "./global.styles.css";
 import { createRoot } from "react-dom/client";
 import App from "@/components/App";
 
-import "@/i18n/index";
+import "@/i18n";
 
 import deployment from "@/deployment/deployment.json";
 

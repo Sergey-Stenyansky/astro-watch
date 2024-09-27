@@ -3,6 +3,10 @@ export class AppRoutes {
     return "/feed";
   }
 
+  static getBrowseUrl() {
+    return "/browse";
+  }
+
   static getDetailUrl(id: number | string) {
     return `/detail/${id}`;
   }

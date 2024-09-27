@@ -9,9 +9,6 @@ import Spacing from "@/primitives/Spacing";
 import { Box, Skeleton, Link, Chip, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import CheckCircle from "@mui/icons-material/CheckCircle";
-import Cancel from "@mui/icons-material/Cancel";
-
 import { diameterFormatter } from "@/util/format/diameter";
 import { useToggle } from "react-use";
 
@@ -26,13 +23,14 @@ import { APPROACH_DATA_LIMIT } from "./common";
 import { getShowAllButtonText } from "./util";
 import { useApproachData } from "./hooks";
 import { CloseApproachDataInterface } from "@/services/api/schema/closeApproachData";
+import InternalIcon from "@/primitives/InternalIcon";
 
-import DetailPageHeader from "./elements/DetailPageHeader";
+import CommonPageHeader from "@/components/CommonPageHeader";
 
 const PlaceHolder = () => {
   return (
     <>
-      <DetailPageHeader />
+      <CommonPageHeader withBackButton />
       <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
       <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
       <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
@@ -67,7 +65,7 @@ const Detail = () => {
 
   return (
     <>
-      <DetailPageHeader title={data.name} />
+      <CommonPageHeader withBackButton title={data.name} />
       <Card>
         <Box sx={flexSpaceBetween}>
           <Link sx={linkStyles} href={data.nasaJplUrl}>
@@ -87,7 +85,13 @@ const Detail = () => {
         <CardCell text={t("feed.absoluteMagnitude")} value={data.absoluteMagnitudeH} />
         <CardCell
           text={t("feed.astroObjectFields.isSentryObject")}
-          value={data.isSentryObject ? <CheckCircle color="success" /> : <Cancel color="error" />}
+          value={
+            data.isSentryObject ? (
+              <InternalIcon icon="check_circle" color="success" />
+            ) : (
+              <InternalIcon icon="cancel" color="error" />
+            )
+          }
         />
         {data.isPotentiallyHazardous && (
           <CardCell text={t("feed.astroObjectFields.isPotentiallyHazardous")} color="error" />

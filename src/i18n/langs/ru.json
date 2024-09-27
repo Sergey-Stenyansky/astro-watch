@@ -1,11 +1,22 @@
 {
   "astroWatch": "Astro watch",
+  "yes": "Да",
+  "no": "Нет",
+  "mainMenu": {
+    "feed": "Ближайшие",
+    "browse": "Поиск",
+    "nav": "Навигация"
+  },
   "search": {
     "noElements": "Нет элементов для отображения",
     "tryChangeSearch": "Попробуйте изменить поисковой запрос"
   },
   "navigation": {
     "back": "Назад"
+  },
+  "pagination": {
+    "perPage": "Показывать на странице",
+    "of": "из"
   },
   "declensions": {
     "element": {
@@ -107,6 +118,17 @@
         "description": "Описание",
         "range": "Разброс"
       }
+    }
+  },
+  "browse": {
+    "asteroids": "Астероиды",
+    "tableHeaders": {
+      "name": "Название",
+      "date": "Дата",
+      "diameter": "Диаметр",
+      "sentryObject": "Объект Sentry",
+      "hazardous": "Опасен",
+      "link": "Ссылка"
     }
   }
 }

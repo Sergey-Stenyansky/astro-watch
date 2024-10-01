@@ -2,7 +2,7 @@ import { test, expect } from "@jest/globals";
 
 import { render, fireEvent } from "@testing-library/react";
 
-import AppDrawer from "..";
+import AppDrawer from ".";
 
 import i18n from "@/i18n";
 import CommonPageHeader from "@/components/CommonPageHeader";

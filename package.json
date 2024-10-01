@@ -45,6 +45,8 @@
     "@storybook/react": "^8.3.3",
     "@storybook/react-vite": "^8.3.3",
     "@storybook/test": "^8.3.3",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
     "@types/jest": "^29.5.13",
     "@types/ramda": "^0.30.2",
     "@types/react": "^18.3.3",

@@ -1,11 +1,14 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
+
 export default {
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   roots: ["<rootDir>/src"],
   testMatch: ["**/__tests__/**/*.+(ts|tsx|js)", "**/?(*.)+(spec|ttt).+(ts|tsx|js)"],
   transformIgnorePatterns: ["/node_modules/"],
   transform: {
-    "^.+.tsx?$": ["ts-jest", {}],
+    "^.+.tsx?$": ["ts-jest", { tsconfig: "tsconfig.app.json" }],
   },
-  testEnvironment: "jsdom",
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
 };

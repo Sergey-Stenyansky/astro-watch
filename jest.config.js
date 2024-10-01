@@ -1,7 +1,7 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 
 export default {
-  testEnvironment: "jsdom",
+  testEnvironment: "jest-environment-jsdom",
   roots: ["<rootDir>/src"],
   testMatch: ["**/__tests__/**/*.+(ts|tsx|js)", "**/?(*.)+(spec|ttt).+(ts|tsx|js)"],
   transformIgnorePatterns: ["/node_modules/"],
@@ -10,5 +10,10 @@ export default {
   },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+  },
+  globals: {
+    "ts-jest": {
+      diagnostics: false,
+    },
   },
 };

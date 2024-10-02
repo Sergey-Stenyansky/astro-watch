@@ -12,6 +12,7 @@ interface ComponentProps {
   icon?: InternalIcons | React.ReactElement;
   selected?: boolean;
   onClick?: (value: string | number) => void;
+  label?: string;
 }
 
 const ContextMenuItem = ({
@@ -21,9 +22,16 @@ const ContextMenuItem = ({
   secondary,
   selected,
   onClick,
+  label,
 }: ComponentProps) => {
   return (
-    <MenuItem selected={selected} sx={fullWidth} value={value} onClick={() => onClick?.(value)}>
+    <MenuItem
+      aria-label={label}
+      selected={selected}
+      sx={fullWidth}
+      value={value}
+      onClick={() => onClick?.(value)}
+    >
       <ListItemText secondary={secondary}>{primary}</ListItemText>
       {icon ? isString(icon) ? <InternalIcon icon={icon} color="action" /> : icon : null}
     </MenuItem>

@@ -1,13 +1,13 @@
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 
-export interface HighlightInterface {
+export interface HighlightProps {
   search?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const escapeRegExp = (str = "") => str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 
-const Highlight = function ({ search, children }: HighlightInterface) {
+const Highlight = function ({ search, children }: HighlightProps) {
   if (!search) return <>{children}</>;
 
   const pattern = new RegExp(`(${escapeRegExp(search)})`, "i");

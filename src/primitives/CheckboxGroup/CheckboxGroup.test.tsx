@@ -24,7 +24,7 @@ const createProps = ({
   items: createItems([groupValue]),
 });
 
-test("checkbox toggles its state on click", async () => {
+test("checkbox group toggles its state on click", async () => {
   let groupValue = "";
   const onToggle = (value: string) => (groupValue = value);
   const { findByRole, rerender } = render(

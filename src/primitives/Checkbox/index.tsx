@@ -3,7 +3,7 @@ import { FormControlLabel, Checkbox } from "@mui/material";
 
 import { memo, ChangeEvent } from "react";
 
-interface ComponentProps {
+export interface CheckboxProps {
   checked?: boolean;
   onChange: (checked: boolean) => void;
   label?: string;
@@ -17,7 +17,7 @@ const CheckboxComponent = ({
   label,
   labelPlacement = "end",
   required,
-}: ComponentProps) => (
+}: CheckboxProps) => (
   <FormControlLabel
     sx={margin0}
     label={label}

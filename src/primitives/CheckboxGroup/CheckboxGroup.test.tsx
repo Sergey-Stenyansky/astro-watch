@@ -1,9 +1,9 @@
-import { test, expect } from "@jest/globals";
+import { test, expect, beforeEach } from "@jest/globals";
 
-import { render, fireEvent } from "@testing-library/react";
 import CheckboxGroup, { CheckboxGroupProps } from ".";
 
 import { CheckboxGroupItem } from "./types";
+import { setup } from "@/util/test";
 
 const createItems = (values: string[]): CheckboxGroupItem[] => {
   return [
@@ -13,36 +13,39 @@ const createItems = (values: string[]): CheckboxGroupItem[] => {
   ];
 };
 
-const createProps = ({
-  onToggle,
-  groupValue,
-}: Partial<CheckboxGroupProps> & {
-  onToggle: (value: string) => void;
-  groupValue: string;
-}): CheckboxGroupProps => ({
-  onToggle,
-  items: createItems([groupValue]),
+let props = {} as CheckboxGroupProps;
+
+beforeEach(() => {
+  props = {
+    onToggle: jest.fn(),
+    items: createItems([]),
+    label: "Test Label",
+  };
 });
 
 test("checkbox group toggles its state on click", async () => {
-  let groupValue = "";
-  const onToggle = (value: string) => (groupValue = value);
-  const { findByRole, rerender } = render(
-    <CheckboxGroup {...createProps({ onToggle, groupValue })} />,
-  );
+  const { findByRole, userEvent, rerender } = setup(<CheckboxGroup {...props} />);
 
-  const firstVariant = (await findByRole("checkbox", { name: "test 1" })) as HTMLInputElement;
-  fireEvent(firstVariant, new MouseEvent("click", { bubbles: true }));
-  rerender(<CheckboxGroup {...createProps({ onToggle, groupValue })} />);
-  expect(firstVariant).toHaveProperty("checked", true);
+  expect(props.onToggle).toHaveBeenCalledTimes(0);
+  expect(await findByRole("checkbox", { name: "test 1" })).toHaveProperty("checked", false);
+  expect(await findByRole("checkbox", { name: "test 2" })).toHaveProperty("checked", false);
+  expect(await findByRole("checkbox", { name: "test 3" })).toHaveProperty("checked", false);
 
-  const secondVariant = (await findByRole("checkbox", { name: "test 2" })) as HTMLInputElement;
-  fireEvent(secondVariant, new MouseEvent("click", { bubbles: true }));
-  rerender(<CheckboxGroup {...createProps({ onToggle, groupValue })} />);
-  expect(secondVariant).toHaveProperty("checked", true);
+  await userEvent.click(await findByRole("checkbox", { name: "test 1" }));
+  expect(props.onToggle).toHaveBeenCalledTimes(1);
+  expect(props.onToggle).toHaveBeenCalledWith("test 1");
 
-  const thirdVariant = (await findByRole("checkbox", { name: "test 3" })) as HTMLInputElement;
-  fireEvent(thirdVariant, new MouseEvent("click", { bubbles: true }));
-  rerender(<CheckboxGroup {...createProps({ onToggle, groupValue })} />);
-  expect(thirdVariant).toHaveProperty("checked", true);
+  await userEvent.click(await findByRole("checkbox", { name: "test 2" }));
+  expect(props.onToggle).toHaveBeenCalledTimes(2);
+  expect(props.onToggle).toHaveBeenCalledWith("test 2");
+
+  await userEvent.click(await findByRole("checkbox", { name: "test 3" }));
+  expect(props.onToggle).toHaveBeenCalledTimes(3);
+  expect(props.onToggle).toHaveBeenCalledWith("test 3");
+
+  rerender(<CheckboxGroup {...props} items={createItems(["test 1", "test 3"])} />);
+  expect(props.onToggle).toHaveBeenCalledTimes(3);
+  expect(await findByRole("checkbox", { name: "test 1" })).toHaveProperty("checked", true);
+  expect(await findByRole("checkbox", { name: "test 2" })).toHaveProperty("checked", false);
+  expect(await findByRole("checkbox", { name: "test 3" })).toHaveProperty("checked", true);
 });

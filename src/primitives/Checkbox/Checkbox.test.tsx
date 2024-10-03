@@ -1,29 +1,33 @@
-import { test, expect } from "@jest/globals";
+import { test, expect, beforeEach } from "@jest/globals";
 
-import { render, fireEvent } from "@testing-library/react";
 import Checkbox, { CheckboxProps } from ".";
 
-const createProps = ({
-  checked,
-  onChange,
-}: Partial<CheckboxProps> & { onChange: (value: boolean) => void }): CheckboxProps => ({
-  onChange,
-  checked,
+import { setup } from "@/util/test";
+
+let props = {} as CheckboxProps;
+
+beforeEach(() => {
+  props = {
+    checked: false,
+    onChange: jest.fn(),
+    label: "Test Label",
+  };
 });
 
 test("checkbox toggles its state on click", async () => {
-  let checked = false;
-  const onChange = (value: boolean) => (checked = value);
-  const { findByRole, rerender } = render(<Checkbox {...createProps({ checked, onChange })} />);
+  const { findByRole, rerender, userEvent } = setup(<Checkbox {...props} />);
 
-  const element = (await findByRole("checkbox")) as HTMLInputElement;
-  expect(element).toHaveProperty("checked", false);
+  expect(await findByRole("checkbox", { name: "Test Label" })).toHaveProperty("checked", false);
+  expect(props.onChange).toHaveBeenCalledTimes(0);
 
-  fireEvent(element, new MouseEvent("click", { bubbles: true }));
-  rerender(<Checkbox {...createProps({ checked, onChange })} />);
-  expect(element).toHaveProperty("checked", true);
+  await userEvent.click(await findByRole("checkbox", { name: "Test Label" }));
+  expect(props.onChange).toHaveBeenCalledTimes(1);
+  expect(props.onChange).toHaveBeenCalledWith(true);
 
-  fireEvent(element, new MouseEvent("click", { bubbles: true }));
-  rerender(<Checkbox {...createProps({ checked, onChange })} />);
-  expect(element).toHaveProperty("checked", false);
+  rerender(<Checkbox {...props} checked={true} />);
+  expect(await findByRole("checkbox", { name: "Test Label" })).toHaveProperty("checked", true);
+
+  await userEvent.click(await findByRole("checkbox", { name: "Test Label" }));
+  expect(props.onChange).toHaveBeenCalledTimes(2);
+  expect(props.onChange).toHaveBeenCalledWith(false);
 });

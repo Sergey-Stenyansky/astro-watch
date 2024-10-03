@@ -3,74 +3,93 @@ import { clampRange, inRange, round, validateRange } from "../number";
 
 describe("number module", () => {
   describe("in range function", () => {
-    it("checks for the lower bound of the interval", () => {
-      expect(inRange(10, [10, 15])).toBe(true);
-    });
-    it("checks for the upper bound of the interval", () => {
-      expect(inRange(15, [10, 15])).toBe(true);
-    });
-    it("checks for an in-bound point of the interval", () => {
-      expect(inRange(12, [10, 15])).toBe(true);
-    });
-    it("checks for a lower out-bound point of the interval", () => {
-      expect(inRange(5, [10, 15])).toBe(false);
-    });
-    it("checks for an upper out-bound point of the interval", () => {
-      expect(inRange(20, [10, 15])).toBe(false);
-    });
+    it.each([
+      [
+        "checks for the lower bound of the interval",
+        { value: 10, range: [10, 15], expected: true },
+      ],
+      [
+        "checks for the upper bound of the interval",
+        { value: 15, range: [10, 15], expected: true },
+      ],
+      [
+        "checks for an in-bound point of the interval",
+        { value: 12, range: [10, 15], expected: true },
+      ],
+      [
+        "checks for a lower out-bound point of the interval",
+        { value: 5, range: [10, 15], expected: false },
+      ],
+      [
+        "checks for a upper out-bound point of the interval",
+        { value: 20, range: [10, 15], expected: false },
+      ],
+    ])("%s", (_, { value, range, expected }) => expect(inRange(value, range)).toBe(expected));
   });
 
   describe("round function", () => {
-    it("rounds a number with more decimal places to two decimal places", () => {
-      expect(round(10.123, 2)).toBe(10.12);
-    });
-    it("rounds a number with less decimal places to two decimal places", () => {
-      expect(round(10.1, 2)).toBe(10.1);
-    });
-    it("rounds a number with zero decimal places to two decimal places", () => {
-      expect(round(10, 2)).toBe(10);
-    });
+    it.each([
+      [
+        "rounds a number with more decimal places to two decimal places",
+        { value: 10.123, expected: 10.12 },
+      ],
+      [
+        "rounds a number with less decimal places to two decimal places",
+        { value: 10.1, expected: 10.1 },
+      ],
+      [
+        "rounds a number with zero decimal places to two decimal places",
+        { value: 10, expected: 10 },
+      ],
+    ])("%s", (_, { value, expected }) => expect(round(value, 2)).toBe(expected));
   });
 
   describe("clamp range function", () => {
-    it("clamps the interval into a bigger interval", () => {
-      expect(clampRange([5, 10], [1, 15])).toEqual([5, 10]);
-    });
-    it("clamps the interval into a bigger interval with an equal lower bound", () => {
-      expect(clampRange([5, 10], [5, 15])).toEqual([5, 10]);
-    });
-    it("clamps the interval into a bigger interval with an equal upper bound", () => {
-      expect(clampRange([5, 10], [1, 10])).toEqual([5, 10]);
-    });
-    it("clamps the interval into an intersecting interval with an equal lower bound", () => {
-      expect(clampRange([5, 10], [5, 9])).toEqual([5, 9]);
-    });
-    it("clamps the interval into an intersecting interval with an equal upper bound", () => {
-      expect(clampRange([5, 10], [6, 15])).toEqual([6, 10]);
-    });
-    it("clamps the interval into a disjoint lower interval (unhandled case)", () => {
-      expect(clampRange([5, 10], [1, 4])).toEqual([5, 4]);
-    });
-    it("clamps the interval into a disjoint upper interval (unhandled case)", () => {
-      expect(clampRange([5, 10], [11, 15])).toEqual([11, 10]);
-    });
+    it.each([
+      ["clamps the interval into a bigger interval", { a: [5, 10], b: [1, 15], expected: [5, 10] }],
+      [
+        "clamps the interval into a bigger interval with an equal lower bound",
+        { a: [5, 10], b: [5, 15], expected: [5, 10] },
+      ],
+      [
+        "clamps the interval into a bigger interval with an equal upper bound",
+        { a: [5, 10], b: [1, 10], expected: [5, 10] },
+      ],
+      [
+        "clamps the interval into an intersecting interval with an equal lower bound",
+        { a: [5, 10], b: [5, 9], expected: [5, 9] },
+      ],
+      [
+        "clamps the interval into an intersecting interval with an equal upper bound",
+        { a: [5, 10], b: [6, 15], expected: [6, 10] },
+      ],
+      [
+        "incorrectly clamps the interval into a disjoint lower interval",
+        { a: [5, 10], b: [1, 4], expected: [5, 4] },
+      ],
+      [
+        "incorrectly clamps the interval into a disjoint upper interval",
+        { a: [5, 10], b: [11, 15], expected: [11, 10] },
+      ],
+    ])("%s", (_, { a, b, expected }) => expect(clampRange(a, b)).toEqual(expected));
   });
 
   describe("validate range function", () => {
-    it("validates a correct interval", () => {
-      expect(validateRange([1, 10])).toBe(true);
-    });
-    it("validates a correct point interval", () => {
-      expect(validateRange([10, 10])).toBe(true);
-    });
-    it("invalidates an incorrect interval (mismatched bounds)", () => {
-      expect(validateRange([10, 1])).toBe(false);
-    });
-    it("invalidates an incorrect interval (less than two elements)", () => {
-      expect(validateRange([1])).toBe(false);
-    });
-    it("invalidates an incorrect interval (more than two elements)", () => {
-      expect(validateRange([1, 10, 100])).toBe(false);
-    });
+    it.each([
+      ["validates a correct interval", { interval: [1, 10], expected: true }],
+      ["validates a correct point interval", { interval: [10, 10], expected: true }],
+      [
+        "invalidates an incorrect interval (mismatched bounds)",
+        { interval: [10, 1], expected: false },
+      ],
+      [
+        "invalidates an incorrect interval (less than two elements)",
+        { interval: [1], expected: false },
+      ],
+      [
+        "invalidates an incorrect interval (more than two elements)",
+        { interval: [1, 10, 100], expected: false },
+      ],
+    ])("%s", (_, { interval, expected }) => expect(validateRange(interval)).toBe(expected));
   });
 });

@@ -26,7 +26,7 @@ function getValueText(value: string | undefined, t: any) {
 
 function getItemLabelPortion(value: SortActionValues, t: any) {
   const parts = value.split("-");
-  return t("sorting." + parts[1]);
+  return t("sort." + parts[1]);
 }
 
 const SortContextMenu = ({ value, onChange }: SortContextMenuProps) => {

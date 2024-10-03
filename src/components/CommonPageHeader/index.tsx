@@ -22,7 +22,7 @@ const CommonPageHeader = ({ title, withBackButton, withoutMode }: ComponentProps
       title={title}
       leftContent={
         <>
-          <IconButton onClick={appDrawer.open}>
+          <IconButton onClick={appDrawer.open} aria-label={t("mainMenu.title")}>
             <InternalIcon icon="menu" color="primary" />
           </IconButton>
           {appNavigation.isEmpty || !withBackButton ? null : (

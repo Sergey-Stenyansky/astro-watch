@@ -1,4 +1,4 @@
-function calculatePagination(page: number, perPage: number, count: number) {
+export function calculatePagination(page: number, perPage: number, count: number) {
   const lastIndex = page * perPage;
   const firstIndex = lastIndex - perPage + 1;
   return {

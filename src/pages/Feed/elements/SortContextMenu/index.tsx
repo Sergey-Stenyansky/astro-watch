@@ -24,6 +24,11 @@ function getValueText(value: string | undefined, t: any) {
   return item.selectedText;
 }
 
+function getItemLabelPortion(value: SortActionValues, t: any) {
+  const parts = value.split("-");
+  return t("sort." + parts[1]);
+}
+
 const SortContextMenu = ({ value, onChange }: SortContextMenuProps) => {
   const { t } = useTranslation();
   const [sortOpened, setSortOpened] = useToggle(false);
@@ -49,6 +54,7 @@ const SortContextMenu = ({ value, onChange }: SortContextMenuProps) => {
               primary={action.text}
               onClick={context.submit}
               selected={action.value === value}
+              label={action.text + " " + getItemLabelPortion(action.value, t)}
             />
           ))}
         </>

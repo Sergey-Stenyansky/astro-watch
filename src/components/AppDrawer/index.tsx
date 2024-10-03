@@ -47,11 +47,11 @@ const AppDrawer = () => {
           <Divider />
           {menuItems.map((item) => {
             return item.link ? (
-              <NavLink style={linkStyles} to={item.link}>
+              <NavLink key={item.code} style={linkStyles} to={item.link}>
                 {({ isActive }) => <AppMenuItemComponent item={item} selected={isActive} />}
               </NavLink>
             ) : (
-              <AppMenuItemComponent item={item} />
+              <AppMenuItemComponent key={item.code} item={item} />
             );
           })}
         </List>

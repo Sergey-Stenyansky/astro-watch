@@ -14,15 +14,10 @@ export function timeRange(
 export function getDefaultFeedWindow() {
   const today = dayjs();
   const [startDate, endDate] = timeRange(today, 7, "days");
-  return { startDate: format(startDate), endDate: format(endDate) };
+  return { startDate: getDateValue(startDate), endDate: getDateValue(endDate) };
 }
 
-function getCount(count: number, inclusive: boolean) {
-  if (inclusive) return count;
-  return count > 0 ? count - 1 : count + 1;
-}
-
-function format(date: Dayjs | Dayjs[]) {
+export function getDateValue(date: Dayjs | Dayjs[]) {
   if (Array.isArray(date)) {
     const result = date.reduce(
       (acc, current) => acc + " " + formatDate(current, DateFormat.shortDateISO),
@@ -31,4 +26,9 @@ function format(date: Dayjs | Dayjs[]) {
     return result.trimStart();
   }
   return formatDate(date, DateFormat.shortDateISO);
+}
+
+function getCount(count: number, inclusive: boolean) {
+  if (inclusive) return count;
+  return count > 0 ? count - 1 : count + 1;
 }

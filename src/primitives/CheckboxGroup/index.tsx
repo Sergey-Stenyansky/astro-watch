@@ -4,13 +4,13 @@ import Checkbox from "../Checkbox";
 
 import { CheckboxGroupItem } from "./types";
 
-interface ComponentProps {
+export interface CheckboxGroupProps {
   label?: string;
   onToggle: (name: string) => void;
   items: CheckboxGroupItem[];
 }
 
-const CheckboxGroup = ({ items, label, onToggle }: ComponentProps) => {
+const CheckboxGroup = ({ items, label, onToggle }: CheckboxGroupProps) => {
   return (
     <FormControl fullWidth>
       {label && <FormLabel>{label}</FormLabel>}

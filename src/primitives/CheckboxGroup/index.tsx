@@ -20,10 +20,7 @@ const CheckboxGroup = ({ items, label, onToggle }: CheckboxGroupProps) => {
             key={item.name}
             label={item.label}
             checked={item.value || false}
-            onChange={() => {
-              console.log("toggle");
-              onToggle(item.name);
-            }}
+            onChange={() => onToggle(item.name)}
           />
         ))}
       </FormGroup>

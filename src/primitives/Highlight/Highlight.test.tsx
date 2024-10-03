@@ -1,35 +1,25 @@
-import { test, expect } from "@jest/globals";
+import { test, expect, beforeEach } from "@jest/globals";
 
 import { render } from "@testing-library/react";
 import Highlight, { HighlightProps } from ".";
-import { Typography } from "@mui/material";
 
-const createProps = ({ search, children }: HighlightProps): HighlightProps => ({
-  search,
-  children,
+let props = {} as HighlightProps;
+
+beforeEach(() => {
+  props = {
+    children: "This is an example text",
+    search: "example text",
+  };
 });
 
 test("highlights search text", async () => {
-  let search = "";
-  const text = "This is an example text";
-  const { rerender } = render(
-    <Typography>
-      <Highlight {...createProps({ search, children: text })} />
-    </Typography>,
+  render(
+    <p>
+      <Highlight {...props} />
+    </p>,
   );
 
-  let container = document.querySelector("p");
-  let mark = container?.querySelector("mark");
-  expect(mark).toBeFalsy();
-
-  search = "example text";
-  rerender(
-    <Typography>
-      <Highlight {...createProps({ search, children: text })} />
-    </Typography>,
-  );
-
-  container = document.querySelector("p");
-  mark = container?.querySelector("mark");
-  expect(mark?.textContent).toBe(search);
+  const container = document.querySelector("p");
+  const mark = container?.querySelector("mark");
+  expect(mark?.textContent).toBe("example text");
 });

@@ -8,7 +8,7 @@ import { yellow, indigo } from "@mui/material/colors";
 const AppThemeModeToggler = () => {
   const { mode, toggleMode } = useAppTheme();
   return (
-    <IconButton onClick={toggleMode as any}>
+    <IconButton onClick={toggleMode as any} data-cy="theme-toggler">
       {mode === "light" ? (
         <InternalIcon icon="dark_mode" htmlColor={indigo.A200} />
       ) : (

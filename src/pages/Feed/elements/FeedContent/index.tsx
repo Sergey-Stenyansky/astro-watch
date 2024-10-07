@@ -62,7 +62,7 @@ const FeedContent = () => {
       <CommonPageHeader title={t("astroWatch")} />
       <FeedFilterComponent />
       <Spacing v={2} />
-      <Stack spacing={1} useFlexGap={true} sx={flexCenter}>
+      <Stack spacing={1} useFlexGap={true} sx={flexCenter} data-cy="feed-content">
         {isFetching && !isError && <SkeletonPlaceholder count={5} />}
         {!isFetching && !isError && !content.items.length && (
           <Placeholder

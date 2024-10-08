@@ -14,7 +14,7 @@ const wrapperStyles = { width: 250 };
 const linkStyles = { textDecoration: "none", color: "inherit" };
 
 const AppMenuItemComponent = ({ item, selected }: { item: AppMenuItem; selected?: boolean }) => (
-  <ListItem key={item.code} disablePadding>
+  <ListItem key={item.code} disablePadding data-test-id={"main-menu-" + item.code}>
     <ListItemButton selected={selected} onClick={item.action}>
       {item.icon && (
         <ListItemIcon sx={listIconStyles}>
@@ -35,6 +35,7 @@ const AppDrawer = () => {
         <Spacing v={1} />
         <Toolbar variant="dense">
           <ListItemText
+            data-test-id="main-menu-nav"
             primary={t("mainMenu.nav")}
             primaryTypographyProps={{
               fontSize: 20,

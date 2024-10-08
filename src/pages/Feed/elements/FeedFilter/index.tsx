@@ -77,7 +77,7 @@ const FeedFilter = () => {
 
   return (
     <Stack>
-      <Card>
+      <Card testId="feed-filter">
         <DatePickerPair
           firstLabel={t("feed.dateFrom")}
           firstDate={window.startDate}

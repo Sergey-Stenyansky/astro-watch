@@ -84,7 +84,7 @@ const BrowseContent = () => {
           onClear={() => setSearchValue("")}
         />
       </Toolbar>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} data-test-id="browse-table">
         <Table size="small">
           <BrowseTableHead />
           <TableBody sx={positionRelative}>
@@ -120,7 +120,10 @@ const BrowseContent = () => {
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <AppLink to={AppRoutes.getDetailUrl(item.id)}>
+                  <AppLink
+                    to={AppRoutes.getDetailUrl(item.id)}
+                    data-test-id="browse-asteroid-app-link"
+                  >
                     <IconButton>
                       <InternalIcon icon="open_in_new" />
                     </IconButton>

@@ -31,9 +31,9 @@ const PlaceHolder = () => {
   return (
     <>
       <CommonPageHeader withBackButton />
-      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
-      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
-      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />;
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
+      <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
     </>
   );
 };
@@ -66,12 +66,12 @@ const Detail = () => {
   return (
     <>
       <CommonPageHeader withBackButton title={data.name} />
-      <Card>
+      <Card testId="detail-content">
         <Box sx={flexSpaceBetween}>
           <Link sx={linkStyles} href={data.nasaJplUrl}>
             {data.nasaJplUrl}
           </Link>
-          <Button variant="text" onClick={toggleOrbitalData}>
+          <Button variant="text" onClick={toggleOrbitalData} data-test-id="toggle-orbital-data">
             {t("detail.orbitalData.word")}
           </Button>
         </Box>

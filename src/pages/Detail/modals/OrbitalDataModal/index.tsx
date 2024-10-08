@@ -29,12 +29,22 @@ const OrbitalDataModal = ({ opened, onChangeOpened, data }: ModalProps) => {
   const { t } = useTranslation();
   return (
     <Dialog fullScreen open={opened} onClose={onChangeOpened} scroll="body">
-      <AppBar position="relative" color="transparent" classes={appBarClasses}>
+      <AppBar
+        position="relative"
+        color="transparent"
+        classes={appBarClasses}
+        data-test-id="orbital-data-modal"
+      >
         <Toolbar variant="dense">
           <Typography sx={flex1} variant="h6" component="div">
             {t("detail.orbitalData.word")}
           </Typography>
-          <IconButton edge="end" color="inherit" onClick={() => onChangeOpened(false)}>
+          <IconButton
+            edge="end"
+            color="inherit"
+            data-test-id="orbital-data-close"
+            onClick={() => onChangeOpened(false)}
+          >
             <InternalIcon icon="close" />
           </IconButton>
         </Toolbar>

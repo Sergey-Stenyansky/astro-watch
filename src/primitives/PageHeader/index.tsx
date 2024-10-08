@@ -12,12 +12,12 @@ interface ComponentProps {
 const PageHeader = ({ title, leftContent, rightContent }: ComponentProps) => (
   <>
     <HideOnScroll>
-      <AppBar position="fixed" color="default" data-cy="page-header">
+      <AppBar position="fixed" color="default" data-test-id="page-header">
         <Toolbar sx={flexSpaceBetween}>
           {leftContent}
           <Typography
             align="center"
-            data-cy="page-title"
+            data-test-id="page-title"
             sx={flex1}
             variant="h5"
             color="inherit"

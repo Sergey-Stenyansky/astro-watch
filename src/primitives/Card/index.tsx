@@ -14,11 +14,11 @@ const cardStylesMap: Record<CardElevation, SxProps> = {
 interface ComponentProps {
   children?: ReactNode;
   elevation?: CardElevation;
-  testTag?: string;
+  testId?: string;
 }
 
-const CardComponent = ({ children, elevation = 3, testTag }: ComponentProps) => (
-  <Card variant="elevation" data-cy={testTag} sx={cardStylesMap[elevation]}>
+const CardComponent = ({ children, elevation = 3, testId }: ComponentProps) => (
+  <Card variant="elevation" data-test-id={testId} sx={cardStylesMap[elevation]}>
     {children}
   </Card>
 );

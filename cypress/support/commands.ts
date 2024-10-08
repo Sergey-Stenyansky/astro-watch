@@ -2,6 +2,6 @@ import { mount } from "cypress/react18";
 
 Cypress.Commands.add("mount", mount);
 
-Cypress.Commands.add("data", (value) => {
-  return cy.get(`[data-cy=${value}]`);
+Cypress.Commands.add("getByTestId", (value) => {
+  return cy.get(`[data-test-id=${value}]`);
 });

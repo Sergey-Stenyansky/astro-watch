@@ -66,12 +66,12 @@ const Detail = () => {
   return (
     <>
       <CommonPageHeader withBackButton title={data.name} />
-      <Card testTag="detail-content">
+      <Card testId="detail-content">
         <Box sx={flexSpaceBetween}>
           <Link sx={linkStyles} href={data.nasaJplUrl}>
             {data.nasaJplUrl}
           </Link>
-          <Button variant="text" onClick={toggleOrbitalData} data-cy="toggle-orbital-data">
+          <Button variant="text" onClick={toggleOrbitalData} data-test-id="toggle-orbital-data">
             {t("detail.orbitalData.word")}
           </Button>
         </Box>

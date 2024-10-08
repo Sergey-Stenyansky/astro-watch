@@ -33,7 +33,7 @@ const OrbitalDataModal = ({ opened, onChangeOpened, data }: ModalProps) => {
         position="relative"
         color="transparent"
         classes={appBarClasses}
-        data-cy="orbital-data-modal"
+        data-test-id="orbital-data-modal"
       >
         <Toolbar variant="dense">
           <Typography sx={flex1} variant="h6" component="div">
@@ -42,7 +42,7 @@ const OrbitalDataModal = ({ opened, onChangeOpened, data }: ModalProps) => {
           <IconButton
             edge="end"
             color="inherit"
-            data-cy="orbital-data-close"
+            data-test-id="orbital-data-close"
             onClick={() => onChangeOpened(false)}
           >
             <InternalIcon icon="close" />

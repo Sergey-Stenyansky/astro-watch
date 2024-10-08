@@ -7,7 +7,6 @@ export type AppMenuItem = {
   code: string;
   icon?: InternalIcons;
   link?: string;
-  testTag?: string;
   action?: () => void;
 };
 
@@ -17,13 +16,11 @@ export const menuItems: AppMenuItem[] = [
     code: "feed",
     icon: "article_outlined",
     link: AppRoutes.getFeedUrl(),
-    testTag: "main-menu-feed",
   },
   {
     title: i18n.t("mainMenu.browse"),
     code: "browse",
     icon: "manage_search",
     link: AppRoutes.getBrowseUrl(),
-    testTag: "main-menu-browse",
   },
 ];

@@ -28,7 +28,7 @@ const AstroObjectCard = ({ item }: { item: AstroObjectInterface }) => {
   return (
     <Card>
       <Box sx={flexSpaceBetween}>
-        <AppLink style={nameStyles} to={AppRoutes.getDetailUrl(item.id)} data-cy="app-link">
+        <AppLink style={nameStyles} to={AppRoutes.getDetailUrl(item.id)} data-test-id="app-link">
           <Typography variant="h5">{item.name}</Typography>
         </AppLink>
         <Link sx={linkStyles} href={item.nasaJplUrl}>

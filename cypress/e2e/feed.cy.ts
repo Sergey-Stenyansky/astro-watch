@@ -8,8 +8,8 @@ describe("feed page", () => {
 
   it("should contain page header and content", () => {
     cy.visit("/feed");
-    cy.data("page-title").should("be.visible");
-    cy.data("feed-filter").should("be.visible");
-    cy.data("feed-content").should("be.visible");
+    cy.getByTestId("page-title").should("be.visible");
+    cy.getByTestId("feed-filter").should("be.visible");
+    cy.getByTestId("feed-content").should("be.visible");
   });
 });
